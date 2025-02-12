@@ -381,10 +381,8 @@ def main_algorithm(user: dict) -> None:
         N, btm_mission_dict = fd.get_btm_mission()
         nested_mission_dict = fd.get_parentChild_mission(btm_mission_dict)
 
-        pprint(btm_mission_dict)
-        pprint(nested_mission_dict)
-
-        print("blablabla")
+        # pprint(btm_mission_dict)
+        # pprint(nested_mission_dict)
 
         # ====================================
         #  Algorithm              
@@ -440,7 +438,7 @@ def main_algorithm(user: dict) -> None:
         all_paths.remove(critical_path)
         all_paths.append(critical_path)
 
-        print(f"critical_path:{critical_path}")
+        # print(f"critical_path:{critical_path}")
 
         # ====================================
         #  Calculating ES & EF with propogation
@@ -473,7 +471,7 @@ def main_algorithm(user: dict) -> None:
                 
             #print("path", path, "propogation done successfully")
 
-        pprint(date_dict)
+        # pprint(date_dict)
 
         # ----- Calculate ES & EF for Parent and Child mission -----
         for p in range(len(nested_mission_dict)):
@@ -491,10 +489,7 @@ def main_algorithm(user: dict) -> None:
             nested_mission_dict[p]["ES"] = smallest_p_es
             nested_mission_dict[p]["EF"] = largest_p_ef
 
-        pprint(nested_mission_dict)
-
-
-        print("gghjk")
+        # pprint(nested_mission_dict)
 
         # ====================================
         #  Updating data back to notion              
@@ -505,9 +500,6 @@ def main_algorithm(user: dict) -> None:
         ud.update_trigger_property(fd.current_trigger)
         
         print(f"[{user['email']}] Finished processing algorithm for trigger {trigger}.")
-        
-def test_algorithm():
-    print("Testing algorithm...")
 
 async def main_async() -> None:
     # ----- Initalize -----
