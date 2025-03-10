@@ -1,0 +1,130 @@
+{
+    "object": "page",
+    "id": "1b2d801c-39b0-8006-8070-f167a4de849b",
+    "created_time": "2025-03-10T02:33:00.000Z",
+    "last_edited_time": "2025-03-10T02:57:00.000Z",
+    "created_by": {
+        "object": "user",
+        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+    },
+    "last_edited_by": {
+        "object": "user",
+        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+    },
+    "cover": {
+        "type": "file",
+        "file": {
+            "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/b8f68939-16a2-45a1-b70a-a0cd0a75f670/9c902ce8-99b5-415f-9282-0732480f5b0e/banner.webp?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466Z4TVIULR%2F20250310%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250310T034751Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDkaCXVzLXdlc3QtMiJHMEUCIQCqJ4HQnZEnx09Jjmie42Cj8N58ZdArTXkg8PqTOdh0uQIgdLsWCUsCi7SCRuUZCMWqdWHIKjwGwSIepIKcDqaGwhEqiAQIgv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDNcsV1c%2BUWApuglyfyrcA%2FoO46Te32Pm1GFtKEM3Zu0FpNfe%2Bl6V0XTfawzJMotEvkzqPnXD4Pf0VaL3e5T%2FXQMtpyaTha3InLViS2YGNgyX%2B4WLsDEe%2FSjm6PY6U17jigk7b0EpyeS5QeS1fhsGmsN4%2B8qckPo64AMsAIvxFlijTnTXZ2qMt9AmJStSsnqrbYtVLPNdDyt4qLTQs5eU4CqSc%2B9bAnaLykA6uuArsYt4jafL6Kv9dMgOtI8FOlo09cmSR6C9BL8fJyvFpOTJvfe5xe8JUQdroLJWuhLIMBpgcpqF6sSOECFyYjoyZgag%2F9nTtlSp5%2BY4NOH5C2AcjpUJdMIcX%2FEZFTRWLs5GegmSk7RoL9nQ9ZSgtM9VgnM3fMJeFBCZ77a0hMkWK8d%2F58lawMVs8ah6ZgLegyWdlDsG26h3VZK2DLJdDE8mfbvjuPnyMrenu13s5ujInl9im%2FGVw0k%2BmUZPeUV1lhbPs2O3%2F1EdhlKlnEFySRljxLYGfblbdjKjyms9BLbmB5Eq39OuV2vox0lC%2FU4ATGxnIeVRnSUY3aD98oCA0nNQ4b%2Bq7mI27%2B6stJJs5KU8s9OEAzx6pxkpC09PnQYWfLgRhrIPgtZngeia%2B50Zxz8V78p1NCMFbQIYrovRDp1mMJz7uL4GOqUBX%2Bnizp5Q0nDm8LNh%2FfxCRWT7A18DukKEew2azgM42QdeNDPs0OPRQw4LeNttfgdhG3jtvcek8Ajg99QcQXazNzKKIRrJ%2FIuZHPTyxUOuXkC5gykvRKaEA%2B7Z3unqVPaBlwC%2FBbeOWC1%2ByPFQrQSbEMMHUsD%2Ff2W8eA%2FZX%2Fwt%2FMu0bngNb6ftQPScfN5fwZ5uIKj7hQfyKNojbYMwdY65h1h4ahCW&X-Amz-Signature=f3d9bd89ee732272c3ee6856de43fc4597a15a097198f2356339f64ad6152122&X-Amz-SignedHeaders=host&x-id=GetObject",
+            "expiry_time": "2025-03-10T04:47:51.771Z"
+        }
+    },
+    "icon": {
+        "type": "external",
+        "external": {
+            "url": "https://www.notion.so/icons/user_green.svg"
+        }
+    },
+    "parent": {
+        "type": "database_id",
+        "database_id": "1b0d801c-39b0-80f0-8b60-d2b8ea3828a5"
+    },
+    "archived": false,
+    "in_trash": false,
+    "properties": {
+        "Email": {
+            "id": "%40Y%3Aj",
+            "type": "email",
+            "email": "b10901023yang@gmail.com"
+        },
+        "執行狀態": {
+            "id": "Dr%3Cc",
+            "type": "status",
+            "status": {
+                "id": "91546548-69ad-426f-af4b-dfed117dba9c",
+                "name": "無",
+                "color": "default"
+            }
+        },
+        "新增專案請求": {
+            "id": "FI%60k",
+            "type": "status",
+            "status": {
+                "id": "23782f20-8958-4848-9625-25ae01a7cf26",
+                "name": "無請求",
+                "color": "default"
+            }
+        },
+        "上次執行的功能": {
+            "id": "NJpT",
+            "type": "rich_text",
+            "rich_text": []
+        },
+        "系統訊息": {
+            "id": "Yw%3B%5C",
+            "type": "rich_text",
+            "rich_text": []
+        },
+        "系統連線狀態": {
+            "id": "e%3AzE",
+            "type": "status",
+            "status": {
+                "id": "e30dcb4d-7db6-47de-a0e1-b8c3e34ce3a8",
+                "name": "無",
+                "color": "default"
+            }
+        },
+        "上次執行時間": {
+            "id": "mFdJ",
+            "type": "date",
+            "date": null
+        },
+        "姓名": {
+            "id": "s%7Dg%7C",
+            "type": "rich_text",
+            "rich_text": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "蔡仁揚",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "蔡仁揚",
+                    "href": null
+                }
+            ]
+        },
+        "個人首頁標題": {
+            "id": "title",
+            "type": "title",
+            "title": [
+                {
+                    "type": "text",
+                    "text": {
+                        "content": "Yang的首頁",
+                        "link": null
+                    },
+                    "annotations": {
+                        "bold": false,
+                        "italic": false,
+                        "strikethrough": false,
+                        "underline": false,
+                        "code": false,
+                        "color": "default"
+                    },
+                    "plain_text": "Yang的首頁",
+                    "href": null
+                }
+            ]
+        }
+    },
+    "url": "https://www.notion.so/Yang-1b2d801c39b080068070f167a4de849b",
+    "public_url": null
+}

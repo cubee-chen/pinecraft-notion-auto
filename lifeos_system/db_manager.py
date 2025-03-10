@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv
+from pprint import pprint
 
 from pymongo.mongo_client import MongoClient
 
@@ -19,10 +20,27 @@ PROJECT_COLLECTION = "project_db"
 class DBManager:
     
     # init: Establish connection with mongoDB
-    def __init__(self, dbName, collectionName):
-        global MONGO_URI
+    def __init__(self):
 
         # Instance Variables
         self.client = MongoClient(MONGO_URI)
-        self.db = self.client[dbName]
-        self.collection = self.db[collectionName]
+        self.db = self.client[DBNAME]
+        self.user_collection = self.db[USER_COLLECTION]
+        self.project_collection = self.db[PROJECT_COLLECTION]
+    
+    def update_user_by_notion_id(self, notion_id: str, data):
+        # If user exists, save it; if not, create a new BSON and save it (upsert=True)
+        self.user_collection.update_one({"notion_id": notion_id}, data, upsert=True)
+
+    def get_user_by_notion_id(self, notion_id: str):
+        user = self.user_collection.find_one({"notion_id": notion_id})
+        if not user:
+            # No user with this ID exists
+            print("NONE")
+        else:
+            pprint(user)
+        pass
+
+if __name__ == "__main__":
+    db_manager = DBManager()
+    db_manager.get_user_by_notion_id("1b1d801c39b080f08cc6cd31f16d0cb9")
