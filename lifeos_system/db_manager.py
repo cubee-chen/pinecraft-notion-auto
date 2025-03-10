@@ -41,6 +41,24 @@ class DBManager:
             pprint(user)
         pass
 
+    # ============ Utility Functions for DB ============
+
+    # Checks schema
+    @staticmethod
+    def data_validation(db_entry, data_name="[data]"):
+        REQUIRED_KEYS = [
+            "notion_id", 
+            "last_edited_time", 
+            "notion_properties", 
+            "notion_content"
+        ]
+        for key in REQUIRED_KEYS:
+            if key not in db_entry:
+                print(f"!WARNING! Data validation of '{data_name}' has failed.")
+                return False
+        return True
+
+
 if __name__ == "__main__":
     db_manager = DBManager()
     db_manager.get_user_by_notion_id("1b1d801c39b080f08cc6cd31f16d0cb9")

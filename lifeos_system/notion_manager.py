@@ -25,32 +25,146 @@ class NotionManager:
         self.notion = AsyncClient(auth=NOTION_TOKEN)
         self.users = []
 
-    async def get_all_users_and_projects(self):
+    # Get all users and projects and return user_data and project_data
+    async def get_all_users_and_projects(self): 
 
-        # get all users and projects and save them in tracked_document
         # run at program start
 
-        # get all properties from all the users
-        all_user_metadata =  await self.notion.databases.query(**{
-            "database_id": USER_NOTION,
-            # No filters yet
-        })
+        # Get all properties from all the users
+        print("Fetching Notion Page Data From All Users...")
+        all_user_metadata = await self.notion.databases.query(
+            database_id=USER_NOTION
+        )
 
-        # get all content from notion
-        user_data = [{
-            "notion_id": user_metadata["id"],
-            "last_edited_time": NotionManager.notion_time_to_seconds(user_metadata["last_edited_time"]),
-            "notion_properties": user_metadata["properties"],
-            "notion_content": (await self.notion.blocks.children.list(user_metadata["id"]))["results"] 
-        } for user_metadata in all_user_metadata["results"]]
+        async def fetch_user_data(user_metadata):
+            notion_id = user_metadata["id"]
+            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata["last_edited_time"])
+            notion_properties = user_metadata["properties"]
+            notion_content = await self.notion.blocks.children.list(notion_id)
+            return {
+                "notion_id": notion_id,
+                "last_edited_time": last_edited_time,
+                "notion_properties": notion_properties,
+                "notion_content": notion_content["results"]
+            }
 
-        NotionManager.output_to_json(user_data)
+        # Run all content fetches concurrently
+        user_data = await asyncio.gather(*[fetch_user_data(user) for user in all_user_metadata["results"]])
 
-    async def get_all_calendars(self):
+        # Get all properties from all the projects
+        print("Fetching Notion Page Data From All Projects...")
+        all_project_metadata = await self.notion.databases.query(
+            database_id=PROJECT_NOTION
+        )
+
+        async def fetch_project_data(project_metadata):
+            notion_id = project_metadata["id"]
+            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata["last_edited_time"])
+            notion_properties = project_metadata["properties"]
+            notion_content = await self.notion.blocks.children.list(notion_id)
+            return {
+                "notion_id": notion_id,
+                "last_edited_time": last_edited_time,
+                "notion_properties": notion_properties,
+                "notion_content": notion_content["results"]
+            }
+
+        # Run all content fetches concurrently
+        project_data = await asyncio.gather(*[fetch_project_data(project) for project in all_project_metadata["results"]])
+
+        return user_data, project_data
+
+    # Fetch a single user's data from Notion by Notion ID.  
+    async def get_user_by_notion_id(self, notion_id):
+        
+        # Query the Notion database to find the specific user
+        print(f"Fetching Notion Page Data for User ID: {notion_id}...")
+        user_metadata = await self.notion.databases.query(
+            database_id=USER_NOTION,
+            filter={"property": "id", "text": {"equals": notion_id}}  # Adjust filter based on Notion schema
+        )
+
+        if not user_metadata["results"]:
+            print(f"No user found with Notion ID: {notion_id}")
+            return None
+
+        user_metadata = user_metadata["results"][0]  # Get the first matching user
+
+        async def fetch_user_data(user_metadata):
+            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata["last_edited_time"])
+            notion_properties = user_metadata["properties"]
+            notion_content = await self.notion.blocks.children.list(notion_id)
+            return {
+                "notion_id": notion_id,
+                "last_edited_time": last_edited_time,
+                "notion_properties": notion_properties,
+                "notion_content": notion_content["results"]
+            }
+
+        # Fetch user data asynchronously
+        user_data = await fetch_user_data(user_metadata)
+
+        return user_data
+    
+    # Fetch a single project's data from Notion by Notion ID.
+    async def get_project_by_notion_id(self, notion_id):
+        
+        # Query the Notion database to find the specific project
+        print(f"Fetching Notion Page Data for User ID: {notion_id}...")
+        project_metadata = await self.notion.databases.query(
+            database_id=PROJECT_NOTION,
+            filter={"property": "id", "text": {"equals": notion_id}}  # Adjust filter based on Notion schema
+        )
+
+        if not project_metadata["results"]:
+            print(f"No project found with Notion ID: {notion_id}")
+            return None
+
+        project_metadata = project_metadata["results"][0]  # Get the first matching project
+
+        async def fetch_project_data(project_metadata):
+            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata["last_edited_time"])
+            notion_properties = project_metadata["properties"]
+            notion_content = await self.notion.blocks.children.list(notion_id)
+            return {
+                "notion_id": notion_id,
+                "last_edited_time": last_edited_time,
+                "notion_properties": notion_properties,
+                "notion_content": notion_content["results"]
+            }
+
+        # Fetch project data asynchronously
+        project_data = await fetch_project_data(project_metadata)
+
+        return project_data
+    
+    async def extract_all_calendars(self, user_data, project_data):
 
         # get calendar db id from user and project page content
         # run at program start
-        pass
+
+        for user in user_data:
+            notion_content = user["notion_content"]
+            user["child_databases"] = []
+            for block in notion_content:
+                if block["type"] == "child_database":
+                    user["child_databases"].append({
+                        "title": block["child_database"]["title"],
+                        "id": block["id"]
+                    })
+        
+        for project in project_data:
+            notion_content = project["notion_content"]
+            project["child_databases"] = []
+            for block in notion_content:
+                if block["type"] == "child_database":
+                    project["child_databases"].append({
+                        "title": block["child_database"]["title"],
+                        "id": block["id"]
+                    })
+
+        return user_data, project_data
+
 
     def get_last_updated_time(self):
         pass
@@ -70,4 +184,9 @@ class NotionManager:
 
 if __name__ == "__main__":
     notion_manager = NotionManager()
-    asyncio.run(notion_manager.get_all_users_and_projects())
+    async def test_run():
+        user_data, project_data = await notion_manager.get_all_users_and_projects()
+        user_data, project_data = await notion_manager.extract_all_calendars(user_data, project_data)
+        NotionManager.output_to_json({"user_data": user_data, "project_data": project_data}, "sample_db_storage.json")
+
+    asyncio.run(test_run())
