@@ -507,7 +507,7 @@ async def main_async() -> None:
     manager = AsyncPollUserManager(users)
 
     # ----- Parameters -----
-    update_interval =60  # seconds
+    update_interval =5  # seconds
     last_update = datetime.now()
 
     # ----- Main loop -----
@@ -518,12 +518,12 @@ async def main_async() -> None:
             new_users = fetch_all_users()
             manager.update_users(new_users)
             last_update = now
-            
+
         await manager.poll_all()
         await asyncio.sleep(2)
 
 
 if __name__ == "__main__":
     asyncio.run(main_async())
+    
 
-    print("Hello, world!")
