@@ -23,9 +23,8 @@ class NotionManager:
 
         # Instance Variables
         self.notion = AsyncClient(auth=NOTION_TOKEN)
-        self.users = []
 
-    # Get all users and projects and return user_data and project_data
+    # 1. Get all users and projects and return user_data and project_data
     async def get_all_users_and_projects(self): 
 
         # run at program start
@@ -73,6 +72,83 @@ class NotionManager:
         project_data = await asyncio.gather(*[fetch_project_data(project) for project in all_project_metadata["results"]])
 
         return user_data, project_data
+
+    # 2. Extract child db ids from a Notion page
+    async def extract_child_db_ids(self, data):
+
+        # get db ids from parent page content
+        # run at program start
+        # print("Extracting Child Databases...")
+        for entry in data:
+            notion_content = entry["notion_content"]
+            for block in notion_content:
+                if block["type"] == "child_database":
+                    db_name = NotionManager.get_db_name(block["child_database"]["title"])
+                    entry[db_name] = block["id"]
+
+        return data
+
+    # 3. Fetch all schedule data collected in user_data and project_data
+    async def get_all_schedules_from_parent(self, user_data, project_data):
+
+        schedule_data = []
+        
+        #! Current Version: Only Backup Project Schedule on Start
+        """
+        print("Fetching Schedules From All Users' Homepages...")
+        async def fetch_schedule(user, schedule_data):
+            # Fetch schedule data for a single user
+            if "schedule" not in user:
+                print(f"No Schedule DB Exist in User: {user['notion_id']}")
+                return  #! Skip users without schedules
+            
+            schedule_id = user["schedule"]
+            schedules = (await self.notion.databases.query(database_id=schedule_id))["results"]
+            
+            schedule_data.extend(await asyncio.gather(*[
+                fetch_schedule_details(schedule, user['notion_id']) for schedule in schedules
+            ]))
+
+        async def fetch_schedule_details(schedule, r_parent_db):
+            # Fetch schedule details for each schedule item.
+            return {
+                "notion_id": schedule["id"],
+                "notion_properties": schedule["properties"],
+                "notion_content": (await self.notion.blocks.children.list(schedule["id"]))["results"],
+                "r_parent_db": r_parent_db
+            }
+
+        # Run all schedule fetches in parallel
+        await asyncio.gather(*[fetch_schedule(user, schedule_data) for user in user_data])
+        """
+        
+        print("Fetching Schedules From All Projects' Homepages...")
+        async def fetch_schedule(project, schedule_data):
+            """Fetch schedule data for a single project."""
+            if "schedule" not in project:
+                print(f"No Schedule DB Exist in User: {project['notion_id']}")
+                return  #! Skip projects without schedules
+            
+            schedule_id = project["schedule"]
+            schedules = (await self.notion.databases.query(database_id=schedule_id))["results"]
+            
+            schedule_data.extend(await asyncio.gather(*[
+                fetch_schedule_details(schedule, project['notion_id']) for schedule in schedules
+            ]))
+
+        async def fetch_schedule_details(schedule, r_parent_db):
+            # Fetch schedule details for each schedule item.
+            return {
+                "notion_id": schedule["id"],
+                "notion_properties": schedule["properties"],
+                "notion_content": (await self.notion.blocks.children.list(schedule["id"]))["results"],
+                "r_parent_db": r_parent_db
+            }
+
+        # Run all schedule fetches in parallel
+        await asyncio.gather(*[fetch_schedule(project, schedule_data) for project in project_data])
+
+        return schedule_data
 
     # Fetch a single user's data from Notion by Notion ID.  
     async def get_user_by_notion_id(self, notion_id):
@@ -138,27 +214,6 @@ class NotionManager:
 
         return project_data
     
-    async def extract_all_calendars(self, user_data, project_data):
-
-        # get calendar db id from user and project page content
-        # run at program start
-
-        for user in user_data:
-            notion_content = user["notion_content"]
-            for block in notion_content:
-                if block["type"] == "child_database":
-                    db_name = NotionManager.get_db_name(block["child_database"]["title"])
-                    user[db_name] = block["id"]
-        
-        for project in project_data:
-            notion_content = project["notion_content"]
-            for block in notion_content:
-                if block["type"] == "child_database":
-                    db_name = NotionManager.get_db_name(block["child_database"]["title"])
-                    project[db_name] = block["id"]
-
-        return user_data, project_data
-
     def get_last_updated_time(self):
         pass
 
@@ -182,6 +237,9 @@ class NotionManager:
         map = {
             "課表": "class_schedule",
             "行事曆": "schedule",
+            "待辦事項": "schedule",
+            "代辦事項": "schedule",
+            "任務資料庫": "schedule",
             "專案": "projects",
         }
         for title in map:
@@ -195,7 +253,9 @@ if __name__ == "__main__":
     notion_manager = NotionManager()
     async def test_run():
         user_data, project_data = await notion_manager.get_all_users_and_projects()
-        user_data, project_data = await notion_manager.extract_all_calendars(user_data, project_data)
-        # NotionManager.output_to_json({"user_data": user_data, "project_data": project_data}, "data_sample/sample_notion_manager_output.json")
+        user_data = await notion_manager.extract_child_db_ids(user_data)
+        project_data = await notion_manager.extract_child_db_ids(project_data)
+        user_data, project_data = await notion_manager.get_all_schedules_from_parent(user_data, project_data)
+        NotionManager.output_to_json({"user_data": user_data, "project_data": project_data}, "data_sample/sample_notion_manager_output.json")
 
     asyncio.run(test_run())
