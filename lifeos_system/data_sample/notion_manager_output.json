@@ -1,6 +1,897 @@
 {
     "user_data": [
         {
+            "notion_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983",
+            "last_edited_time": 1741645500,
+            "notion_properties": {
+                "Email": {
+                    "id": "%40Y%3Aj",
+                    "type": "email",
+                    "email": null
+                },
+                "執行狀態": {
+                    "id": "Dr%3Cc",
+                    "type": "status",
+                    "status": {
+                        "id": "91546548-69ad-426f-af4b-dfed117dba9c",
+                        "name": "無",
+                        "color": "default"
+                    }
+                },
+                "新增專案請求": {
+                    "id": "FI%60k",
+                    "type": "status",
+                    "status": {
+                        "id": "9d908115-a31b-46e4-b287-92596bbd9886",
+                        "name": "請求中",
+                        "color": "blue"
+                    }
+                },
+                "上次執行功能": {
+                    "id": "NJpT",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
+                "系統訊息": {
+                    "id": "Yw%3B%5C",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
+                "系統連線狀態": {
+                    "id": "e%3AzE",
+                    "type": "status",
+                    "status": {
+                        "id": "e30dcb4d-7db6-47de-a0e1-b8c3e34ce3a8",
+                        "name": "無",
+                        "color": "default"
+                    }
+                },
+                "上次執行時間": {
+                    "id": "mFdJ",
+                    "type": "date",
+                    "date": null
+                },
+                "姓名": {
+                    "id": "s%7Dg%7C",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
+                "個人首頁標題": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "[Python Test] 我的首頁",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "[Python Test] 我的首頁",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "notion_content": [
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-8158-99b1-ee9e9089e2f6",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:25:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": true,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "callout",
+                    "callout": {
+                        "rich_text": [],
+                        "icon": {
+                            "type": "file",
+                            "file": {
+                                "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/b8f68939-16a2-45a1-b70a-a0cd0a75f670/9a65c1a4-18e0-4062-a98a-466b8d1db5da/logo.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4663ZOJIKTR%2F20250311%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250311T064551Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEFcaCXVzLXdlc3QtMiJHMEUCIHMM0lUbNsRe6zFhZywfD6uANN4lgcJd0jsuc4SOteABAiEAhmIQxJUE%2BNHEqkq0OMuFyoGd5PH3o0lP5nHTwcxzdeMqiAQIoP%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDLw33fWPGMvHhJ7n1SrcA5NNkbhLnGN%2Bbnq4rRp6XpdEF%2FwPXlXbj%2BmgH2W8oGX37FIqwNSpF2bBXnopyt13OXsicZ56egMfLM6oqkdYC5rKUGwYw4IGJacjhiYJS1VchDctEUpMHaTaVkmbDypWuz3bzTPU3H6WpqPIt3msbIuL0lk8nVwRVkqF4UNJrEQ0xLOzUdn16oWT1jyRfEbU79IcaBidMMOeHSpM%2FZK9QC0huLMqvRQt8i5SP2WJ5JZXnrFofTxRRly3sOwC7J7Cj0%2Fm5ziJTMyy6F3qcI7n1aJZUh9LJakc0J3o3VdKpjwKNSKlFc4ZifZRkrrmn9fcLYUemgq%2BYkF2CdsHGyI4I8cmrjt7hvo8%2FvpkuC1GoNhZqdjmDJx72Glafj6hOvEwLCLhASl7rn87xyUqqJUppJXOrInGXHA0d4wY6UGFBs9o%2BTpN124wgmLi8doMKr6KLazkjxZBgYUjurzJq7zLV2bZzcD58v8blWXm4DP%2BO2xkp06NB%2B%2FFmMCSX%2BtwgrguMQR49VOB3ZAcovzU2n4gHC%2FSyYL2vRF8JwQ0mDLotG8VQWz3s%2BQcd9xo1THvGJOJxoR8dHjcVnROJK7JzviywJhC3ayFp40OfF4o%2BJRs4HgxBgDVAkdGlCnWuttqMJiwv74GOqUBEE4QaE1%2B2JWpxxevt86E9MxhIpYob%2Fsdgp%2BEJG36pOljIKj1P2%2FJSxvehIKiwLhPayKhBg4QOtFaGS9O7lljChEFXZXZmXDJuJVq7kpkZrJvb8cx2MkcKnEwRzVodcoxhSzeQr1HEuR7VTSUDOKboLliJJup7l632M5CFBgFgrpq1irwPg887SKMBxAQee8hD%2FfFVyApDVhxrB4%2B%2Fg%2B7r1V2XDLD&X-Amz-Signature=6c5c30f65f80e2d283caf8879e99403f03a37540bef24a17e96b27609eccba15&X-Amz-SignedHeaders=host&x-id=GetObject",
+                                "expiry_time": "2025-03-11T07:45:51.266Z"
+                            }
+                        },
+                        "color": "gray_background"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-813f-b324-cd36c8c644d4",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:25:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "paragraph",
+                    "paragraph": {
+                        "rich_text": [],
+                        "color": "default"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-81c3-8e61-fc5e852d462b",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:25:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "callout",
+                    "callout": {
+                        "rich_text": [
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": "我的捷徑 |  ",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "我的捷徑 |  ",
+                                "href": null
+                            },
+                            {
+                                "type": "mention",
+                                "mention": {
+                                    "type": "database",
+                                    "database": {
+                                        "id": "1b3d801c-39b0-811c-9833-cadbb1001988"
+                                    }
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "待辦事項",
+                                "href": "https://www.notion.so/1b3d801c39b0811c9833cadbb1001988"
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": " ",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": " ",
+                                "href": null
+                            },
+                            {
+                                "type": "mention",
+                                "mention": {
+                                    "type": "database",
+                                    "database": {
+                                        "id": "1b3d801c-39b0-819d-9a17-f943e6ca7ad1"
+                                    }
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "行事曆",
+                                "href": "https://www.notion.so/1b3d801c39b0819d9a17f943e6ca7ad1"
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": " ",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": " ",
+                                "href": null
+                            }
+                        ],
+                        "icon": {
+                            "type": "emoji",
+                            "emoji": "📌"
+                        },
+                        "color": "gray_background"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-818b-9187-dd3db9c1fd64",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:25:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "我的專案"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-817e-97e4-e0d9a9227cb2",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:25:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "113-2 課表"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-811c-9833-cadbb1001988",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:35:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "行事曆"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-819d-9a17-f943e6ca7ad1",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:25:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "行事曆"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b3d801c-39b0-81fa-84c4-f1d6b565a3af",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b3d801c-39b0-80c6-be42-d3b4b25e2983"
+                    },
+                    "created_time": "2025-03-11T06:25:00.000Z",
+                    "last_edited_time": "2025-03-11T06:25:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "1add872b-594c-8188-bb9b-0002504092a3"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "paragraph",
+                    "paragraph": {
+                        "rich_text": [],
+                        "color": "default"
+                    }
+                }
+            ],
+            "projects": "1b3d801c-39b0-818b-9187-dd3db9c1fd64",
+            "class_schedule": "1b3d801c-39b0-817e-97e4-e0d9a9227cb2",
+            "schedule": "1b3d801c-39b0-819d-9a17-f943e6ca7ad1"
+        },
+        {
+            "notion_id": "1b2d801c-39b0-8052-b809-fb9a31779497",
+            "last_edited_time": 1741570080,
+            "notion_properties": {
+                "Email": {
+                    "id": "%40Y%3Aj",
+                    "type": "email",
+                    "email": null
+                },
+                "執行狀態": {
+                    "id": "Dr%3Cc",
+                    "type": "status",
+                    "status": {
+                        "id": "91546548-69ad-426f-af4b-dfed117dba9c",
+                        "name": "無",
+                        "color": "default"
+                    }
+                },
+                "新增專案請求": {
+                    "id": "FI%60k",
+                    "type": "status",
+                    "status": {
+                        "id": "9d908115-a31b-46e4-b287-92596bbd9886",
+                        "name": "請求中",
+                        "color": "blue"
+                    }
+                },
+                "上次執行功能": {
+                    "id": "NJpT",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
+                "系統訊息": {
+                    "id": "Yw%3B%5C",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
+                "系統連線狀態": {
+                    "id": "e%3AzE",
+                    "type": "status",
+                    "status": {
+                        "id": "e30dcb4d-7db6-47de-a0e1-b8c3e34ce3a8",
+                        "name": "無",
+                        "color": "default"
+                    }
+                },
+                "上次執行時間": {
+                    "id": "mFdJ",
+                    "type": "date",
+                    "date": {
+                        "start": "2025-03-10",
+                        "end": null,
+                        "time_zone": null
+                    }
+                },
+                "姓名": {
+                    "id": "s%7Dg%7C",
+                    "type": "rich_text",
+                    "rich_text": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "蠟筆小傑",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "蠟筆小傑",
+                            "href": null
+                        }
+                    ]
+                },
+                "個人首頁標題": {
+                    "id": "title",
+                    "type": "title",
+                    "title": [
+                        {
+                            "type": "text",
+                            "text": {
+                                "content": "蠟筆小傑",
+                                "link": null
+                            },
+                            "annotations": {
+                                "bold": false,
+                                "italic": false,
+                                "strikethrough": false,
+                                "underline": false,
+                                "code": false,
+                                "color": "default"
+                            },
+                            "plain_text": "蠟筆小傑",
+                            "href": null
+                        }
+                    ]
+                }
+            },
+            "notion_content": [
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-8142-93c1-d542c709d725",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "bookmark",
+                    "bookmark": {
+                        "caption": [],
+                        "url": "https://pinecraft-notion.com"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-8149-b1c0-f8824d519bf6",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "callout",
+                    "callout": {
+                        "rich_text": [
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": "我的捷徑 |  ",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "我的捷徑 |  ",
+                                "href": null
+                            },
+                            {
+                                "type": "mention",
+                                "mention": {
+                                    "type": "database",
+                                    "database": {
+                                        "id": "1b2d801c-39b0-810e-b0cc-c2cb9a8bee06"
+                                    }
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "待辦事項",
+                                "href": "https://www.notion.so/1b2d801c39b0810eb0ccc2cb9a8bee06"
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": " ",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": " ",
+                                "href": null
+                            },
+                            {
+                                "type": "mention",
+                                "mention": {
+                                    "type": "database",
+                                    "database": {
+                                        "id": "1b2d801c-39b0-81f5-b22e-cd31a2a42425"
+                                    }
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "行事曆",
+                                "href": "https://www.notion.so/1b2d801c39b081f5b22ecd31a2a42425"
+                            },
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": " ",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": " ",
+                                "href": null
+                            }
+                        ],
+                        "icon": {
+                            "type": "emoji",
+                            "emoji": "📌"
+                        },
+                        "color": "gray_background"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-8108-9df5-f1fa1e3acccc",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": true,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "callout",
+                    "callout": {
+                        "rich_text": [
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": "功能區",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "功能區",
+                                "href": null
+                            }
+                        ],
+                        "icon": {
+                            "type": "external",
+                            "external": {
+                                "url": "https://www.notion.so/icons/server_yellow.svg"
+                            }
+                        },
+                        "color": "gray_background"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-8190-b75d-eead4ce9c208",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "我的專案"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-816c-9235-e23620951805",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "paragraph",
+                    "paragraph": {
+                        "rich_text": [],
+                        "color": "default"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-815e-a5b5-c3b0649ae109",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "113-2 課表"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-81bb-a76b-d2fd1f2275f7",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "paragraph",
+                    "paragraph": {
+                        "rich_text": [
+                            {
+                                "type": "text",
+                                "text": {
+                                    "content": "我的資料庫",
+                                    "link": null
+                                },
+                                "annotations": {
+                                    "bold": true,
+                                    "italic": false,
+                                    "strikethrough": false,
+                                    "underline": false,
+                                    "code": false,
+                                    "color": "default"
+                                },
+                                "plain_text": "我的資料庫",
+                                "href": null
+                            }
+                        ],
+                        "color": "gray_background"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-810e-b0cc-c2cb9a8bee06",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "行事曆"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-81f5-b22e-cd31a2a42425",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "child_database",
+                    "child_database": {
+                        "title": "行事曆"
+                    }
+                },
+                {
+                    "object": "block",
+                    "id": "1b2d801c-39b0-814b-a6f7-e509e45f5615",
+                    "parent": {
+                        "type": "page_id",
+                        "page_id": "1b2d801c-39b0-8052-b809-fb9a31779497"
+                    },
+                    "created_time": "2025-03-10T09:04:00.000Z",
+                    "last_edited_time": "2025-03-10T09:04:00.000Z",
+                    "created_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "last_edited_by": {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe"
+                    },
+                    "has_children": false,
+                    "archived": false,
+                    "in_trash": false,
+                    "type": "paragraph",
+                    "paragraph": {
+                        "rich_text": [],
+                        "color": "default"
+                    }
+                }
+            ],
+            "projects": "1b2d801c-39b0-8190-b75d-eead4ce9c208",
+            "class_schedule": "1b2d801c-39b0-815e-a5b5-c3b0649ae109",
+            "schedule": "1b2d801c-39b0-81f5-b22e-cd31a2a42425"
+        },
+        {
             "notion_id": "1b2d801c-39b0-8006-8070-f167a4de849b",
             "last_edited_time": 1741546620,
             "notion_properties": {
@@ -27,7 +918,7 @@
                         "color": "default"
                     }
                 },
-                "上次執行的功能": {
+                "上次執行功能": {
                     "id": "NJpT",
                     "type": "rich_text",
                     "rich_text": []
@@ -181,7 +1072,7 @@
                                     "code": false,
                                     "color": "default"
                                 },
-                                "plain_text": "代辦事項",
+                                "plain_text": "待辦事項",
                                 "href": "https://www.notion.so/1b2d801c39b08102966ed79382897b9e"
                             },
                             {
@@ -423,7 +1314,7 @@
                         "page_id": "1b2d801c-39b0-8006-8070-f167a4de849b"
                     },
                     "created_time": "2025-03-10T02:33:00.000Z",
-                    "last_edited_time": "2025-03-10T02:33:00.000Z",
+                    "last_edited_time": "2025-03-10T06:16:00.000Z",
                     "created_by": {
                         "object": "user",
                         "id": "f1e3c238-e466-4650-8f87-503865417abe"
@@ -492,24 +1383,9 @@
                     }
                 }
             ],
-            "child_databases": [
-                {
-                    "title": "我的專案",
-                    "id": "1b2d801c-39b0-813d-89dc-cec6d503ddf3"
-                },
-                {
-                    "title": "113-2 課表",
-                    "id": "1b2d801c-39b0-810a-901f-d519b6e10b4a"
-                },
-                {
-                    "title": "行事曆",
-                    "id": "1b2d801c-39b0-8102-966e-d79382897b9e"
-                },
-                {
-                    "title": "行事曆",
-                    "id": "1b2d801c-39b0-8138-9814-d5af11cc866f"
-                }
-            ]
+            "projects": "1b2d801c-39b0-813d-89dc-cec6d503ddf3",
+            "class_schedule": "1b2d801c-39b0-810a-901f-d519b6e10b4a",
+            "schedule": "1b2d801c-39b0-8138-9814-d5af11cc866f"
         },
         {
             "notion_id": "1b1d801c-39b0-8032-96a2-c541745910cc",
@@ -538,7 +1414,7 @@
                         "color": "blue"
                     }
                 },
-                "上次執行的功能": {
+                "上次執行功能": {
                     "id": "NJpT",
                     "type": "rich_text",
                     "rich_text": []
@@ -693,12 +1569,7 @@
                     }
                 }
             ],
-            "child_databases": [
-                {
-                    "title": "113-2 課表",
-                    "id": "b03ccfdc-62a2-4c1d-9785-2aadafc82b14"
-                }
-            ]
+            "class_schedule": "b03ccfdc-62a2-4c1d-9785-2aadafc82b14"
         },
         {
             "notion_id": "1b1d801c-39b0-804e-abbf-cfbf72ed4a81",
@@ -727,7 +1598,7 @@
                         "color": "blue"
                     }
                 },
-                "上次執行的功能": {
+                "上次執行功能": {
                     "id": "NJpT",
                     "type": "rich_text",
                     "rich_text": []
@@ -789,12 +1660,7 @@
                     }
                 }
             ],
-            "child_databases": [
-                {
-                    "title": "113-2 課表",
-                    "id": "f7b7b453-10e9-4c54-955c-44736d5c6124"
-                }
-            ]
+            "class_schedule": "f7b7b453-10e9-4c54-955c-44736d5c6124"
         },
         {
             "notion_id": "1b1d801c-39b0-80f0-8cc6-cd31f16d0cb9",
@@ -823,7 +1689,7 @@
                         "color": "blue"
                     }
                 },
-                "上次執行的功能": {
+                "上次執行功能": {
                     "id": "NJpT",
                     "type": "rich_text",
                     "rich_text": [
@@ -1205,8 +2071,7 @@
                         "color": "default"
                     }
                 }
-            ],
-            "child_databases": []
+            ]
         }
     ],
     "project_data": [
@@ -1230,10 +2095,20 @@
                         }
                     ]
                 },
+                "系統訊息": {
+                    "id": "KZca",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
                 "時間": {
                     "id": "Ls~v",
                     "type": "date",
                     "date": null
+                },
+                "上次執行功能": {
+                    "id": "Q%3Dwc",
+                    "type": "rich_text",
+                    "rich_text": []
                 },
                 "派發任務更新": {
                     "id": "RX%5DO",
@@ -1266,14 +2141,37 @@
                         "color": "default"
                     }
                 },
-                "狀態": {
+                "系統連線狀態": {
+                    "id": "ftYO",
+                    "type": "status",
+                    "status": {
+                        "id": "7c24c7af-b334-4d9c-b6f0-882f1ea6221f",
+                        "name": "無",
+                        "color": "default"
+                    }
+                },
+                "專案狀態": {
                     "id": "hf_%3E",
                     "type": "status",
                     "status": {
                         "id": "e83d19c9-e66f-4cf5-a918-acb50ace8381",
-                        "name": "Not started",
+                        "name": "未開始",
                         "color": "default"
                     }
+                },
+                "執行狀態": {
+                    "id": "vWjZ",
+                    "type": "status",
+                    "status": {
+                        "id": "c7ba4c85-0bc3-42fe-95b0-8e89b64b0abc",
+                        "name": "無",
+                        "color": "default"
+                    }
+                },
+                "上次執行功能時間": {
+                    "id": "wT%3BI",
+                    "type": "date",
+                    "date": null
                 },
                 "甘特圖演算法": {
                     "id": "zgQE",
@@ -1284,7 +2182,7 @@
                         "color": "default"
                     }
                 },
-                "Name": {
+                "專案名稱": {
                     "id": "title",
                     "type": "title",
                     "title": [
@@ -1579,26 +2477,31 @@
                     }
                 }
             ],
-            "child_databases": [
-                {
-                    "title": "任務資料庫",
-                    "id": "1b2d801c-39b0-819c-805e-ff11b7b1cdad"
-                }
-            ]
+            "unknown": "1b2d801c-39b0-819c-805e-ff11b7b1cdad"
         },
         {
             "notion_id": "1b1d801c-39b0-806e-af49-c975b29152f2",
-            "last_edited_time": 1741492320,
+            "last_edited_time": 1741596000,
             "notion_properties": {
                 "負責人": {
                     "id": "%3Clmu",
                     "type": "people",
                     "people": []
                 },
+                "系統訊息": {
+                    "id": "KZca",
+                    "type": "rich_text",
+                    "rich_text": []
+                },
                 "時間": {
                     "id": "Ls~v",
                     "type": "date",
                     "date": null
+                },
+                "上次執行功能": {
+                    "id": "Q%3Dwc",
+                    "type": "rich_text",
+                    "rich_text": []
                 },
                 "派發任務更新": {
                     "id": "RX%5DO",
@@ -1631,14 +2534,37 @@
                         "color": "default"
                     }
                 },
-                "狀態": {
+                "系統連線狀態": {
+                    "id": "ftYO",
+                    "type": "status",
+                    "status": {
+                        "id": "cGh>",
+                        "name": "連線成功",
+                        "color": "green"
+                    }
+                },
+                "專案狀態": {
                     "id": "hf_%3E",
                     "type": "status",
                     "status": {
                         "id": "e83d19c9-e66f-4cf5-a918-acb50ace8381",
-                        "name": "Not started",
+                        "name": "未開始",
                         "color": "default"
                     }
+                },
+                "執行狀態": {
+                    "id": "vWjZ",
+                    "type": "status",
+                    "status": {
+                        "id": "647b657d-5e09-439c-9bd6-61350f22d5a4",
+                        "name": "執行中",
+                        "color": "blue"
+                    }
+                },
+                "上次執行功能時間": {
+                    "id": "wT%3BI",
+                    "type": "date",
+                    "date": null
                 },
                 "甘特圖演算法": {
                     "id": "zgQE",
@@ -1649,7 +2575,7 @@
                         "color": "default"
                     }
                 },
-                "Name": {
+                "專案名稱": {
                     "id": "title",
                     "type": "title",
                     "title": [
@@ -1673,8 +2599,7 @@
                     ]
                 }
             },
-            "notion_content": [],
-            "child_databases": []
+            "notion_content": []
         }
     ]
 }

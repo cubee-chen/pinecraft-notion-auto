@@ -145,26 +145,19 @@ class NotionManager:
 
         for user in user_data:
             notion_content = user["notion_content"]
-            user["child_databases"] = []
             for block in notion_content:
                 if block["type"] == "child_database":
-                    user["child_databases"].append({
-                        "title": block["child_database"]["title"],
-                        "id": block["id"]
-                    })
+                    db_name = NotionManager.get_db_name(block["child_database"]["title"])
+                    user[db_name] = block["id"]
         
         for project in project_data:
             notion_content = project["notion_content"]
-            project["child_databases"] = []
             for block in notion_content:
                 if block["type"] == "child_database":
-                    project["child_databases"].append({
-                        "title": block["child_database"]["title"],
-                        "id": block["id"]
-                    })
+                    db_name = NotionManager.get_db_name(block["child_database"]["title"])
+                    project[db_name] = block["id"]
 
         return user_data, project_data
-
 
     def get_last_updated_time(self):
         pass
@@ -182,11 +175,27 @@ class NotionManager:
         with open(filename, "w") as file:
             file.write(json.dumps(object, ensure_ascii=False, indent=4))
 
+    # Maps database title to standardized name
+    @staticmethod
+    def get_db_name(db_title):
+        # standardized db names
+        map = {
+            "課表": "class_schedule",
+            "行事曆": "schedule",
+            "專案": "projects",
+        }
+        for title in map:
+            if title in db_title:
+                return map[title]
+        return "unknown"
+
+# ================= Test Run =================
+
 if __name__ == "__main__":
     notion_manager = NotionManager()
     async def test_run():
         user_data, project_data = await notion_manager.get_all_users_and_projects()
         user_data, project_data = await notion_manager.extract_all_calendars(user_data, project_data)
-        NotionManager.output_to_json({"user_data": user_data, "project_data": project_data}, "sample_db_storage.json")
+        # NotionManager.output_to_json({"user_data": user_data, "project_data": project_data}, "data_sample/sample_notion_manager_output.json")
 
     asyncio.run(test_run())
