@@ -7,6 +7,7 @@ from datetime import datetime
 
 from notion_client import AsyncClient
 
+from synced_document import SyncedDocumentManager
 from cache import Cache
 
 # =========== Load Environmental Variables ===========
@@ -117,11 +118,13 @@ class NotionManager:
 
         async def fetch_schedule_details(schedule, r_parent_db):
             # Fetch schedule details for each schedule item.
+            last_edited_time = NotionManager.notion_time_to_seconds(schedule["last_edited_time"])
             return {
                 "notion_id": schedule["id"],
                 "notion_properties": schedule["properties"],
                 "notion_content": (await self.notion.blocks.children.list(schedule["id"]))["results"],
-                "r_parent_db": r_parent_db
+                "r_parent_db": r_parent_db,
+                "last_edited_time": last_edited_time
             }
 
         # Run all schedule fetches in parallel
@@ -131,7 +134,7 @@ class NotionManager:
 
     # 4. Delete all schedule data collected in user_data that corresponds to one in project_data
     #    and insert new schedule data by cloing these in project data
-    async def renew_all_schedules_in_user(self, user_data, schedule_data, cache: Cache):
+    async def renew_all_schedules_in_user(self, user_data, schedule_data, cache: Cache, synced_document_manager: SyncedDocumentManager):
         
         # Delete
         print("Deleting all Outdated Schedules...")
@@ -149,6 +152,7 @@ class NotionManager:
         await asyncio.gather(*(process_user(user) for user in user_data))
         
         # Insert
+        print("Inserting New Schedules to User Notion...")
         for schedule in schedule_data:
             people = schedule["notion_properties"]["負責人"]["people"]
             for user in people:
@@ -164,7 +168,20 @@ class NotionManager:
                     #! Handle cache not yet saved notion_id -> schedule_id mapping
                     # brute search?
                     continue
-                await self.create_user_schedule(user_schedule_id, schedule)
+                new_schedule_id = await self.create_user_schedule(user_schedule_id, schedule)
+
+                # Add link to synced document
+                synced_document_manager.create_document_link(schedule["notion_id"], new_schedule_id)
+        
+        # Insert schedule to DB
+        print("Inserting All Schedules to the Database...")
+        for schedule in schedule_data:
+            if synced_document_manager.schedule_notion_id_is_synced(schedule["notion_id"]):
+                # Add virtual link with physical element for the project's schedule
+                synced_document_manager.create_document_link(schedule["notion_id"], schedule["notion_id"])
+                # Save the physical page to the database
+                await synced_document_manager.save_version_by_notion_id(schedule["notion_id"], schedule, schedule["last_edited_time"])
+        
         return True
     
     # Fetch a single user's data from Notion by Notion ID.  
@@ -238,13 +255,12 @@ class NotionManager:
 
     # Create user schedule page
     async def create_user_schedule(self, schedule_db_id, schedule):
-        #! Schema Validation
         mapped_properties = NotionManager.convert_project_schedule_to_user_schedule(schedule["r_parent_db"], schedule["notion_properties"])
         new_page = await self.notion.pages.create(
             parent={"database_id": schedule_db_id},
             properties=mapped_properties
         )
-        pprint(new_page)
+        return new_page["id"]
 
     def get_last_updated_time(self):
         pass
