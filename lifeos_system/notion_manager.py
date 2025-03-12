@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from pprint import pprint
 import asyncio
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 
 from notion_client import AsyncClient
 
@@ -312,7 +312,7 @@ class NotionManager:
     # Converts notion datetime to seconds since epoch
     @staticmethod
     def notion_time_to_seconds(last_edited_time):
-        return int(datetime.strptime(last_edited_time, "%Y-%m-%dT%H:%M:%S.%fZ").timestamp())
+        return int(datetime.strptime(last_edited_time, "%Y-%m-%dT%H:%M:%S.%fZ").replace(tzinfo=timezone.utc).timestamp())
     
     # Saves object to JSON
     @staticmethod

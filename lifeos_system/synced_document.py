@@ -1,5 +1,5 @@
 from pprint import pprint
-from datetime import datetime
+from datetime import datetime, timezone
 import asyncio
 
 from db_manager import DBManager
@@ -120,6 +120,7 @@ class SyncedDocument:
         self.db_manager = db_manager
         
     async def check_version(self, last_edited_time):
+        print(f"Check Version: {last_edited_time} (incoming) - {self.last_edited_time} (saved) = {last_edited_time - self.last_edited_time}")
         if last_edited_time == self.last_edited_time:
             # Notion is currently at the same version with DB
             return SyncedDocumentManager.UP_TO_DATE
@@ -142,8 +143,8 @@ class SyncedDocument:
     
     async def save_version(self, content, last_edited_time=None):
         if last_edited_time == None:
-            last_edited_time = int(datetime.now().timestamp())
+            last_edited_time = int(datetime.now(timezone.utc).timestamp() // 60 * 60)
         self.last_edited_time = last_edited_time
-        
+
         #! Save content to DB
         return await self.db_manager.update_schedule_by_notion_id(self.notion_id, content)

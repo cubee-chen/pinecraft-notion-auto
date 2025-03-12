@@ -161,7 +161,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-8174-bc2d-fee3025f4f5b",
@@ -311,7 +311,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-8122-b4d2-c10220cabea2",
@@ -461,7 +461,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-8155-8a3a-e5f64c8373af",
@@ -611,7 +611,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-8185-8d1c-dc059e74a88d",
@@ -775,7 +775,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-819f-b8c6-d3366ba26de8",
@@ -925,7 +925,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-81ac-83ba-c9f8d17fa8ea",
@@ -1086,7 +1086,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-81dc-a826-c409b8644d57",
@@ -1236,7 +1236,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-81e0-b795-def4353a44e9",
@@ -1386,7 +1386,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-8122-bfaa-fafbac7fd0c2",
@@ -1567,7 +1567,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741763520
+        "last_edited_time": 1741794660
     },
     {
         "notion_id": "1b4d801c-39b0-8138-b222-fa0c6eea7e17",
@@ -1717,7 +1717,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-81da-b457-e618580bacfb",
@@ -1867,7 +1867,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
-        "last_edited_time": 1741761120
+        "last_edited_time": 1741789920
     },
     {
         "notion_id": "1b4d801c-39b0-80e0-995c-e82a984686cb",
@@ -1968,7 +1968,11 @@
             "時間": {
                 "id": "lKGm",
                 "type": "date",
-                "date": null
+                "date": {
+                    "start": "2025-03-19",
+                    "end": null,
+                    "time_zone": null
+                }
             },
             "Parent item": {
                 "id": "lxq%3A",
@@ -1980,8 +1984,8 @@
                 "id": "m%3EyA",
                 "type": "formula",
                 "formula": {
-                    "type": "string",
-                    "string": null
+                    "type": "number",
+                    "number": 6
                 }
             },
             "Sub-item": {
@@ -2024,7 +2028,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741763520
+        "last_edited_time": 1741794660
     },
     {
         "notion_id": "1b4d801c-39b0-81d0-8b98-dbd3a822be0b",
@@ -2174,7 +2178,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-810d-b6c7-f2a560d2e6a1",
@@ -2324,7 +2328,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-8184-8916-e3a8172207db",
@@ -2474,7 +2478,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-8197-82a6-e0f6b66b1e94",
@@ -2638,7 +2642,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-81ac-868b-f60b8e414180",
@@ -2788,7 +2792,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-81bb-bcbb-eae8cd8104ad",
@@ -2938,7 +2942,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-81c2-b7b4-de4d57926f7b",
@@ -3088,7 +3092,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-81dc-895e-eafbb3d8e60d",
@@ -3249,7 +3253,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-81e3-80ed-ce36c9ee1c99",
@@ -3413,7 +3417,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-8160-9b3b-c2e996cfbb9b",
@@ -3563,7 +3567,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-8174-93c6-ce541bf3bdba",
@@ -3713,7 +3717,7 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741789980
     },
     {
         "notion_id": "1b4d801c-39b0-81c8-b803-f960ce309b7e",
@@ -3804,7 +3808,7 @@
                 "id": "lKGm",
                 "type": "date",
                 "date": {
-                    "start": "2025-03-13",
+                    "start": "2025-03-16",
                     "end": null,
                     "time_zone": null
                 }
@@ -3820,7 +3824,7 @@
                 "type": "formula",
                 "formula": {
                     "type": "number",
-                    "number": 0
+                    "number": 3
                 }
             },
             "Sub-item": {
@@ -3873,6 +3877,6 @@
         },
         "notion_content": [],
         "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
-        "last_edited_time": 1741761180
+        "last_edited_time": 1741793760
     }
 ]
