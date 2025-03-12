@@ -88,13 +88,21 @@ class DBManager:
 
     async def update_schedule_by_notion_id(self, notion_id: str, data):
         #! Fake async. Can be upgraded to "real" async
+        print("Update DB: ", notion_id, data["notion_id"])
 
         # Validate schedule data
         schedule_validated = DBManager.data_validation(data, f"schedule_{notion_id}")
-        if not schedule_validated:
+        schedule_property_validated = DBManager.schedule_property_validation(data["notion_properties"], f"property of schedule_{notion_id}")
+        
+        if not schedule_validated or not schedule_property_validated:
             #! Program wouldn't insert into DB if the data isn't validated.
             return False
-
+        
+        # Redundant Check
+        if notion_id != data["notion_id"]:
+            print("!WARNING! notion_id != data['notion_id]")
+            data["notion_id"] = notion_id
+        
         # If schedule exists, save it; if not, create a new BSON and save it (upsert=True)
         self.schedule_collection.update_one({"notion_id": notion_id}, {"$set": data}, upsert=True)
         
@@ -104,10 +112,17 @@ class DBManager:
         user = self.user_collection.find_one({"notion_id": notion_id})
         if not user:
             # No user with this ID exists
-            print("NONE")
-        else:
-            pprint(user)
-        pass
+            return None
+        return user
+    
+    async def get_schedule_by_notion_id(self, notion_id: str):
+        schedule = self.schedule_collection.find_one({"notion_id": notion_id})
+        if not schedule:
+            # No schedule with this ID exists
+            #! Error Handling
+            print(f"!ERROR! No schedule with id '{notion_id}' exist!")
+            return None
+        return schedule
 
     # ============ Utility Functions for DB ============
 
@@ -125,13 +140,45 @@ class DBManager:
         # ]
         for key in REQUIRED_KEYS:
             if key not in db_entry:
-                print(f"!ERROR! Data validation of '{data_name}' has failed.")
+                print(f"!ERROR! Data validation of '{data_name}' has failed: Missing {key}")
                 return False
         # for key in ADDITIONAL_KEYS:
         #     if key not in db_entry:
         #         print(f"!WARNING! Data '{data_name}' is missing '{key}' key.")
         return True
 
+    @staticmethod
+    def schedule_property_validation(property, data_name="[data]"):
+        # REQUIRED_KEYS = [
+        #     "負責人",
+        #     "時間",
+        #     "完成",
+        #     "前置任務",
+        #     "子任務",
+        #     "進度",
+        #     "預估所需時長(天)",
+        #     "類別",
+        #     "ID",
+        #     "任務權重",
+        #     "儲存進度",
+        #     "剩餘天數",
+        #     "父任務",
+        #     "後續任務",
+        #     "Blocked by",
+        #     "Blocking",
+        #     "Parent item",
+        #     "Sub-item"
+        # ]
+        REQUIRED_KEYS = [
+            "時間",
+            "完成",
+            "任務名稱"
+        ]
+        for key in REQUIRED_KEYS:
+            if key not in property:
+                print(f"!ERROR! Property validation of '{data_name}' has failed: Missing {key}")
+                return False
+        return True
 
 if __name__ == "__main__":
     db_manager = DBManager()

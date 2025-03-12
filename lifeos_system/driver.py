@@ -4,14 +4,83 @@ from notion_manager import NotionManager
 from synced_document import SyncedDocumentManager
 from cache import Cache
 
-FETCH_INTERVAL = 1 # seconds
+# =========== System Variables ===========
+FAST_FETCH_INTERVAL = 0.1 # seconds
+NORMAL_FETCH_INTERVAL = 10 # seconds
+SLOW_FETCH_INTERVAL = 600 # seconds
 
+# =========== Driver Class ===========
 class Driver:
     def __init__(self):
+        # Runtime Variables
+        self.fetch_interval = NORMAL_FETCH_INTERVAL
+        
+        # Manager Functions
         self.notion_manager = NotionManager()
+        #! Database can only be accessed via SyncedDocumentManager
         self.synced_document_manager = SyncedDocumentManager()
         self.cache = Cache()
-        #! Database can only be accessed via SyncedDocumentManager
+
+    async def sweep_all_schedules(self):
+        all_schedule_notion_id = self.synced_document_manager.get_all_instance_notion_id()
+        self.synced_document_manager.print()
+        async def sweep(instance_notion_id):
+            # get only properties
+            instance_schedule = await self.notion_manager.get_schedule_by_notion_id(instance_notion_id, includes_content=False)
+            last_edited_time = instance_schedule["last_edited_time"]
+
+            # version control
+            version_control = await self.synced_document_manager.check_version_by_notion_id(instance_notion_id, last_edited_time)
+            if version_control == SyncedDocumentManager.UP_TO_DATE:
+                # Great!
+                pass
+            elif version_control == SyncedDocumentManager.AHEAD:
+                # Save the current version to DB
+                full_instance_schedule = await self.notion_manager.get_schedule_by_notion_id(instance_notion_id, includes_content=True)
+                
+                #! Set notion_id to schedule_notion_id
+                full_instance_schedule["notion_id"] = self.synced_document_manager.get_schedule_notion_id(instance_notion_id)
+
+                # Check if the properties are correct
+                is_user = self.synced_document_manager.is_user(instance_notion_id)
+                if is_user == None:
+                    #! Error
+                    print("document not synced")
+                if is_user:
+                    full_instance_schedule["notion_properties"] = self.notion_manager.convert_user_schedule_to_project_schedule(instance_notion_id, full_instance_schedule["notion_properties"])
+                
+                print(f"Page {instance_notion_id} is Ahead of the Current Version. Updating DB...")
+                await self.synced_document_manager.save_version_by_notion_id(instance_notion_id, full_instance_schedule)
+            elif version_control == SyncedDocumentManager.NOT_TRACKED:
+                #! Deal with it
+                print(f"'{instance_notion_id}' NOT TRACKED IN VERSION CONTROL!")
+            elif version_control == SyncedDocumentManager.BEHIND:
+                # Fetch the latest version
+                latest_version_schedule = await self.synced_document_manager.get_latest_version_by_notion_id(instance_notion_id)
+                is_user = self.synced_document_manager.is_user(instance_notion_id)
+                if not latest_version_schedule:
+                    #! Error Handling
+                    return version_control
+                if is_user == None:
+                    #! Error
+                    print("document not synced")
+                elif is_user:
+                    print(f"User Schedule {instance_notion_id} is Behind the Current Version. Syncing...")
+                    await self.notion_manager.update_user_schedule(instance_notion_id, latest_version_schedule)
+                else:
+                    print(f"Project Schedule {instance_notion_id} is Behind the Current Version. Syncing...")
+                    await self.notion_manager.update_project_schedule(instance_notion_id, latest_version_schedule)
+                
+            return version_control
+
+        version_control_aggregation = await asyncio.gather(*(sweep(instance_notion_id) for instance_notion_id in all_schedule_notion_id))
+        
+        print("=== Version Control Check ===")
+        print(f"{version_control_aggregation.count(SyncedDocumentManager.AHEAD)} Pages Ahead")
+        print(f"{version_control_aggregation.count(SyncedDocumentManager.BEHIND)} Pages Behind")
+        print(f"{version_control_aggregation.count(SyncedDocumentManager.UP_TO_DATE)} Pages Up to Date")
+        print(f"{version_control_aggregation.count(SyncedDocumentManager.NOT_TRACKED)} Pages Not Tracked")
+        print("=============================")
 
     # Startup Function: runs when start up
     async def startup(self):
@@ -27,18 +96,27 @@ class Driver:
         NotionManager.output_to_json(schedule_data, "data_sample/schedule_data.json")
         await self.synced_document_manager.db_manager.update_all_users_and_projects(user_data, project_data, drop_content=True)
         await self.notion_manager.renew_all_schedules_in_user(user_data, schedule_data, self.cache, self.synced_document_manager)
-
+        # self.synced_document_manager.print()
         print("Startup Complete!")
     # Main Function: runs every FETCH_INTERVAL seconds
     async def driver(self):
-        print("Driver Running!")
+        
+        # TODO: (Advanced) Pull from Admin DB and dynamically control the fetch interval
+
+        # Keep up sync
+        print("---")
+        await self.sweep_all_schedules()
+        # print("Driver Running!")
 
     # Async Entry FUnction
     async def main(self):
         await self.startup()
+        print("Driver Running!")
+        print("")
+        # self.synced_document_manager.print()
         while True:
             await self.driver()
-            await asyncio.sleep(FETCH_INTERVAL)
+            await asyncio.sleep(self.fetch_interval)
 
     # Entry Function
     def run(self):

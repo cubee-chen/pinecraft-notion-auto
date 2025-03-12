@@ -1,533 +1,6 @@
 [
     {
-        "notion_id": "1b3d801c-39b0-80b0-a538-e0bbd7c1b6ba",
-        "notion_properties": {
-            "Blocking": {
-                "id": "%3D%40GX",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "儲存進度": {
-                "id": "%3FrK%3D",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "父任務": {
-                "id": "Avdr",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "Blocked by": {
-                "id": "AxqQ",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "後續任務": {
-                "id": "F%7Dd%3D",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "說明": {
-                "id": "HDzi",
-                "type": "rich_text",
-                "rich_text": []
-            },
-            "預估所需時長(天)": {
-                "id": "QW%5B%3F",
-                "type": "number",
-                "number": null
-            },
-            "ID": {
-                "id": "Qr%5Bo",
-                "type": "number",
-                "number": null
-            },
-            "類別": {
-                "id": "U%3Cj%40",
-                "type": "select",
-                "select": null
-            },
-            "任務權重": {
-                "id": "Yw%60v",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "子任務": {
-                "id": "dIL%3C",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "負責人": {
-                "id": "hzKN",
-                "type": "people",
-                "people": [
-                    {
-                        "object": "user",
-                        "id": "f1e3c238-e466-4650-8f87-503865417abe",
-                        "name": "Yang Yang",
-                        "avatar_url": "https://lh3.googleusercontent.com/a/AATXAJxIYWt6wn-hx_F4kARAN_zSpsdggi-guJBYknXI=s100",
-                        "type": "person",
-                        "person": {
-                            "email": "b10901023yang@gmail.com"
-                        }
-                    }
-                ]
-            },
-            "完成": {
-                "id": "i%7CQz",
-                "type": "checkbox",
-                "checkbox": false
-            },
-            "前置任務": {
-                "id": "ji%7BM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "時間": {
-                "id": "lKGm",
-                "type": "date",
-                "date": {
-                    "start": "2025-03-11",
-                    "end": null,
-                    "time_zone": null
-                }
-            },
-            "Parent item": {
-                "id": "lxq%3A",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "剩餘天數": {
-                "id": "m%3EyA",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": -1
-                }
-            },
-            "Sub-item": {
-                "id": "s%7DDM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "進度": {
-                "id": "vCYk",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "名稱": {
-                "id": "title",
-                "type": "title",
-                "title": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": "HIHI",
-                            "link": null
-                        },
-                        "annotations": {
-                            "bold": false,
-                            "italic": false,
-                            "strikethrough": false,
-                            "underline": false,
-                            "code": false,
-                            "color": "default"
-                        },
-                        "plain_text": "HIHI",
-                        "href": null
-                    }
-                ]
-            }
-        },
-        "notion_content": [],
-        "r_parent_db": "1b2d801c-39b0-801e-b22b-ce9b3376b3cc",
-        "last_edited_time": 1741679220
-    },
-    {
-        "notion_id": "1b2d801c-39b0-8181-9a00-fa88ceb21596",
-        "notion_properties": {
-            "Blocking": {
-                "id": "%3D%40GX",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "儲存進度": {
-                "id": "%3FrK%3D",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "父任務": {
-                "id": "Avdr",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "Blocked by": {
-                "id": "AxqQ",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "後續任務": {
-                "id": "F%7Dd%3D",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "說明": {
-                "id": "HDzi",
-                "type": "rich_text",
-                "rich_text": []
-            },
-            "預估所需時長(天)": {
-                "id": "QW%5B%3F",
-                "type": "number",
-                "number": null
-            },
-            "ID": {
-                "id": "Qr%5Bo",
-                "type": "number",
-                "number": null
-            },
-            "類別": {
-                "id": "U%3Cj%40",
-                "type": "select",
-                "select": null
-            },
-            "任務權重": {
-                "id": "Yw%60v",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "子任務": {
-                "id": "dIL%3C",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "負責人": {
-                "id": "hzKN",
-                "type": "people",
-                "people": [
-                    {
-                        "object": "user",
-                        "id": "8c29074c-fa58-407a-8f83-0ee1265b6861",
-                        "name": "Po-Chun Wu",
-                        "avatar_url": "https://s3-us-west-2.amazonaws.com/public.notion-static.com/d00c7a94-1227-44a4-9538-8643015d3dae/lake_dusk.jpg",
-                        "type": "person",
-                        "person": {
-                            "email": "pcwu2022@gmail.com"
-                        }
-                    },
-                    {
-                        "object": "user",
-                        "id": "f1e3c238-e466-4650-8f87-503865417abe",
-                        "name": "Yang Yang",
-                        "avatar_url": "https://lh3.googleusercontent.com/a/AATXAJxIYWt6wn-hx_F4kARAN_zSpsdggi-guJBYknXI=s100",
-                        "type": "person",
-                        "person": {
-                            "email": "b10901023yang@gmail.com"
-                        }
-                    }
-                ]
-            },
-            "完成": {
-                "id": "i%7CQz",
-                "type": "checkbox",
-                "checkbox": false
-            },
-            "前置任務": {
-                "id": "ji%7BM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "時間": {
-                "id": "lKGm",
-                "type": "date",
-                "date": {
-                    "start": "2025-03-30",
-                    "end": null,
-                    "time_zone": null
-                }
-            },
-            "Parent item": {
-                "id": "lxq%3A",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "剩餘天數": {
-                "id": "m%3EyA",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 17
-                }
-            },
-            "Sub-item": {
-                "id": "s%7DDM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "進度": {
-                "id": "vCYk",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "名稱": {
-                "id": "title",
-                "type": "title",
-                "title": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": "Hello Good Morning",
-                            "link": null
-                        },
-                        "annotations": {
-                            "bold": false,
-                            "italic": false,
-                            "strikethrough": false,
-                            "underline": false,
-                            "code": false,
-                            "color": "default"
-                        },
-                        "plain_text": "Hello Good Morning",
-                        "href": null
-                    }
-                ]
-            }
-        },
-        "notion_content": [
-            {
-                "object": "block",
-                "id": "1b4d801c-39b0-807d-860d-ebe96fab25bd",
-                "parent": {
-                    "type": "page_id",
-                    "page_id": "1b2d801c-39b0-8181-9a00-fa88ceb21596"
-                },
-                "created_time": "2025-03-12T08:31:00.000Z",
-                "last_edited_time": "2025-03-12T08:31:00.000Z",
-                "created_by": {
-                    "object": "user",
-                    "id": "1add872b-594c-8188-bb9b-0002504092a3"
-                },
-                "last_edited_by": {
-                    "object": "user",
-                    "id": "1add872b-594c-8188-bb9b-0002504092a3"
-                },
-                "has_children": false,
-                "archived": false,
-                "in_trash": false,
-                "type": "paragraph",
-                "paragraph": {
-                    "rich_text": [
-                        {
-                            "type": "text",
-                            "text": {
-                                "content": "Yeah Hey!",
-                                "link": null
-                            },
-                            "annotations": {
-                                "bold": false,
-                                "italic": false,
-                                "strikethrough": false,
-                                "underline": false,
-                                "code": false,
-                                "color": "default"
-                            },
-                            "plain_text": "Yeah Hey!",
-                            "href": null
-                        }
-                    ],
-                    "color": "default"
-                }
-            }
-        ],
-        "r_parent_db": "1b2d801c-39b0-801e-b22b-ce9b3376b3cc",
-        "last_edited_time": 1741739460
-    },
-    {
-        "notion_id": "1b3d801c-39b0-8171-803f-f7dcc5194d49",
-        "notion_properties": {
-            "Blocking": {
-                "id": "%3D%40GX",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "儲存進度": {
-                "id": "%3FrK%3D",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "父任務": {
-                "id": "Avdr",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "Blocked by": {
-                "id": "AxqQ",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "後續任務": {
-                "id": "F%7Dd%3D",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "說明": {
-                "id": "HDzi",
-                "type": "rich_text",
-                "rich_text": []
-            },
-            "預估所需時長(天)": {
-                "id": "QW%5B%3F",
-                "type": "number",
-                "number": null
-            },
-            "ID": {
-                "id": "Qr%5Bo",
-                "type": "number",
-                "number": null
-            },
-            "類別": {
-                "id": "U%3Cj%40",
-                "type": "select",
-                "select": null
-            },
-            "任務權重": {
-                "id": "Yw%60v",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "子任務": {
-                "id": "dIL%3C",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "負責人": {
-                "id": "hzKN",
-                "type": "people",
-                "people": []
-            },
-            "完成": {
-                "id": "i%7CQz",
-                "type": "checkbox",
-                "checkbox": false
-            },
-            "前置任務": {
-                "id": "ji%7BM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "時間": {
-                "id": "lKGm",
-                "type": "date",
-                "date": null
-            },
-            "Parent item": {
-                "id": "lxq%3A",
-                "type": "relation",
-                "relation": [
-                    {
-                        "id": "1b3d801c-39b0-812b-8fc7-d786e68bb811"
-                    }
-                ],
-                "has_more": false
-            },
-            "剩餘天數": {
-                "id": "m%3EyA",
-                "type": "formula",
-                "formula": {
-                    "type": "string",
-                    "string": null
-                }
-            },
-            "Sub-item": {
-                "id": "s%7DDM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "進度": {
-                "id": "vCYk",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "任務名稱": {
-                "id": "title",
-                "type": "title",
-                "title": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": "撰寫項目二",
-                            "link": null
-                        },
-                        "annotations": {
-                            "bold": false,
-                            "italic": false,
-                            "strikethrough": false,
-                            "underline": false,
-                            "code": false,
-                            "color": "default"
-                        },
-                        "plain_text": "撰寫項目二",
-                        "href": null
-                    }
-                ]
-            }
-        },
-        "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
-    },
-    {
-        "notion_id": "1b3d801c-39b0-8188-9374-d0ed52a11db0",
+        "notion_id": "1b4d801c-39b0-813d-baf5-ccc0ee19bc31",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -625,7 +98,7 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-8117-96bc-ed5e96704f56"
+                        "id": "1b4d801c-39b0-8122-bfaa-fafbac7fd0c2"
                     }
                 ],
                 "has_more": false
@@ -643,13 +116,13 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-812f-adcd-d26a6f58d33c"
+                        "id": "1b4d801c-39b0-8138-b222-fa0c6eea7e17"
                     },
                     {
-                        "id": "1b3d801c-39b0-8102-8bd4-d127c822fbb4"
+                        "id": "1b4d801c-39b0-8122-b4d2-c10220cabea2"
                     },
                     {
-                        "id": "1b3d801c-39b0-8192-b3bf-e9264d9a3108"
+                        "id": "1b4d801c-39b0-81e0-b795-def4353a44e9"
                     }
                 ],
                 "has_more": false
@@ -687,11 +160,11 @@
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-8102-8bd4-d127c822fbb4",
+        "notion_id": "1b4d801c-39b0-8174-bc2d-fee3025f4f5b",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -785,7 +258,157 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-8188-9374-d0ed52a11db0"
+                        "id": "1b4d801c-39b0-81ac-83ba-c9f8d17fa8ea"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "撰寫項目二",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "撰寫項目二",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
+    },
+    {
+        "notion_id": "1b4d801c-39b0-8122-b4d2-c10220cabea2",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-813d-baf5-ccc0ee19bc31"
                     }
                 ],
                 "has_more": false
@@ -837,11 +460,11 @@
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-8125-8b81-e5e39550de91",
+        "notion_id": "1b4d801c-39b0-8155-8a3a-e5f64c8373af",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -935,7 +558,7 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-819b-9cee-ce9395e3efd5"
+                        "id": "1b4d801c-39b0-8185-8d1c-dc059e74a88d"
                     }
                 ],
                 "has_more": false
@@ -987,11 +610,11 @@
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-812b-8fc7-d786e68bb811",
+        "notion_id": "1b4d801c-39b0-8185-8d1c-dc059e74a88d",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -1089,7 +712,7 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-8117-96bc-ed5e96704f56"
+                        "id": "1b4d801c-39b0-8122-bfaa-fafbac7fd0c2"
                     }
                 ],
                 "has_more": false
@@ -1107,10 +730,13 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-8174-9438-fdeb6eff9593"
+                        "id": "1b4d801c-39b0-8155-8a3a-e5f64c8373af"
                     },
                     {
-                        "id": "1b3d801c-39b0-8171-803f-f7dcc5194d49"
+                        "id": "1b4d801c-39b0-81da-b457-e618580bacfb"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-81dc-a826-c409b8644d57"
                     }
                 ],
                 "has_more": false
@@ -1130,7 +756,7 @@
                     {
                         "type": "text",
                         "text": {
-                            "content": "準備書面報告",
+                            "content": "蒐集資料",
                             "link": null
                         },
                         "annotations": {
@@ -1141,18 +767,18 @@
                             "code": false,
                             "color": "default"
                         },
-                        "plain_text": "準備書面報告",
+                        "plain_text": "蒐集資料",
                         "href": null
                     }
                 ]
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-812f-adcd-d26a6f58d33c",
+        "notion_id": "1b4d801c-39b0-819f-b8c6-d3366ba26de8",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -1246,157 +872,7 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-8188-9374-d0ed52a11db0"
-                    }
-                ],
-                "has_more": false
-            },
-            "剩餘天數": {
-                "id": "m%3EyA",
-                "type": "formula",
-                "formula": {
-                    "type": "string",
-                    "string": null
-                }
-            },
-            "Sub-item": {
-                "id": "s%7DDM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "進度": {
-                "id": "vCYk",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "任務名稱": {
-                "id": "title",
-                "type": "title",
-                "title": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": "簡報準備",
-                            "link": null
-                        },
-                        "annotations": {
-                            "bold": false,
-                            "italic": false,
-                            "strikethrough": false,
-                            "underline": false,
-                            "code": false,
-                            "color": "default"
-                        },
-                        "plain_text": "簡報準備",
-                        "href": null
-                    }
-                ]
-            }
-        },
-        "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
-    },
-    {
-        "notion_id": "1b3d801c-39b0-8174-9438-fdeb6eff9593",
-        "notion_properties": {
-            "Blocking": {
-                "id": "%3D%40GX",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "儲存進度": {
-                "id": "%3FrK%3D",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "父任務": {
-                "id": "Avdr",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "Blocked by": {
-                "id": "AxqQ",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "後續任務": {
-                "id": "F%7Dd%3D",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "說明": {
-                "id": "HDzi",
-                "type": "rich_text",
-                "rich_text": []
-            },
-            "預估所需時長(天)": {
-                "id": "QW%5B%3F",
-                "type": "number",
-                "number": null
-            },
-            "ID": {
-                "id": "Qr%5Bo",
-                "type": "number",
-                "number": null
-            },
-            "類別": {
-                "id": "U%3Cj%40",
-                "type": "select",
-                "select": null
-            },
-            "任務權重": {
-                "id": "Yw%60v",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "子任務": {
-                "id": "dIL%3C",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "負責人": {
-                "id": "hzKN",
-                "type": "people",
-                "people": []
-            },
-            "完成": {
-                "id": "i%7CQz",
-                "type": "checkbox",
-                "checkbox": false
-            },
-            "前置任務": {
-                "id": "ji%7BM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "時間": {
-                "id": "lKGm",
-                "type": "date",
-                "date": null
-            },
-            "Parent item": {
-                "id": "lxq%3A",
-                "type": "relation",
-                "relation": [
-                    {
-                        "id": "1b3d801c-39b0-812b-8fc7-d786e68bb811"
+                        "id": "1b4d801c-39b0-81ac-83ba-c9f8d17fa8ea"
                     }
                 ],
                 "has_more": false
@@ -1448,161 +924,11 @@
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-8192-b3bf-e9264d9a3108",
-        "notion_properties": {
-            "Blocking": {
-                "id": "%3D%40GX",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "儲存進度": {
-                "id": "%3FrK%3D",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "父任務": {
-                "id": "Avdr",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "Blocked by": {
-                "id": "AxqQ",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "後續任務": {
-                "id": "F%7Dd%3D",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "說明": {
-                "id": "HDzi",
-                "type": "rich_text",
-                "rich_text": []
-            },
-            "預估所需時長(天)": {
-                "id": "QW%5B%3F",
-                "type": "number",
-                "number": null
-            },
-            "ID": {
-                "id": "Qr%5Bo",
-                "type": "number",
-                "number": null
-            },
-            "類別": {
-                "id": "U%3Cj%40",
-                "type": "select",
-                "select": null
-            },
-            "任務權重": {
-                "id": "Yw%60v",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "子任務": {
-                "id": "dIL%3C",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "負責人": {
-                "id": "hzKN",
-                "type": "people",
-                "people": []
-            },
-            "完成": {
-                "id": "i%7CQz",
-                "type": "checkbox",
-                "checkbox": false
-            },
-            "前置任務": {
-                "id": "ji%7BM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "時間": {
-                "id": "lKGm",
-                "type": "date",
-                "date": null
-            },
-            "Parent item": {
-                "id": "lxq%3A",
-                "type": "relation",
-                "relation": [
-                    {
-                        "id": "1b3d801c-39b0-8188-9374-d0ed52a11db0"
-                    }
-                ],
-                "has_more": false
-            },
-            "剩餘天數": {
-                "id": "m%3EyA",
-                "type": "formula",
-                "formula": {
-                    "type": "string",
-                    "string": null
-                }
-            },
-            "Sub-item": {
-                "id": "s%7DDM",
-                "type": "relation",
-                "relation": [],
-                "has_more": false
-            },
-            "進度": {
-                "id": "vCYk",
-                "type": "formula",
-                "formula": {
-                    "type": "number",
-                    "number": 0
-                }
-            },
-            "任務名稱": {
-                "id": "title",
-                "type": "title",
-                "title": [
-                    {
-                        "type": "text",
-                        "text": {
-                            "content": "順稿",
-                            "link": null
-                        },
-                        "annotations": {
-                            "bold": false,
-                            "italic": false,
-                            "strikethrough": false,
-                            "underline": false,
-                            "code": false,
-                            "color": "default"
-                        },
-                        "plain_text": "順稿",
-                        "href": null
-                    }
-                ]
-            }
-        },
-        "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
-    },
-    {
-        "notion_id": "1b3d801c-39b0-819b-9cee-ce9395e3efd5",
+        "notion_id": "1b4d801c-39b0-81ac-83ba-c9f8d17fa8ea",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -1700,7 +1026,7 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-8117-96bc-ed5e96704f56"
+                        "id": "1b4d801c-39b0-8122-bfaa-fafbac7fd0c2"
                     }
                 ],
                 "has_more": false
@@ -1718,13 +1044,10 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-8125-8b81-e5e39550de91"
+                        "id": "1b4d801c-39b0-819f-b8c6-d3366ba26de8"
                     },
                     {
-                        "id": "1b3d801c-39b0-81e5-9c35-cf0c2fcd2dc6"
-                    },
-                    {
-                        "id": "1b3d801c-39b0-81da-8a79-eb56f32ad917"
+                        "id": "1b4d801c-39b0-8174-bc2d-fee3025f4f5b"
                     }
                 ],
                 "has_more": false
@@ -1744,7 +1067,7 @@
                     {
                         "type": "text",
                         "text": {
-                            "content": "蒐集資料",
+                            "content": "準備書面報告",
                             "link": null
                         },
                         "annotations": {
@@ -1755,18 +1078,18 @@
                             "code": false,
                             "color": "default"
                         },
-                        "plain_text": "蒐集資料",
+                        "plain_text": "準備書面報告",
                         "href": null
                     }
                 ]
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-81da-8a79-eb56f32ad917",
+        "notion_id": "1b4d801c-39b0-81dc-a826-c409b8644d57",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -1860,7 +1183,7 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-819b-9cee-ce9395e3efd5"
+                        "id": "1b4d801c-39b0-8185-8d1c-dc059e74a88d"
                     }
                 ],
                 "has_more": false
@@ -1912,11 +1235,11 @@
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-81e5-9c35-cf0c2fcd2dc6",
+        "notion_id": "1b4d801c-39b0-81e0-b795-def4353a44e9",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -2010,7 +1333,488 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-819b-9cee-ce9395e3efd5"
+                        "id": "1b4d801c-39b0-813d-baf5-ccc0ee19bc31"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "順稿",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "順稿",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
+    },
+    {
+        "notion_id": "1b4d801c-39b0-8122-bfaa-fafbac7fd0c2",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": [
+                    {
+                        "object": "user",
+                        "id": "8c29074c-fa58-407a-8f83-0ee1265b6861",
+                        "name": "Po-Chun Wu",
+                        "avatar_url": "https://s3-us-west-2.amazonaws.com/public.notion-static.com/d00c7a94-1227-44a4-9538-8643015d3dae/lake_dusk.jpg",
+                        "type": "person",
+                        "person": {
+                            "email": "pcwu2022@gmail.com"
+                        }
+                    },
+                    {
+                        "object": "user",
+                        "id": "f1e3c238-e466-4650-8f87-503865417abe",
+                        "name": "Yang Yang",
+                        "avatar_url": "https://lh3.googleusercontent.com/a/AATXAJxIYWt6wn-hx_F4kARAN_zSpsdggi-guJBYknXI=s100",
+                        "type": "person",
+                        "person": {
+                            "email": "b10901023yang@gmail.com"
+                        }
+                    }
+                ]
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": {
+                    "start": "2025-03-13",
+                    "end": null,
+                    "time_zone": null
+                }
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-8185-8d1c-dc059e74a88d"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-81ac-83ba-c9f8d17fa8ea"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-813d-baf5-ccc0ee19bc31"
+                    }
+                ],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "期末報告",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "期末報告",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741763520
+    },
+    {
+        "notion_id": "1b4d801c-39b0-8138-b222-fa0c6eea7e17",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-813d-baf5-ccc0ee19bc31"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "簡報準備",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "簡報準備",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81da-b457-e618580bacfb",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-8185-8d1c-dc059e74a88d"
                     }
                 ],
                 "has_more": false
@@ -2062,11 +1866,11 @@
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741651080
+        "r_parent_db": "1b4d801c-39b0-80b1-8f40-e4598691cddb",
+        "last_edited_time": 1741761120
     },
     {
-        "notion_id": "1b3d801c-39b0-8117-96bc-ed5e96704f56",
+        "notion_id": "1b4d801c-39b0-80e0-995c-e82a984686cb",
         "notion_properties": {
             "Blocking": {
                 "id": "%3D%40GX",
@@ -2164,6 +1968,1841 @@
             "時間": {
                 "id": "lKGm",
                 "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "Test 1",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "Test 1",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741763520
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81d0-8b98-dbd3a822be0b",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81dc-895e-eafbb3d8e60d"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "撰寫項目二",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "撰寫項目二",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-810d-b6c7-f2a560d2e6a1",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81e3-80ed-ce36c9ee1c99"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "順稿",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "順稿",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-8184-8916-e3a8172207db",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81e3-80ed-ce36c9ee1c99"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "演講稿準備",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "演講稿準備",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-8197-82a6-e0f6b66b1e94",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": {
+                    "start": "2025-03-14",
+                    "end": "2025-03-18",
+                    "time_zone": null
+                }
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81c8-b803-f960ce309b7e"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 5
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81c2-b7b4-de4d57926f7b"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-8174-93c6-ce541bf3bdba"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-81bb-bcbb-eae8cd8104ad"
+                    }
+                ],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "蒐集資料",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "蒐集資料",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81ac-868b-f60b8e414180",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81dc-895e-eafbb3d8e60d"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "撰寫項目一",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "撰寫項目一",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81bb-bcbb-eae8cd8104ad",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-8197-82a6-e0f6b66b1e94"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "分析研究結果",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "分析研究結果",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81c2-b7b4-de4d57926f7b",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-8197-82a6-e0f6b66b1e94"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "研究項目一",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "研究項目一",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81dc-895e-eafbb3d8e60d",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": {
+                    "start": "2025-03-14",
+                    "end": "2025-03-18",
+                    "time_zone": null
+                }
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81c8-b803-f960ce309b7e"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 5
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81ac-868b-f60b8e414180"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-81d0-8b98-dbd3a822be0b"
+                    }
+                ],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "準備書面報告",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "準備書面報告",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81e3-80ed-ce36c9ee1c99",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": {
+                    "start": "2025-03-15",
+                    "end": "2025-03-19",
+                    "time_zone": null
+                }
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81c8-b803-f960ce309b7e"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 6
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-8160-9b3b-c2e996cfbb9b"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-8184-8916-e3a8172207db"
+                    },
+                    {
+                        "id": "1b4d801c-39b0-810d-b6c7-f2a560d2e6a1"
+                    }
+                ],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "準備口頭報告",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": true,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "準備口頭報告",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-8160-9b3b-c2e996cfbb9b",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-81e3-80ed-ce36c9ee1c99"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "簡報準備",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "簡報準備",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-8174-93c6-ce541bf3bdba",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
+                "date": null
+            },
+            "Parent item": {
+                "id": "lxq%3A",
+                "type": "relation",
+                "relation": [
+                    {
+                        "id": "1b4d801c-39b0-8197-82a6-e0f6b66b1e94"
+                    }
+                ],
+                "has_more": false
+            },
+            "剩餘天數": {
+                "id": "m%3EyA",
+                "type": "formula",
+                "formula": {
+                    "type": "string",
+                    "string": null
+                }
+            },
+            "Sub-item": {
+                "id": "s%7DDM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "進度": {
+                "id": "vCYk",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "任務名稱": {
+                "id": "title",
+                "type": "title",
+                "title": [
+                    {
+                        "type": "text",
+                        "text": {
+                            "content": "研究項目二",
+                            "link": null
+                        },
+                        "annotations": {
+                            "bold": false,
+                            "italic": false,
+                            "strikethrough": false,
+                            "underline": false,
+                            "code": false,
+                            "color": "default"
+                        },
+                        "plain_text": "研究項目二",
+                        "href": null
+                    }
+                ]
+            }
+        },
+        "notion_content": [],
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
+    },
+    {
+        "notion_id": "1b4d801c-39b0-81c8-b803-f960ce309b7e",
+        "notion_properties": {
+            "Blocking": {
+                "id": "%3D%40GX",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "儲存進度": {
+                "id": "%3FrK%3D",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "父任務": {
+                "id": "Avdr",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "Blocked by": {
+                "id": "AxqQ",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "後續任務": {
+                "id": "F%7Dd%3D",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "說明": {
+                "id": "HDzi",
+                "type": "rich_text",
+                "rich_text": []
+            },
+            "預估所需時長(天)": {
+                "id": "QW%5B%3F",
+                "type": "number",
+                "number": null
+            },
+            "ID": {
+                "id": "Qr%5Bo",
+                "type": "number",
+                "number": null
+            },
+            "類別": {
+                "id": "U%3Cj%40",
+                "type": "select",
+                "select": null
+            },
+            "任務權重": {
+                "id": "Yw%60v",
+                "type": "formula",
+                "formula": {
+                    "type": "number",
+                    "number": 0
+                }
+            },
+            "子任務": {
+                "id": "dIL%3C",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "負責人": {
+                "id": "hzKN",
+                "type": "people",
+                "people": []
+            },
+            "完成": {
+                "id": "i%7CQz",
+                "type": "checkbox",
+                "checkbox": false
+            },
+            "前置任務": {
+                "id": "ji%7BM",
+                "type": "relation",
+                "relation": [],
+                "has_more": false
+            },
+            "時間": {
+                "id": "lKGm",
+                "type": "date",
                 "date": {
                     "start": "2025-03-13",
                     "end": null,
@@ -2189,13 +3828,13 @@
                 "type": "relation",
                 "relation": [
                     {
-                        "id": "1b3d801c-39b0-819b-9cee-ce9395e3efd5"
+                        "id": "1b4d801c-39b0-8197-82a6-e0f6b66b1e94"
                     },
                     {
-                        "id": "1b3d801c-39b0-812b-8fc7-d786e68bb811"
+                        "id": "1b4d801c-39b0-81dc-895e-eafbb3d8e60d"
                     },
                     {
-                        "id": "1b3d801c-39b0-8188-9374-d0ed52a11db0"
+                        "id": "1b4d801c-39b0-81e3-80ed-ce36c9ee1c99"
                     }
                 ],
                 "has_more": false
@@ -2233,7 +3872,7 @@
             }
         },
         "notion_content": [],
-        "r_parent_db": "1b1d801c-39b0-806e-af49-c975b29152f2",
-        "last_edited_time": 1741656420
+        "r_parent_db": "1b4d801c-39b0-80e2-93e0-e423455c1bd7",
+        "last_edited_time": 1741761180
     }
 ]
