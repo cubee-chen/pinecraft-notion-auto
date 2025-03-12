@@ -6,7 +6,7 @@ from cache import Cache
 
 # =========== System Variables ===========
 FAST_FETCH_INTERVAL = 0.1 # seconds
-NORMAL_FETCH_INTERVAL = 10 # seconds
+NORMAL_FETCH_INTERVAL = 2 # seconds
 SLOW_FETCH_INTERVAL = 600 # seconds
 
 # =========== Driver Class ===========

@@ -143,7 +143,7 @@ class SyncedDocument:
     
     async def save_version(self, content, last_edited_time=None):
         if last_edited_time == None:
-            last_edited_time = int(datetime.now(timezone.utc).timestamp() // 60 * 60)
+            last_edited_time = int(round(datetime.now(timezone.utc).timestamp()/60)*60)
         self.last_edited_time = last_edited_time
 
         #! Save content to DB
