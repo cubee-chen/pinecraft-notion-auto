@@ -128,7 +128,7 @@ class NotionManager:
             }
 
         # Run all schedule fetches in parallel
-        await asyncio.gather(*[fetch_schedule(project, schedule_data) for project in project_data])
+        await asyncio.gather(*(fetch_schedule(project, schedule_data) for project in project_data))
 
         return schedule_data
 
@@ -153,7 +153,7 @@ class NotionManager:
         
         # Insert
         print("Inserting New Schedules to User Notion...")
-        for schedule in schedule_data:
+        async def insert_schedules(schedule):
             people = schedule["notion_properties"]["負責人"]["people"]
             for user in people:
                 user_id = user["id"]
@@ -173,15 +173,18 @@ class NotionManager:
                 # Add link to synced document
                 synced_document_manager.create_document_link(schedule["notion_id"], new_schedule_id)
         
+        asyncio.gather(*(insert_schedules(schedule) for schedule in schedule_data))
+        
         # Insert schedule to DB
         print("Inserting All Schedules to the Database...")
-        for schedule in schedule_data:
+        async def process_schedule(schedule):
             if synced_document_manager.schedule_notion_id_is_synced(schedule["notion_id"]):
                 # Add virtual link with physical element for the project's schedule
                 synced_document_manager.create_document_link(schedule["notion_id"], schedule["notion_id"])
                 # Save the physical page to the database
                 await synced_document_manager.save_version_by_notion_id(schedule["notion_id"], schedule, schedule["last_edited_time"])
-        
+        asyncio.gather(*[process_schedule(schedule) for schedule in schedule_data])
+
         return True
     
     # Fetch a single user's data from Notion by Notion ID.  
