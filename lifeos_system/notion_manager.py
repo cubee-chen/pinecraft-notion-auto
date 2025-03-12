@@ -7,6 +7,8 @@ from datetime import datetime
 
 from notion_client import AsyncClient
 
+from cache import Cache
+
 # =========== Load Environmental Variables ===========
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_PATH = os.path.join(BASE_DIR, ".env")
@@ -25,7 +27,7 @@ class NotionManager:
         self.notion = AsyncClient(auth=NOTION_TOKEN)
 
     # 1. Get all users and projects and return user_data and project_data
-    async def get_all_users_and_projects(self): 
+    async def get_all_users_and_projects(self, cache: Cache): 
 
         # run at program start
 
@@ -39,6 +41,10 @@ class NotionManager:
             notion_id = user_metadata["id"]
             last_edited_time = NotionManager.notion_time_to_seconds(user_metadata["last_edited_time"])
             notion_properties = user_metadata["properties"]
+            if len(user_metadata["properties"]["姓名"]["people"]) > 0:
+                user_id = user_metadata["properties"]["姓名"]["people"][0]["id"]
+                if user_id:
+                    cache.update_user_id_to_notion_id(user_id, notion_id)
             notion_content = await self.notion.blocks.children.list(notion_id)
             return {
                 "notion_id": notion_id,
@@ -74,7 +80,7 @@ class NotionManager:
         return user_data, project_data
 
     # 2. Extract child db ids from a Notion page
-    async def extract_child_db_ids(self, data):
+    async def extract_child_db_ids(self, data, cache: Cache):
 
         # get db ids from parent page content
         # run at program start
@@ -85,42 +91,15 @@ class NotionManager:
                 if block["type"] == "child_database":
                     db_name = NotionManager.get_db_name(block["child_database"]["title"])
                     entry[db_name] = block["id"]
+                    if db_name == "schedule":
+                        cache.update_notion_id_to_schedule_id(entry["notion_id"], block["id"])
 
         return data
 
-    # 3. Fetch all schedule data collected in user_data and project_data
-    async def get_all_schedules_from_parent(self, user_data, project_data):
+    # 3. Fetch all schedule data collected in project_data
+    async def get_all_schedules_from_project(self, project_data):
 
         schedule_data = []
-        
-        #! Current Version: Only Backup Project Schedule on Start
-        """
-        print("Fetching Schedules From All Users' Homepages...")
-        async def fetch_schedule(user, schedule_data):
-            # Fetch schedule data for a single user
-            if "schedule" not in user:
-                print(f"No Schedule DB Exist in User: {user['notion_id']}")
-                return  #! Skip users without schedules
-            
-            schedule_id = user["schedule"]
-            schedules = (await self.notion.databases.query(database_id=schedule_id))["results"]
-            
-            schedule_data.extend(await asyncio.gather(*[
-                fetch_schedule_details(schedule, user['notion_id']) for schedule in schedules
-            ]))
-
-        async def fetch_schedule_details(schedule, r_parent_db):
-            # Fetch schedule details for each schedule item.
-            return {
-                "notion_id": schedule["id"],
-                "notion_properties": schedule["properties"],
-                "notion_content": (await self.notion.blocks.children.list(schedule["id"]))["results"],
-                "r_parent_db": r_parent_db
-            }
-
-        # Run all schedule fetches in parallel
-        await asyncio.gather(*[fetch_schedule(user, schedule_data) for user in user_data])
-        """
         
         print("Fetching Schedules From All Projects' Homepages...")
         async def fetch_schedule(project, schedule_data):
@@ -150,6 +129,44 @@ class NotionManager:
 
         return schedule_data
 
+    # 4. Delete all schedule data collected in user_data that corresponds to one in project_data
+    #    and insert new schedule data by cloing these in project data
+    async def renew_all_schedules_in_user(self, user_data, schedule_data, cache: Cache):
+        
+        # Delete
+        print("Deleting all Outdated Schedules...")
+        async def process_user(user):
+            if "schedule" not in user:
+                return
+            #! prop: "[勿動] IS任務"
+            pages_to_delete = await self.notion.databases.query(user["schedule"], **{
+                "property": "所屬專案",
+                "rich_text": {"is_not_empty": True}
+            })
+            page_ids = [page["id"] for page in pages_to_delete["results"]]
+            await asyncio.gather(*(self.delete_page_by_notion_id(page_id) for page_id in page_ids))
+
+        await asyncio.gather(*(process_user(user) for user in user_data))
+        
+        # Insert
+        for schedule in schedule_data:
+            people = schedule["notion_properties"]["負責人"]["people"]
+            for user in people:
+                user_id = user["id"]
+                notion_id = cache.get_user_id_to_notion_id(user_id)
+                if not notion_id:
+                    #! Handle cache not yet saved user_id -> notion_id mapping
+                    # might be because a user shared the project to other users
+                    continue
+                # Add schedule data to a specific user's schedule database
+                user_schedule_id = cache.get_notion_id_to_schedule_id(notion_id)
+                if not user_schedule_id:
+                    #! Handle cache not yet saved notion_id -> schedule_id mapping
+                    # brute search?
+                    continue
+                await self.create_user_schedule(user_schedule_id, schedule)
+        return True
+    
     # Fetch a single user's data from Notion by Notion ID.  
     async def get_user_by_notion_id(self, notion_id):
         
@@ -214,6 +231,21 @@ class NotionManager:
 
         return project_data
     
+    # Delete data 
+    async def delete_page_by_notion_id(self, notion_id):
+        await self.notion.pages.update(notion_id, archived=True)
+        return True
+
+    # Create user schedule page
+    async def create_user_schedule(self, schedule_db_id, schedule):
+        #! Schema Validation
+        mapped_properties = NotionManager.convert_project_schedule_to_user_schedule(schedule["r_parent_db"], schedule["notion_properties"])
+        new_page = await self.notion.pages.create(
+            parent={"database_id": schedule_db_id},
+            properties=mapped_properties
+        )
+        pprint(new_page)
+
     def get_last_updated_time(self):
         pass
 
@@ -247,6 +279,25 @@ class NotionManager:
                 return map[title]
         return "unknown"
 
+    # Extract plain text from rich text
+    @staticmethod
+    def extract_from_rich_text(rich_text):
+        ret = ""
+        for text in rich_text:
+            ret += text["plain_text"]
+        return ret
+
+    @staticmethod
+    def convert_project_schedule_to_user_schedule(project_notion_id, properties):
+        map_properties = {
+            "項目": properties["任務名稱"] if "任務名稱" in properties else { "title": [ { "text": { "content": "新任務" } }]},
+            "所屬專案": { "rich_text": [ { "text": { "content": project_notion_id } }]},
+            "日期 / Deadline": properties["時間"],
+            "已完成": properties["完成"],
+            "[勿動] IS任務": { "checkbox": True }
+        }
+        return map_properties
+
 # ================= Test Run =================
 
 if __name__ == "__main__":
@@ -255,7 +306,7 @@ if __name__ == "__main__":
         user_data, project_data = await notion_manager.get_all_users_and_projects()
         user_data = await notion_manager.extract_child_db_ids(user_data)
         project_data = await notion_manager.extract_child_db_ids(project_data)
-        user_data, project_data = await notion_manager.get_all_schedules_from_parent(user_data, project_data)
+        user_data, project_data = await notion_manager.get_all_schedules_from_project(user_data, project_data)
         NotionManager.output_to_json({"user_data": user_data, "project_data": project_data}, "data_sample/sample_notion_manager_output.json")
 
     asyncio.run(test_run())
