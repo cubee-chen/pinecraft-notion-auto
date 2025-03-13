@@ -120,22 +120,24 @@ class SyncedDocument:
         self.db_manager = db_manager
         
     async def check_version(self, last_edited_time):
-        print(f"Check Version: {last_edited_time} (incoming) - {self.last_edited_time} (saved) = {last_edited_time - self.last_edited_time}")
         if last_edited_time == self.last_edited_time:
             # Notion is currently at the same version with DB
             return SyncedDocumentManager.UP_TO_DATE
         elif last_edited_time > self.last_edited_time:
             # Notion is ahead of DB
             self.last_edited_time = last_edited_time
+            print(f"Check Version: {last_edited_time} (incoming) - {self.last_edited_time} (saved) = {last_edited_time - self.last_edited_time}")
             return SyncedDocumentManager.AHEAD
             #! The program would then call save_version
         elif last_edited_time < self.last_edited_time:
             # Notion is behind DB
+            print(f"Check Version: {last_edited_time} (incoming) - {self.last_edited_time} (saved) = {last_edited_time - self.last_edited_time}")
             return SyncedDocumentManager.BEHIND
             #! The program would then call get_latest_version
         else:
             #! BUG
-            print(f"Last_edited_time: {self.last_edited_time} vs {last_edited_time}")
+            print(f"!ERROR! Last_edited_time: {self.last_edited_time} vs {last_edited_time}")
+            return SyncedDocumentManager.NOT_TRACKED
 
     async def get_latest_version(self):
         # Fetch content from DB
