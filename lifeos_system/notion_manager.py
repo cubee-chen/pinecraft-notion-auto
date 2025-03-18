@@ -20,6 +20,12 @@ NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 USER_NOTION = os.getenv("USER_NOTION")
 PROJECT_NOTION = os.getenv("PROJECT_NOTION")
 
+# ============ Define Commonly Used Keys =============
+NOTION_ID = "notion_id"
+NOTION_PROPERTIES = "notion_properties"
+NOTION_CONTENT = "notion_content"
+LAST_EDITED_TIME = "last_edited_time"
+
 # =================== Define Class ===================
 class NotionManager:
     def __init__(self):
@@ -42,7 +48,7 @@ class NotionManager:
 
         async def fetch_user_data(user_metadata):
             notion_id = user_metadata["id"]
-            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata["last_edited_time"])
+            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata[LAST_EDITED_TIME])
             notion_properties = user_metadata["properties"]
             if len(user_metadata["properties"]["姓名"]["people"]) > 0:
                 user_id = user_metadata["properties"]["姓名"]["people"][0]["id"]
@@ -55,10 +61,10 @@ class NotionManager:
                 notion_content = {"results": []}
             
             return {
-                "notion_id": notion_id,
-                "last_edited_time": last_edited_time,
-                "notion_properties": notion_properties,
-                "notion_content": notion_content["results"]
+                NOTION_ID: notion_id,
+                LAST_EDITED_TIME: last_edited_time,
+                NOTION_PROPERTIES: notion_properties,
+                NOTION_CONTENT: notion_content["results"]
             }
 
         # Run all content fetches concurrently
@@ -72,7 +78,7 @@ class NotionManager:
 
         async def fetch_project_data(project_metadata):
             notion_id = project_metadata["id"]
-            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata["last_edited_time"])
+            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata[LAST_EDITED_TIME])
             notion_properties = project_metadata["properties"]
 
             if includes_content:
@@ -81,10 +87,10 @@ class NotionManager:
                 notion_content = {"results": []}
             
             return {
-                "notion_id": notion_id,
-                "last_edited_time": last_edited_time,
-                "notion_properties": notion_properties,
-                "notion_content": notion_content["results"]
+                NOTION_ID: notion_id,
+                LAST_EDITED_TIME: last_edited_time,
+                NOTION_PROPERTIES: notion_properties,
+                NOTION_CONTENT: notion_content["results"]
             }
 
         # Run all content fetches concurrently
@@ -99,13 +105,13 @@ class NotionManager:
         # run at program start
         # print("Extracting Child Databases...")
         for entry in data:
-            notion_content = entry["notion_content"]
+            notion_content = entry[NOTION_CONTENT]
             for block in notion_content:
                 if block["type"] == "child_database":
                     db_name = NotionManager.get_db_name(block["child_database"]["title"])
                     entry[db_name] = block["id"]
                     if db_name == "schedule":
-                        cache.update_notion_id_to_schedule_id(entry["notion_id"], block["id"])
+                        cache.update_notion_id_to_schedule_id(entry[NOTION_ID], block["id"])
 
         return data
 
@@ -130,13 +136,13 @@ class NotionManager:
 
         async def fetch_schedule_details(schedule, r_parent_db):
             # Fetch schedule details for each schedule item.
-            last_edited_time = NotionManager.notion_time_to_seconds(schedule["last_edited_time"])
+            last_edited_time = NotionManager.notion_time_to_seconds(schedule[LAST_EDITED_TIME])
             return {
-                "notion_id": schedule["id"],
-                "notion_properties": schedule["properties"],
-                "notion_content": (await self.notion.blocks.children.list(schedule["id"]))["results"],
+                NOTION_ID: schedule["id"],
+                NOTION_PROPERTIES: schedule["properties"],
+                NOTION_CONTENT: (await self.notion.blocks.children.list(schedule["id"]))["results"],
                 "r_parent_db": r_parent_db,
-                "last_edited_time": last_edited_time
+                LAST_EDITED_TIME: last_edited_time
             }
 
         # Run all schedule fetches in parallel
@@ -166,7 +172,7 @@ class NotionManager:
         # Insert
         print("Inserting New Schedules to User Notion...")
         async def insert_schedules(schedule):
-            people = schedule["notion_properties"]["負責人"]["people"]
+            people = schedule[NOTION_PROPERTIES]["負責人"]["people"]
             for user in people:
                 user_id = user["id"]
                 notion_id = cache.get_user_id_to_notion_id(user_id)
@@ -183,18 +189,18 @@ class NotionManager:
                 new_schedule_id = await self.create_user_schedule(user_schedule_id, schedule)
 
                 # Add link to synced document
-                synced_document_manager.create_instance_link(schedule["notion_id"], new_schedule_id, is_user=True)
+                synced_document_manager.create_instance_link(schedule[NOTION_ID], new_schedule_id, is_user=True)
         
         await asyncio.gather(*(insert_schedules(schedule) for schedule in schedule_data))
         
         # Insert schedule to DB
         print("Inserting All Schedules to the Database...")
         async def process_schedule(schedule):
-            if synced_document_manager.schedule_notion_id_is_synced(schedule["notion_id"]):
+            if synced_document_manager.schedule_notion_id_is_synced(schedule[NOTION_ID]):
                 # Add virtual link with physical element for the project's schedule
-                synced_document_manager.create_instance_link(schedule["notion_id"], schedule["notion_id"], is_user=False)
+                synced_document_manager.create_instance_link(schedule[NOTION_ID], schedule[NOTION_ID], is_user=False)
                 # Save the physical page to the database
-                await synced_document_manager.save_version_by_notion_id(schedule["notion_id"], schedule, schedule["last_edited_time"])
+                await synced_document_manager.save_version_by_notion_id(schedule[NOTION_ID], schedule, schedule[LAST_EDITED_TIME])
         await asyncio.gather(*[process_schedule(schedule) for schedule in schedule_data])
         # synced_document_manager.print()
         return True
@@ -213,14 +219,14 @@ class NotionManager:
             return None
 
         async def fetch_user_data(user_metadata):
-            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata["last_edited_time"])
+            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata[LAST_EDITED_TIME])
             notion_properties = user_metadata["properties"]
             notion_content = await self.notion.blocks.children.list(notion_id)
             return {
-                "notion_id": notion_id,
-                "last_edited_time": last_edited_time,
-                "notion_properties": notion_properties,
-                "notion_content": notion_content["results"]
+                NOTION_ID: notion_id,
+                LAST_EDITED_TIME: last_edited_time,
+                NOTION_PROPERTIES: notion_properties,
+                NOTION_CONTENT: notion_content["results"]
             }
 
         # Fetch user data asynchronously
@@ -240,14 +246,14 @@ class NotionManager:
             return None
 
         async def fetch_project_data(project_metadata):
-            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata["last_edited_time"])
+            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata[LAST_EDITED_TIME])
             notion_properties = project_metadata["properties"]
             notion_content = await self.notion.blocks.children.list(notion_id)
             return {
-                "notion_id": notion_id,
-                "last_edited_time": last_edited_time,
-                "notion_properties": notion_properties,
-                "notion_content": notion_content["results"]
+                NOTION_ID: notion_id,
+                LAST_EDITED_TIME: last_edited_time,
+                NOTION_PROPERTIES: notion_properties,
+                NOTION_CONTENT: notion_content["results"]
             }
 
         # Fetch project data asynchronously
@@ -267,17 +273,17 @@ class NotionManager:
             return None
 
         async def fetch_schedule_data(schedule_metadata):
-            last_edited_time = NotionManager.notion_time_to_seconds(schedule_metadata["last_edited_time"])
+            last_edited_time = NotionManager.notion_time_to_seconds(schedule_metadata[LAST_EDITED_TIME])
             notion_properties = schedule_metadata["properties"]
             if includes_content:
                 notion_content = await self.notion.blocks.children.list(notion_id)
             else:
                 notion_content = {"results": []}
             return {
-                "notion_id": notion_id,
-                "last_edited_time": last_edited_time,
-                "notion_properties": notion_properties,
-                "notion_content": notion_content["results"]
+                NOTION_ID: notion_id,
+                LAST_EDITED_TIME: last_edited_time,
+                NOTION_PROPERTIES: notion_properties,
+                NOTION_CONTENT: notion_content["results"]
             }
 
         # Fetch schedule data asynchronously
@@ -292,7 +298,7 @@ class NotionManager:
 
     # Create user schedule page
     async def create_user_schedule(self, schedule_db_id, schedule):
-        mapped_properties = NotionManager.convert_project_schedule_to_user_schedule(schedule["r_parent_db"], schedule["notion_properties"])
+        mapped_properties = NotionManager.convert_project_schedule_to_user_schedule(schedule["r_parent_db"], schedule[NOTION_PROPERTIES])
         new_page = await self.notion.pages.create(
             parent={"database_id": schedule_db_id},
             properties=mapped_properties
@@ -301,18 +307,18 @@ class NotionManager:
 
     # Update user schedule page to the newest version
     async def update_user_schedule(self, schedule_notion_id, schedule):
-        mapped_properties = NotionManager.convert_project_schedule_to_user_schedule(schedule["r_parent_db"], schedule["notion_properties"])
+        mapped_properties = NotionManager.convert_project_schedule_to_user_schedule(schedule["r_parent_db"], schedule[NOTION_PROPERTIES])
         await self.notion.pages.update(schedule_notion_id, properties=mapped_properties)
 
         #! Notion currently doesn't allow direct content editing yet
-        await self.notion.blocks.children.append(schedule_notion_id, children=schedule["notion_content"])
+        await self.notion.blocks.children.append(schedule_notion_id, children=schedule[NOTION_CONTENT])
 
     async def update_project_schedule(self, schedule_notion_id, schedule):
-        mapped_properties = NotionManager.filter_project_schedule_before_updating_notion(schedule["notion_properties"])
+        mapped_properties = NotionManager.filter_project_schedule_before_updating_notion(schedule[NOTION_PROPERTIES])
         await self.notion.pages.update(schedule_notion_id, properties=mapped_properties)
 
         #! Notion currently doesn't allow direct content editing yet
-        await self.notion.blocks.children.append(schedule_notion_id, children=schedule["notion_content"])
+        await self.notion.blocks.children.append(schedule_notion_id, children=schedule[NOTION_CONTENT])
 
     # ============ Utility Functions for Notion ============
 

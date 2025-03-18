@@ -12,6 +12,15 @@ SLOW_FETCH_INTERVAL = 600 # seconds
 
 MAX_SYNC_ATTEMPTS = 5 # continuously sync the pages
 
+# =========== Debug Variables ===========
+SAVE_DATA_SAMPLE = False
+
+# ===== Define Commonly Used Keys ======
+NOTION_ID = "notion_id"
+NOTION_PROPERTIES = "notion_properties"
+NOTION_CONTENT = "notion_content"
+LAST_EDITED_TIME = "last_edited_time"
+
 # =========== Driver Class ===========
 class Driver:
     def __init__(self):
@@ -31,7 +40,7 @@ class Driver:
         async def sweep(instance_notion_id):
             # get only properties
             instance_schedule = await self.notion_manager.get_schedule_by_notion_id(instance_notion_id, includes_content=False)
-            last_edited_time = instance_schedule["last_edited_time"]
+            last_edited_time = instance_schedule[LAST_EDITED_TIME]
 
             # version control
             version_control = await self.synced_document_manager.check_version_by_notion_id(instance_notion_id, last_edited_time)
@@ -43,7 +52,7 @@ class Driver:
                 full_instance_schedule = await self.notion_manager.get_schedule_by_notion_id(instance_notion_id, includes_content=True)
                 
                 #! Set notion_id to schedule_notion_id
-                full_instance_schedule["notion_id"] = self.synced_document_manager.get_schedule_notion_id(instance_notion_id)
+                full_instance_schedule[NOTION_ID] = self.synced_document_manager.get_schedule_notion_id(instance_notion_id)
 
                 # Check if the properties are correct
                 is_user = self.synced_document_manager.is_user(instance_notion_id)
@@ -51,7 +60,7 @@ class Driver:
                     #! Error
                     print("document not synced")
                 if is_user:
-                    full_instance_schedule["notion_properties"] = self.notion_manager.convert_user_schedule_to_project_schedule(instance_notion_id, full_instance_schedule["notion_properties"])
+                    full_instance_schedule[NOTION_PROPERTIES] = self.notion_manager.convert_user_schedule_to_project_schedule(instance_notion_id, full_instance_schedule[NOTION_PROPERTIES])
                 
                 print(f"Page {instance_notion_id} is Ahead of the Current Version. Updating DB...")
                 await self.synced_document_manager.save_version_by_notion_id(instance_notion_id, full_instance_schedule)
@@ -93,9 +102,11 @@ class Driver:
 
     async def sweep_all_users_and_projects(self):
         user_data, project_data = await self.notion_manager.get_all_users_and_projects(self.cache, includes_content=False)
+        changed_user_notion_ids = self.cache.compare_and_update_user_data(user_data)
+        changed_project_notion_ids = self.cache.compare_and_update_project_data(project_data)
 
-        user_request_results = await asyncio.gather(*(self.request_manager.handle_user_requests(user) for user in user_data))
-        project_request_results = await asyncio.gather(*(self.request_manager.handle_project_requests(project) for project in project_data))
+        user_request_results = await asyncio.gather(*(self.request_manager.handle_user_requests_by_id(user_notion_id) for user_notion_id in changed_user_notion_ids))
+        project_request_results = await asyncio.gather(*(self.request_manager.handle_project_requests_by_id(project_notion_id) for project_notion_id in changed_project_notion_ids))
 
     # Startup Function: runs when start up
     async def startup(self):
@@ -106,9 +117,15 @@ class Driver:
         user_data = await self.notion_manager.extract_child_db_ids(user_data, self.cache)
         project_data = await self.notion_manager.extract_child_db_ids(project_data, self.cache)
         schedule_data = await self.notion_manager.get_all_schedules_from_project(project_data)
-        NotionManager.output_to_json(user_data, "data_sample/user_data.json")
-        NotionManager.output_to_json(project_data, "data_sample/project_data.json")
-        NotionManager.output_to_json(schedule_data, "data_sample/schedule_data.json")
+        
+        self.cache.refresh_user_data(user_data)
+        self.cache.refresh_project_data(project_data)
+
+        if SAVE_DATA_SAMPLE:
+            NotionManager.output_to_json(user_data, "data_sample/user_data.json")
+            NotionManager.output_to_json(project_data, "data_sample/project_data.json")
+            NotionManager.output_to_json(schedule_data, "data_sample/schedule_data.json")
+        
         await self.synced_document_manager.db_manager.update_all_users_and_projects(user_data, project_data, drop_content=True)
         await self.notion_manager.renew_all_schedules_in_user(user_data, schedule_data, self.cache, self.synced_document_manager)
         # self.synced_document_manager.print()

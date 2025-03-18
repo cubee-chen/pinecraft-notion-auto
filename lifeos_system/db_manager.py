@@ -18,6 +18,12 @@ USER_COLLECTION = "user_db"
 PROJECT_COLLECTION = "project_db"
 SCHEDULE_COLLECTION = "schedule_db"
 
+# ============ Define Commonly Used Keys =============
+NOTION_ID = "notion_id"
+NOTION_PROPERTIES = "notion_properties"
+NOTION_CONTENT = "notion_content"
+LAST_EDITED_TIME = "last_edited_time"
+
 # =================== Define Class ===================
 class DBManager:
     
@@ -39,15 +45,15 @@ class DBManager:
         # Process users
         async def process_user(user):
             if drop_content:
-                # user.pop("notion_content", None)
-                user["notion_content"] = []
-            return await self.update_user_by_notion_id(user["notion_id"], user)
+                # user.pop(NOTION_CONTENT, None)
+                user[NOTION_CONTENT] = []
+            return await self.update_user_by_notion_id(user[NOTION_ID], user)
 
         # Process projects
         async def process_project(project):
             if drop_content:
-                project.pop("notion_content", None)
-            return await self.update_project_by_notion_id(project["notion_id"], project)
+                project.pop(NOTION_CONTENT, None)
+            return await self.update_project_by_notion_id(project[NOTION_ID], project)
 
         # Run user and project updates concurrently
         #! Not yet handled data invalid situations
@@ -68,7 +74,7 @@ class DBManager:
             return False
 
         # If user exists, save it; if not, create a new BSON and save it (upsert=True)
-        self.user_collection.update_one({"notion_id": notion_id}, {"$set": data}, upsert=True)
+        self.user_collection.update_one({NOTION_ID: notion_id}, {"$set": data}, upsert=True)
         
         return True
     
@@ -82,41 +88,41 @@ class DBManager:
             return False
 
         # If project exists, save it; if not, create a new BSON and save it (upsert=True)
-        self.project_collection.update_one({"notion_id": notion_id}, {"$set": data}, upsert=True)
+        self.project_collection.update_one({NOTION_ID: notion_id}, {"$set": data}, upsert=True)
         
         return True
 
     async def update_schedule_by_notion_id(self, notion_id: str, data):
         #! Fake async. Can be upgraded to "real" async
-        print("Update DB: ", notion_id, data["notion_id"])
+        print("Update DB: ", notion_id, data[NOTION_ID])
 
         # Validate schedule data
         schedule_validated = DBManager.data_validation(data, f"schedule_{notion_id}")
-        schedule_property_validated = DBManager.schedule_property_validation(data["notion_properties"], f"property of schedule_{notion_id}")
+        schedule_property_validated = DBManager.schedule_property_validation(data[NOTION_PROPERTIES], f"property of schedule_{notion_id}")
         
         if not schedule_validated or not schedule_property_validated:
             #! Program wouldn't insert into DB if the data isn't validated.
             return False
         
         # Redundant Check
-        if notion_id != data["notion_id"]:
+        if notion_id != data[NOTION_ID]:
             print("!WARNING! notion_id != data['notion_id]")
-            data["notion_id"] = notion_id
+            data[NOTION_ID] = notion_id
         
         # If schedule exists, save it; if not, create a new BSON and save it (upsert=True)
-        self.schedule_collection.update_one({"notion_id": notion_id}, {"$set": data}, upsert=True)
+        self.schedule_collection.update_one({NOTION_ID: notion_id}, {"$set": data}, upsert=True)
         
         return True
     
     async def get_user_by_notion_id(self, notion_id: str):
-        user = self.user_collection.find_one({"notion_id": notion_id})
+        user = self.user_collection.find_one({NOTION_ID: notion_id})
         if not user:
             # No user with this ID exists
             return None
         return user
     
     async def get_schedule_by_notion_id(self, notion_id: str):
-        schedule = self.schedule_collection.find_one({"notion_id": notion_id})
+        schedule = self.schedule_collection.find_one({NOTION_ID: notion_id})
         if not schedule:
             # No schedule with this ID exists
             #! Error Handling
@@ -130,9 +136,9 @@ class DBManager:
     @staticmethod
     def data_validation(db_entry, data_name="[data]"):
         REQUIRED_KEYS = [
-            "notion_id", 
-            "last_edited_time", 
-            "notion_properties"
+            NOTION_ID, 
+            LAST_EDITED_TIME, 
+            NOTION_PROPERTIES
         ]
         # ADDITIONAL_KEYS = [
         #     "schedule",

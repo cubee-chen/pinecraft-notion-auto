@@ -4,6 +4,16 @@ import asyncio
 
 from db_manager import DBManager
 
+# ============ Define Commonly Used Keys =============
+NOTION_ID = "notion_id"
+NOTION_PROPERTIES = "notion_properties"
+NOTION_CONTENT = "notion_content"
+LAST_EDITED_TIME = "last_edited_time"
+
+SCHEDULE_NOTION_ID = "schedule_notion_id"
+SYNCED_DOCUMENT = "synced_document"
+IS_USER = "is_user"
+
 # =================== Define Class ===================
 
 # Data structure to store and index the SyncedDocument
@@ -26,9 +36,9 @@ class SyncedDocumentManager:
     def print(self):
         print("=== Synced Document Mapping ===") 
         for instance_notion_id in self.map:
-            if self.map[instance_notion_id]["is_user"] == None:
+            if self.map[instance_notion_id][IS_USER] == None:
                 print(f"(error no is_user) {instance_notion_id} -> ({self.map[instance_notion_id]['schedule_notion_id']})")
-            elif self.map[instance_notion_id]["is_user"]:
+            elif self.map[instance_notion_id][IS_USER]:
                 print(f"{instance_notion_id} -> ({self.map[instance_notion_id]['schedule_notion_id']})")
             else:
                 print(f"{instance_notion_id} (datasource)")
@@ -41,13 +51,13 @@ class SyncedDocumentManager:
         if not self.instance_notion_id_is_synced(instance_notion_id):
             #! Error not handled
             return None
-        return self.map[instance_notion_id]["schedule_notion_id"]
+        return self.map[instance_notion_id][SCHEDULE_NOTION_ID]
 
     def is_user(self, instance_notion_id):
         if not self.instance_notion_id_is_synced(instance_notion_id):
             #! Error not handled
             return None
-        return self.map[instance_notion_id]["is_user"]
+        return self.map[instance_notion_id][IS_USER]
     # Create SyncedDocument if not exist, update link if exist
     #   schedule_notion_id is the reference to the schedule element
     #   schedule_notion_id is defined as the id to the project schedule database
@@ -61,23 +71,23 @@ class SyncedDocumentManager:
             #! Maybe we can resort to better search methods in the future
             synced_document = None
             for notion_id in self.map:
-                if self.map[notion_id]["schedule_notion_id"] == schedule_notion_id:
-                    synced_document = self.map[notion_id]["synced_document"]
+                if self.map[notion_id][SCHEDULE_NOTION_ID] == schedule_notion_id:
+                    synced_document = self.map[notion_id][SYNCED_DOCUMENT]
             if not synced_document:
                 raise KeyError("No Synced Document Exist!")
             self.map[instance_notion_id] = {
-                "schedule_notion_id": schedule_notion_id,
-                "synced_document": synced_document,
-                "is_user": is_user
+                SCHEDULE_NOTION_ID: schedule_notion_id,
+                SYNCED_DOCUMENT: synced_document,
+                IS_USER: is_user
             }
         else:
             # Task doesn't exist in the mapping
             self.schedule_list.append(schedule_notion_id)
             synced_document = SyncedDocument(schedule_notion_id, self.db_manager) #! Consider passing arguments in the future
             self.map[instance_notion_id] = {
-                "schedule_notion_id": schedule_notion_id,
-                "synced_document": synced_document,
-                "is_user": is_user
+                SCHEDULE_NOTION_ID: schedule_notion_id,
+                SYNCED_DOCUMENT: synced_document,
+                IS_USER: is_user
             }
         return True
     
@@ -95,20 +105,20 @@ class SyncedDocumentManager:
     async def check_version_by_notion_id(self, instance_notion_id, last_edited_time):
         if not self.instance_notion_id_is_synced(instance_notion_id):
             return SyncedDocumentManager.NOT_TRACKED
-        synced_document: SyncedDocument = self.map[instance_notion_id]["synced_document"]
+        synced_document: SyncedDocument = self.map[instance_notion_id][SYNCED_DOCUMENT]
         return await synced_document.check_version(last_edited_time)
 
     async def get_latest_version_by_notion_id(self, instance_notion_id):
         if not self.instance_notion_id_is_synced(instance_notion_id):
             #! Deal with this error
             return False
-        synced_document: SyncedDocument = self.map[instance_notion_id]["synced_document"]
+        synced_document: SyncedDocument = self.map[instance_notion_id][SYNCED_DOCUMENT]
         return await synced_document.get_latest_version()
 
     async def save_version_by_notion_id(self, instance_notion_id, content, last_edited_time=None):
         if not self.instance_notion_id_is_synced(instance_notion_id):
             return False
-        synced_document: SyncedDocument = self.map[instance_notion_id]["synced_document"]
+        synced_document: SyncedDocument = self.map[instance_notion_id][SYNCED_DOCUMENT]
         return await synced_document.save_version(content, last_edited_time)
 
 # A mapping of Notion Page and Physical DB via a Virtual Page (SyncedDocument)
