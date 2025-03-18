@@ -6,8 +6,10 @@ from cache import Cache
 
 # =========== System Variables ===========
 FAST_FETCH_INTERVAL = 0.1 # seconds
-NORMAL_FETCH_INTERVAL = 2 # seconds
+NORMAL_FETCH_INTERVAL = 10 # seconds
 SLOW_FETCH_INTERVAL = 600 # seconds
+
+MAX_SYNC_ATTEMPTS = 5 # continuously sync the pages
 
 # =========== Driver Class ===========
 class Driver:
@@ -82,6 +84,11 @@ class Driver:
         print(f"{version_control_aggregation.count(SyncedDocumentManager.NOT_TRACKED)} Pages Not Tracked")
         print("=============================")
 
+        if version_control_aggregation.count(SyncedDocumentManager.AHEAD) > 0:
+            # False means not yet fully synced -> There would still be pages behind after the "ahead" is synced
+            return False
+        return True
+
     # Startup Function: runs when start up
     async def startup(self):
         print("Starting Up Driver...")
@@ -105,8 +112,14 @@ class Driver:
 
         # Keep up sync
         print("---")
-        await self.sweep_all_schedules()
-        # print("Driver Running!")
+        synced = await self.sweep_all_schedules()
+        sync_attempt = 2
+        while not synced:
+            if sync_attempt > MAX_SYNC_ATTEMPTS:
+                break
+            print(f"--- Sync Attempt {sync_attempt} ---")
+            synced = await self.sweep_all_schedules()
+            sync_attempt += 1
 
     # Async Entry FUnction
     async def main(self):
