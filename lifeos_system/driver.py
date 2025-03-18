@@ -3,6 +3,7 @@ import asyncio
 from notion_manager import NotionManager
 from synced_document import SyncedDocumentManager
 from cache import Cache
+from request_manager import RequestManager
 
 # =========== System Variables ===========
 FAST_FETCH_INTERVAL = 0.1 # seconds
@@ -22,6 +23,7 @@ class Driver:
         #! Database can only be accessed via SyncedDocumentManager
         self.synced_document_manager = SyncedDocumentManager()
         self.cache = Cache()
+        self.request_manager = RequestManager(self.notion_manager, self.cache, self.synced_document_manager)
 
     async def sweep_all_schedules(self):
         all_schedule_notion_id = self.synced_document_manager.get_all_instance_notion_id()
@@ -88,6 +90,12 @@ class Driver:
             # False means not yet fully synced -> There would still be pages behind after the "ahead" is synced
             return False
         return True
+
+    async def sweep_all_users_and_projects(self):
+        user_data, project_data = await self.notion_manager.get_all_users_and_projects(self.cache, includes_content=False)
+
+        user_request_results = await asyncio.gather(*(self.request_manager.handle_user_requests(user) for user in user_data))
+        project_request_results = await asyncio.gather(*(self.request_manager.handle_project_requests(project) for project in project_data))
 
     # Startup Function: runs when start up
     async def startup(self):

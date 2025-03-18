@@ -30,7 +30,7 @@ class NotionManager:
     # =================== Startup Functions ===================
 
     # 1. Get all users and projects and return user_data and project_data
-    async def get_all_users_and_projects(self, cache: Cache): 
+    async def get_all_users_and_projects(self, cache: Cache, includes_content = True): 
 
         # run at program start
 
@@ -48,7 +48,12 @@ class NotionManager:
                 user_id = user_metadata["properties"]["姓名"]["people"][0]["id"]
                 if user_id:
                     cache.update_user_id_to_notion_id(user_id, notion_id)
-            notion_content = await self.notion.blocks.children.list(notion_id)
+            
+            if includes_content:
+                notion_content = await self.notion.blocks.children.list(notion_id)
+            else:
+                notion_content = {"results": []}
+            
             return {
                 "notion_id": notion_id,
                 "last_edited_time": last_edited_time,
@@ -69,7 +74,12 @@ class NotionManager:
             notion_id = project_metadata["id"]
             last_edited_time = NotionManager.notion_time_to_seconds(project_metadata["last_edited_time"])
             notion_properties = project_metadata["properties"]
-            notion_content = await self.notion.blocks.children.list(notion_id)
+
+            if includes_content:
+                notion_content = await self.notion.blocks.children.list(notion_id)
+            else:
+                notion_content = {"results": []}
+            
             return {
                 "notion_id": notion_id,
                 "last_edited_time": last_edited_time,
@@ -303,9 +313,6 @@ class NotionManager:
 
         #! Notion currently doesn't allow direct content editing yet
         await self.notion.blocks.children.append(schedule_notion_id, children=schedule["notion_content"])
-
-    def get_last_edited_time_time(self):
-        pass
 
     # ============ Utility Functions for Notion ============
 
