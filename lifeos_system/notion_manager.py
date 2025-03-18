@@ -152,7 +152,7 @@ class NotionManager:
 
     # 4. Delete all schedule data collected in user_data that corresponds to one in project_data
     #    and insert new schedule data by cloing these in project data
-    async def renew_all_schedules_in_user(self, user_data, schedule_data, cache: Cache, synced_document_manager: SyncedDocumentManager):
+    async def renew_all_schedules_in_user(self, user_data, project_notion_ids, schedule_data, cache: Cache, synced_document_manager: SyncedDocumentManager):
         
         # Delete
         print("Deleting all Outdated Schedules...")
@@ -164,8 +164,15 @@ class NotionManager:
                 "property": "所屬專案",
                 "rich_text": {"is_not_empty": True}
             })
-            page_ids = [page["id"] for page in pages_to_delete["results"]]
+            # Filter those with the related project ids
+            #! Filter Ref: "所屬專案": { "rich_text": [ { "text": { "content": project_notion_id } }]},
+            page_ids = [page["id"] for page in pages_to_delete["results"] 
+                        if (
+                            len(page["properties"]["所屬專案"]["rich_text"]) > 0 
+                            and page["properties"]["所屬專案"]["rich_text"][0]["text"]["content"] in project_notion_ids
+                        )]
             await asyncio.gather(*(self.delete_page_by_notion_id(page_id) for page_id in page_ids))
+            print(f"Deleted {len(page_ids)} Outdated Schedules")
 
         await asyncio.gather(*(process_user(user) for user in user_data))
         

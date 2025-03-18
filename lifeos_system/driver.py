@@ -102,11 +102,27 @@ class Driver:
 
     async def sweep_all_users_and_projects(self):
         user_data, project_data = await self.notion_manager.get_all_users_and_projects(self.cache, includes_content=False)
-        changed_user_notion_ids = self.cache.compare_and_update_user_data(user_data)
-        changed_project_notion_ids = self.cache.compare_and_update_project_data(project_data)
+        created_users, updated_users = self.cache.compare_and_update_user_data(user_data)
+        created_projects, updated_projects = self.cache.compare_and_update_project_data(project_data)
 
-        user_request_results = await asyncio.gather(*(self.request_manager.handle_user_requests_by_id(user_notion_id) for user_notion_id in changed_user_notion_ids))
-        project_request_results = await asyncio.gather(*(self.request_manager.handle_project_requests_by_id(project_notion_id) for project_notion_id in changed_project_notion_ids))
+        if len(created_users) > 0 or len(created_projects) > 0:
+            print(f"Creating {len(created_users)} users and {len(created_projects)} projects")
+            # Handle Create User or Project
+            created_users = await self.notion_manager.extract_child_db_ids(created_users, self.cache)
+            created_projects = await self.notion_manager.extract_child_db_ids(created_projects, self.cache)
+            created_schedules = await self.notion_manager.get_all_schedules_from_project(created_projects)
+
+            self.cache.compare_and_update_user_data(created_users)
+            self.cache.compare_and_update_project_data(created_projects)
+
+            await self.synced_document_manager.db_manager.update_users_and_projects(created_users, created_projects, drop_content=True)
+            project_notion_ids = [project[NOTION_ID] for project in created_projects]
+            await self.notion_manager.renew_all_schedules_in_user(user_data, project_notion_ids, created_schedules, self.cache, self.synced_document_manager)
+
+        # Handle Update User or Project
+        user_update_request_results = await asyncio.gather(*(self.request_manager.handle_user_update_requests(user_notion_id) for user_notion_id in updated_users))
+        project_update_request_results = await asyncio.gather(*(self.request_manager.handle_project_update_requests(project_notion_id) for project_notion_id in updated_projects))
+        
 
     # Startup Function: runs when start up
     async def startup(self):
@@ -126,8 +142,10 @@ class Driver:
             NotionManager.output_to_json(project_data, "data_sample/project_data.json")
             NotionManager.output_to_json(schedule_data, "data_sample/schedule_data.json")
         
-        await self.synced_document_manager.db_manager.update_all_users_and_projects(user_data, project_data, drop_content=True)
-        await self.notion_manager.renew_all_schedules_in_user(user_data, schedule_data, self.cache, self.synced_document_manager)
+        await self.synced_document_manager.db_manager.update_users_and_projects(user_data, project_data, drop_content=True)
+        project_notion_ids = [project[NOTION_ID] for project in project_data]
+        await self.notion_manager.renew_all_schedules_in_user(user_data, project_notion_ids, schedule_data, self.cache, self.synced_document_manager)
+        
         # self.synced_document_manager.print()
         print("Startup Complete!")
     # Main Function: runs every FETCH_INTERVAL seconds
@@ -135,7 +153,10 @@ class Driver:
         
         # TODO: (Advanced) Pull from Admin DB and dynamically control the fetch interval
 
-        # Keep up sync
+        # Sweep Users and Projects
+        await self.sweep_all_users_and_projects()
+
+        # Sync schedules
         print("---")
         synced = await self.sweep_all_schedules()
         sync_attempt = 2

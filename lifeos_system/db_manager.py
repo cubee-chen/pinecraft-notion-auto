@@ -38,7 +38,7 @@ class DBManager:
         self.schedule_collection = self.db[SCHEDULE_COLLECTION]
     
     # Run at start, After NotionManager.extract_all_schedules
-    async def update_all_users_and_projects(self, user_data, project_data, drop_content=True):
+    async def update_users_and_projects(self, user_data, project_data, drop_content=True):
         # Upsert Data Concurrently
 
         print(f"{'(drop_content) ' if drop_content else ''}Saving {len(user_data)} users and {len(project_data)} projects to the Database...")

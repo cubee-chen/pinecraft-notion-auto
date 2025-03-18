@@ -16,10 +16,10 @@ class RequestManager:
         self.synced_document_manager = synced_document_manager
 
     # =================== Classify and Disperse ===================
-    def handle_user_requests_by_id(self, user_notion_id):
+    async def handle_user_update_requests(self, user):
         pass
 
-    def handle_project_requests_by_id(self, project_notion_id):
+    async def handle_project_update_requests(self, project):
         pass
 
     # =================== Handle Requests ===================
