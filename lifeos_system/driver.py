@@ -1,4 +1,6 @@
 import asyncio
+from pprint import pprint
+from datetime import datetime, timezone
 
 from notion_manager import NotionManager
 from synced_document import SyncedDocumentManager
@@ -26,6 +28,7 @@ class Driver:
     def __init__(self):
         # Runtime Variables
         self.fetch_interval = NORMAL_FETCH_INTERVAL
+        self.last_updated_time = datetime.now(timezone.utc).timestamp()
         
         # Manager Functions
         self.notion_manager = NotionManager()
@@ -34,9 +37,11 @@ class Driver:
         self.cache = Cache()
         self.request_manager = RequestManager(self.notion_manager, self.cache, self.synced_document_manager)
 
+    # Sync schedules
     async def sweep_all_schedules(self):
+        # get schedules from synced_document_manager
         all_schedule_notion_id = self.synced_document_manager.get_all_instance_notion_id()
-        self.synced_document_manager.print()
+        # self.synced_document_manager.print()
         async def sweep(instance_notion_id):
             # get only properties
             instance_schedule = await self.notion_manager.get_schedule_by_notion_id(instance_notion_id, includes_content=False)
@@ -100,14 +105,15 @@ class Driver:
             return False
         return True
 
+    # Respond to actions on users and projects
     async def sweep_all_users_and_projects(self):
         user_data, project_data = await self.notion_manager.get_all_users_and_projects(self.cache, includes_content=False)
         created_users, updated_users = self.cache.compare_and_update_user_data(user_data)
         created_projects, updated_projects = self.cache.compare_and_update_project_data(project_data)
 
+        # Handle Create User or Project
         if len(created_users) > 0 or len(created_projects) > 0:
             print(f"Creating {len(created_users)} users and {len(created_projects)} projects")
-            # Handle Create User or Project
             created_users = await self.notion_manager.extract_child_db_ids(created_users, self.cache)
             created_projects = await self.notion_manager.extract_child_db_ids(created_projects, self.cache)
             created_schedules = await self.notion_manager.get_all_schedules_from_project(created_projects)
@@ -121,8 +127,37 @@ class Driver:
 
         # Handle Update User or Project
         user_update_request_results = await asyncio.gather(*(self.request_manager.handle_user_update_requests(user_notion_id) for user_notion_id in updated_users))
-        project_update_request_results = await asyncio.gather(*(self.request_manager.handle_project_update_requests(project_notion_id) for project_notion_id in updated_projects))
+        project_update_request_results = await asyncio.gather(*(self.request_manager.handle_project_update_requests(project_notion_id) for project_notion_id in updated_projects))  
+
+        #! Handle New Schedules Or Schedules with New Mentions to Sync in Old Project
+        async def sync_new_schedules_in_old_project(project, user_data):
+            schedule_id = self.cache.get_notion_id_to_schedule_id(project[NOTION_ID])
+            if not schedule_id:
+                #! Unhandled error: schedule id is not tracked in the cache
+                print("Error: Project ID Not Saved in Cache: ", project[NOTION_ID])
+                return
+
+            # Check if new schedules are created
+            linked_schedules_raw = await self.notion_manager.notion.databases.query(schedule_id, **{
+                "filter": {
+                    "property": "負責人",
+                    "people": {"is_not_empty": True}
+                }
+            })
+            if "results" not in linked_schedules_raw or len(linked_schedules_raw["results"]) == 0:
+                # print("No schedules with people linked exist.")
+                return
+            
+            # filter out schedules that are already tracked
+            linked_schedules = [schedule_raw for schedule_raw in linked_schedules_raw["results"] if not self.synced_document_manager.schedule_notion_id_is_synced(schedule_raw["id"])]
+
+            # Fetch new schedule data including content from Notion
+            linked_schedules = await asyncio.gather(*(self.notion_manager.fetch_schedule_details(schedule, project["notion_id"]) for schedule in linked_schedules))
+            # pprint(linked_schedules)
+            await self.notion_manager.renew_all_schedules_in_user(user_data, [project[NOTION_ID]], linked_schedules, self.cache, self.synced_document_manager)
+            print(f"Synced {len(linked_schedules)} new Schedules.")
         
+        await asyncio.gather(*(sync_new_schedules_in_old_project(project, user_data) for project in project_data))
 
     # Startup Function: runs when start up
     async def startup(self):
@@ -148,6 +183,7 @@ class Driver:
         
         # self.synced_document_manager.print()
         print("Startup Complete!")
+    
     # Main Function: runs every FETCH_INTERVAL seconds
     async def driver(self):
         
@@ -166,13 +202,16 @@ class Driver:
             print(f"--- Sync Attempt {sync_attempt} ---")
             synced = await self.sweep_all_schedules()
             sync_attempt += 1
+        self.last_updated_time = datetime.now(timezone.utc).timestamp()
+        print("")
+        print(f"--- Last Synced at {datetime.now(timezone.utc)} ---")
+        print("")
 
     # Async Entry FUnction
     async def main(self):
         await self.startup()
         print("Driver Running!")
         print("")
-        # self.synced_document_manager.print()
         while True:
             await self.driver()
             await asyncio.sleep(self.fetch_interval)

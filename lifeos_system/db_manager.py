@@ -94,7 +94,7 @@ class DBManager:
 
     async def update_schedule_by_notion_id(self, notion_id: str, data):
         #! Fake async. Can be upgraded to "real" async
-        print("Update DB: ", notion_id, data[NOTION_ID])
+        # print("Update DB: ", notion_id, data[NOTION_ID])
 
         # Validate schedule data
         schedule_validated = DBManager.data_validation(data, f"schedule_{notion_id}")

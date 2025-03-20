@@ -120,33 +120,9 @@ class NotionManager:
 
         schedule_data = []
         
-        print("Fetching Schedules From All Projects' Homepages...")
-        async def fetch_schedule(project, schedule_data):
-            """Fetch schedule data for a single project."""
-            if "schedule" not in project:
-                print(f"No Schedule DB Exist in User: {project['notion_id']}")
-                return  #! Skip projects without schedules
-            
-            schedule_id = project["schedule"]
-            schedules = (await self.notion.databases.query(database_id=schedule_id))["results"]
-            
-            schedule_data.extend(await asyncio.gather(*[
-                fetch_schedule_details(schedule, project['notion_id']) for schedule in schedules
-            ]))
-
-        async def fetch_schedule_details(schedule, r_parent_db):
-            # Fetch schedule details for each schedule item.
-            last_edited_time = NotionManager.notion_time_to_seconds(schedule[LAST_EDITED_TIME])
-            return {
-                NOTION_ID: schedule["id"],
-                NOTION_PROPERTIES: schedule["properties"],
-                NOTION_CONTENT: (await self.notion.blocks.children.list(schedule["id"]))["results"],
-                "r_parent_db": r_parent_db,
-                LAST_EDITED_TIME: last_edited_time
-            }
-
         # Run all schedule fetches in parallel
-        await asyncio.gather(*(fetch_schedule(project, schedule_data) for project in project_data))
+        print("Fetching Schedules From All Projects' Homepages...")
+        await asyncio.gather(*(self.fetch_schedule(project, schedule_data) for project in project_data))
 
         return schedule_data
 
@@ -297,6 +273,32 @@ class NotionManager:
         schedule_data = await fetch_schedule_data(schedule_metadata)
 
         return schedule_data
+
+    # Fetch schedule by project object and extend schedule_data
+    async def fetch_schedule(self, project, schedule_data):
+        """Fetch schedule data for a single project."""
+        if "schedule" not in project:
+            print(f"No Schedule DB Exist in User: {project['notion_id']}")
+            return  #! Skip projects without schedules
+        
+        schedule_id = project["schedule"]
+        schedules = (await self.notion.databases.query(database_id=schedule_id))["results"]
+        
+        schedule_data.extend(await asyncio.gather(*[
+            self.fetch_schedule_details(schedule, project['notion_id']) for schedule in schedules
+        ]))
+
+    # Fetch schedule details by schedule object
+    async def fetch_schedule_details(self, schedule_raw, r_parent_db_notion_id):
+        # Fetch schedule details for each schedule item.
+        last_edited_time = NotionManager.notion_time_to_seconds(schedule_raw[LAST_EDITED_TIME])
+        return {
+            NOTION_ID: schedule_raw["id"],
+            NOTION_PROPERTIES: schedule_raw["properties"],
+            NOTION_CONTENT: (await self.notion.blocks.children.list(schedule_raw["id"]))["results"],
+            "r_parent_db": r_parent_db_notion_id,
+            LAST_EDITED_TIME: last_edited_time
+        }
 
     # Delete data 
     async def delete_page_by_notion_id(self, notion_id):
