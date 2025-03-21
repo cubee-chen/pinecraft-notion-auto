@@ -70,7 +70,7 @@ class RequestManager:
             to_be_updated = dict(to_be_updated)
 
             async def update_schedule(schedule_id, properties_to_be_updated):
-                pprint(properties_to_be_updated)
+                # pprint(properties_to_be_updated)
                 await self.notion_manager.update_project_schedules_by_partial_properties(schedule_id, properties_to_be_updated)
 
             await asyncio.gather(*(update_schedule(schedule_id, to_be_updated[schedule_id]) for schedule_id in to_be_updated))
