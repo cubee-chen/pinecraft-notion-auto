@@ -34,6 +34,9 @@ class RequestManager:
     async def handle_gantt_request(self, project):
         project["schedule"] = self.cache.get_notion_id_to_schedule_id(project[NOTION_ID])
         print(f"GANTT REQUEST: {project[NOTION_ID]}")
+        await self.notion_manager.update_project_partial_properties(project[NOTION_ID], {
+            "甘特圖演算法": {"status": {"name": "執行中..."}}
+        })
         schedule_data = []
         await self.notion_manager.fetch_schedules_by_parent_project(project, schedule_data)
         parse_data = ParseData(schedule_data, project)
