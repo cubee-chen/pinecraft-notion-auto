@@ -1,13 +1,13 @@
 from pprint import pprint
 import json
 
-# =================== Define Commonly Used Keys ===================
+#! =================== Define Commonly Used Keys ===================
 NOTION_ID = "notion_id"
 NOTION_PROPERTIES = "notion_properties"
 NOTION_CONTENT = "notion_content"
 LAST_EDITED_TIME = "last_edited_time"
 
-# =================== Act as Storage for Local Variables ===================
+#! =================== Act as Storage for Local Variables ===================
 class Cache:
     def __init__(self):
         # Plain Data (Private)
@@ -20,7 +20,7 @@ class Cache:
         self.__user_id_to_notion_id = {}
         self.__notion_id_to_schedule_id = {}
 
-    # =================== Functions ===================
+    #! =================== Functions ===================
     def print(self):
         print("'user_id_to_notion_id':")
         pprint(self.__user_id_to_notion_id)
@@ -31,7 +31,7 @@ class Cache:
         print("'project_data':")
         pprint(self.__project_data)
 
-    # =================== Index Dict ===================
+    #! =================== Index Dict ===================
     # Maintain the quality of index dict (Hidden Method)
     def __refresh_user_index_dict(self):
         self.__user_index_dict = {}
@@ -46,7 +46,7 @@ class Cache:
             project = self.__project_data[i]
             self.__project_index_dict[project[NOTION_ID]] = i
 
-    # =================== User and Project Data =================== 
+    #! =================== User and Project Data =================== 
     # save user_data -> hard save
     def refresh_user_data(self, user_data):
         self.__user_data = user_data
@@ -119,7 +119,7 @@ class Cache:
     def get_project_data(self):
         return self.__project_data
 
-    # =================== Mappings ===================
+    #! =================== Mappings ===================
     # notion_id -> user object
     def get_user_by_notion_id(self, notion_id):
         if notion_id not in self.__user_index_dict:

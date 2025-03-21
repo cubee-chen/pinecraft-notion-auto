@@ -10,7 +10,7 @@ from notion_client import AsyncClient
 from synced_document import SyncedDocumentManager
 from cache import Cache
 
-# =========== Load Environmental Variables ===========
+#! =========== Load Environmental Variables ===========
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_PATH = os.path.join(BASE_DIR, ".env")
 load_dotenv(ENV_PATH)
@@ -20,232 +20,95 @@ NOTION_TOKEN = os.getenv("NOTION_TOKEN")
 USER_NOTION = os.getenv("USER_NOTION")
 PROJECT_NOTION = os.getenv("PROJECT_NOTION")
 
-# ============ Define Commonly Used Keys =============
+#! ============ Define Commonly Used Keys =============
 NOTION_ID = "notion_id"
 NOTION_PROPERTIES = "notion_properties"
 NOTION_CONTENT = "notion_content"
 LAST_EDITED_TIME = "last_edited_time"
 
-# =================== Define Class ===================
+#! =================== Define Class ===================
 class NotionManager:
     def __init__(self):
-
-        # Instance Variables
         self.notion = AsyncClient(auth=NOTION_TOKEN)
 
-    # =================== Startup Functions ===================
-
-    # 1. Get all users and projects and return user_data and project_data
-    async def get_all_users_and_projects(self, cache: Cache, includes_content = True): 
-
-        # run at program start
-
-        # Get all properties from all the users
-        print("Fetching Notion Page Data From All Users...")
-        all_user_metadata = await self.notion.databases.query(
-            database_id=USER_NOTION
-        )
-
-        async def fetch_user_data(user_metadata):
-            notion_id = user_metadata["id"]
-            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata[LAST_EDITED_TIME])
-            notion_properties = user_metadata["properties"]
-            if len(user_metadata["properties"]["姓名"]["people"]) > 0:
-                user_id = user_metadata["properties"]["姓名"]["people"][0]["id"]
-                if user_id:
-                    cache.update_user_id_to_notion_id(user_id, notion_id)
+    #! ============ General CRUD Operations ============
             
-            if includes_content:
-                notion_content = await self.notion.blocks.children.list(notion_id)
-            else:
-                notion_content = {"results": []}
-            
-            return {
-                NOTION_ID: notion_id,
-                LAST_EDITED_TIME: last_edited_time,
-                NOTION_PROPERTIES: notion_properties,
-                NOTION_CONTENT: notion_content["results"]
-            }
-
-        # Run all content fetches concurrently
-        user_data = await asyncio.gather(*[fetch_user_data(user) for user in all_user_metadata["results"]])
-
-        # Get all properties from all the projects
-        print("Fetching Notion Page Data From All Projects...")
-        all_project_metadata = await self.notion.databases.query(
-            database_id=PROJECT_NOTION
-        )
-
-        async def fetch_project_data(project_metadata):
-            notion_id = project_metadata["id"]
-            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata[LAST_EDITED_TIME])
-            notion_properties = project_metadata["properties"]
-
-            if includes_content:
-                notion_content = await self.notion.blocks.children.list(notion_id)
-            else:
-                notion_content = {"results": []}
-            
-            return {
-                NOTION_ID: notion_id,
-                LAST_EDITED_TIME: last_edited_time,
-                NOTION_PROPERTIES: notion_properties,
-                NOTION_CONTENT: notion_content["results"]
-            }
-
-        # Run all content fetches concurrently
-        project_data = await asyncio.gather(*[fetch_project_data(project) for project in all_project_metadata["results"]])
-
-        return user_data, project_data
-
-    # 2. Extract child db ids from a Notion page
-    async def extract_child_db_ids(self, data, cache: Cache):
-
-        # get db ids from parent page content
-        # run at program start
-        # print("Extracting Child Databases...")
-        for entry in data:
-            notion_content = entry[NOTION_CONTENT]
-            for block in notion_content:
-                if block["type"] == "child_database":
-                    db_name = NotionManager.get_db_name(block["child_database"]["title"])
-                    entry[db_name] = block["id"]
-                    if db_name == "schedule":
-                        cache.update_notion_id_to_schedule_id(entry[NOTION_ID], block["id"])
-
-        return data
-
-    # 3. Fetch all schedule data collected in project_data
-    async def get_all_schedules_from_project(self, project_data):
-
-        schedule_data = []
-        
-        # Run all schedule fetches in parallel
-        print("Fetching Schedules From All Projects' Homepages...")
-        await asyncio.gather(*(self.fetch_schedule(project, schedule_data) for project in project_data))
-
-        return schedule_data
-
-    # 4. Delete all schedule data collected in user_data that corresponds to one in project_data
-    #    and insert new schedule data by cloing these in project data
-    async def renew_all_schedules_in_user(self, user_data, project_notion_ids, schedule_data, cache: Cache, synced_document_manager: SyncedDocumentManager):
-        
-        # Delete
-        print("Deleting all Outdated Schedules...")
-        async def process_user(user):
-            if "schedule" not in user:
-                return
-            #! prop: "[勿動] IS任務"
-            pages_to_delete = await self.notion.databases.query(user["schedule"], **{
-                "property": "所屬專案",
-                "rich_text": {"is_not_empty": True}
-            })
-            # Filter those with the related project ids
-            #! Filter Ref: "所屬專案": { "rich_text": [ { "text": { "content": project_notion_id } }]},
-            page_ids = [page["id"] for page in pages_to_delete["results"] 
-                        if (
-                            len(page["properties"]["所屬專案"]["rich_text"]) > 0 
-                            and page["properties"]["所屬專案"]["rich_text"][0]["text"]["content"] in project_notion_ids
-                        )]
-            await asyncio.gather(*(self.delete_page_by_notion_id(page_id) for page_id in page_ids))
-            print(f"Deleted {len(page_ids)} Outdated Schedules")
-
-        await asyncio.gather(*(process_user(user) for user in user_data))
-        
-        # Insert
-        print("Inserting New Schedules to User Notion...")
-        async def insert_schedules(schedule):
-            people = schedule[NOTION_PROPERTIES]["負責人"]["people"]
-            for user in people:
-                user_id = user["id"]
-                notion_id = cache.get_user_id_to_notion_id(user_id)
-                if not notion_id:
-                    #! Handle cache not yet saved user_id -> notion_id mapping
-                    # might be because a user shared the project to other users
-                    continue
-                # Add schedule data to a specific user's schedule database
-                user_schedule_id = cache.get_notion_id_to_schedule_id(notion_id)
-                if not user_schedule_id:
-                    #! Handle cache not yet saved notion_id -> schedule_id mapping
-                    # brute search?
-                    continue
-                new_schedule_id = await self.create_user_schedule(user_schedule_id, schedule)
-
-                # Add link to synced document
-                synced_document_manager.create_instance_link(schedule[NOTION_ID], new_schedule_id, is_user=True)
-        
-        await asyncio.gather(*(insert_schedules(schedule) for schedule in schedule_data))
-        
-        # Insert schedule to DB
-        print("Inserting All Schedules to the Database...")
-        async def process_schedule(schedule):
-            if synced_document_manager.schedule_notion_id_is_synced(schedule[NOTION_ID]):
-                # Add virtual link with physical element for the project's schedule
-                synced_document_manager.create_instance_link(schedule[NOTION_ID], schedule[NOTION_ID], is_user=False)
-                # Save the physical page to the database
-                await synced_document_manager.save_version_by_notion_id(schedule[NOTION_ID], schedule, schedule[LAST_EDITED_TIME])
-        await asyncio.gather(*[process_schedule(schedule) for schedule in schedule_data])
-        # synced_document_manager.print()
+    # Delete any page
+    async def delete_page_by_notion_id(self, notion_id):
+        await self.notion.pages.update(notion_id, archived=True)
         return True
-    
-    # =============== Dynamic Runtime Functions ===============
 
-    # Fetch a single user's data from Notion by Notion ID.  
-    async def get_user_by_notion_id(self, notion_id):
+    #! ============ CRUD Operations on User or Project ============
+
+    # Fetch all users' metadata by USER_NOTION
+    async def fetch_all_user_metadata(self):
+        all_raw_user_metadata = await self.notion.databases.query(database_id=USER_NOTION)
+        # Convert Everything before processing
+        all_user_metadata = [{
+            NOTION_ID: raw_user_metadata["id"],
+            LAST_EDITED_TIME: NotionManager.notion_time_to_seconds(raw_user_metadata[LAST_EDITED_TIME]),
+            NOTION_PROPERTIES: raw_user_metadata["properties"],
+            NOTION_CONTENT: []
+        } for raw_user_metadata in all_raw_user_metadata["results"]]
+        return all_user_metadata
+    
+    # Fetch all projects' metadata by USER_NOTION
+    async def fetch_all_project_metadata(self):
+        all_raw_project_metadata = await self.notion.databases.query(database_id=PROJECT_NOTION)
+        # Convert Everything before processing
+        all_project_metadata = [{
+            NOTION_ID: raw_project_metadata["id"],
+            LAST_EDITED_TIME: NotionManager.notion_time_to_seconds(raw_project_metadata[LAST_EDITED_TIME]),
+            NOTION_PROPERTIES: raw_project_metadata["properties"],
+            NOTION_CONTENT: []
+        } for raw_project_metadata in all_raw_project_metadata["results"]]
+        return all_project_metadata
+
+    # Fetch a single user's content from Notion by user_metadata
+    async def fetch_user_content(self, user_metadata, cache: Cache, includes_content=True):
+        notion_id = user_metadata[NOTION_ID]
+        last_edited_time = user_metadata[LAST_EDITED_TIME]
+        notion_properties = user_metadata[NOTION_PROPERTIES]
+
+        if len(notion_properties["姓名"]["people"]) > 0:
+            user_id = notion_properties["姓名"]["people"][0]["id"]
+            if user_id:
+                cache.update_user_id_to_notion_id(user_id, notion_id)
         
-        # Query the Notion database to find the specific user
-        # print(f"Fetching Notion Page Data for User ID: {notion_id}...")
-        user_metadata = await self.notion.pages.retrieve(notion_id)
-
-        if not user_metadata:
-            print(f"No user found with Notion ID: {notion_id}")
-            return None
-
-        async def fetch_user_data(user_metadata):
-            last_edited_time = NotionManager.notion_time_to_seconds(user_metadata[LAST_EDITED_TIME])
-            notion_properties = user_metadata["properties"]
+        if includes_content:
             notion_content = await self.notion.blocks.children.list(notion_id)
-            return {
-                NOTION_ID: notion_id,
-                LAST_EDITED_TIME: last_edited_time,
-                NOTION_PROPERTIES: notion_properties,
-                NOTION_CONTENT: notion_content["results"]
-            }
-
-        # Fetch user data asynchronously
-        user_data = await fetch_user_data(user_metadata)
-
-        return user_data
-    
-    # Fetch a single project's data from Notion by Notion ID.
-    async def get_project_by_notion_id(self, notion_id):
+        else:
+            notion_content = {"results": []}
         
-        # Query the Notion database to find the specific project
-        # print(f"Fetching Notion Page Data for User ID: {notion_id}...")
-        project_metadata = await self.notion.pages.retrieve(notion_id)
+        return {
+            NOTION_ID: notion_id,
+            LAST_EDITED_TIME: last_edited_time,
+            NOTION_PROPERTIES: notion_properties,
+            NOTION_CONTENT: notion_content["results"]
+        }
 
-        if not project_metadata:
-            print(f"No project found with Notion ID: {notion_id}")
-            return None
+    # Fetch a single project's content from Notion by project_metadata
+    async def fetch_project_content(self, project_metadata, includes_content=True):
+        notion_id = project_metadata[NOTION_ID]
+        last_edited_time = project_metadata[LAST_EDITED_TIME]
+        notion_properties = project_metadata[NOTION_PROPERTIES]
 
-        async def fetch_project_data(project_metadata):
-            last_edited_time = NotionManager.notion_time_to_seconds(project_metadata[LAST_EDITED_TIME])
-            notion_properties = project_metadata["properties"]
+        if includes_content:
             notion_content = await self.notion.blocks.children.list(notion_id)
-            return {
-                NOTION_ID: notion_id,
-                LAST_EDITED_TIME: last_edited_time,
-                NOTION_PROPERTIES: notion_properties,
-                NOTION_CONTENT: notion_content["results"]
-            }
+        else:
+            notion_content = {"results": []}
+        
+        return {
+            NOTION_ID: notion_id,
+            LAST_EDITED_TIME: last_edited_time,
+            NOTION_PROPERTIES: notion_properties,
+            NOTION_CONTENT: notion_content["results"]
+        }
+        
+    #! ============ CRUD Operations on Schedule ============
 
-        # Fetch project data asynchronously
-        project_data = await fetch_project_data(project_metadata)
-
-        return project_data
-    
     # Fetch a single schedule's data from Notion by Notion ID.
-    async def get_schedule_by_notion_id(self, notion_id, includes_content=True):
+    async def fetch_schedule_by_notion_id(self, notion_id, includes_content=True):
         
         # Query the Notion database to find the specific schedule
         # print(f"Fetching Notion Page Data for User ID: {notion_id}...")
@@ -275,7 +138,7 @@ class NotionManager:
         return schedule_data
 
     # Fetch schedule by project object and extend schedule_data
-    async def fetch_schedule(self, project, schedule_data):
+    async def fetch_schedule_by_parent_project(self, project, schedule_data):
         """Fetch schedule data for a single project."""
         if "schedule" not in project:
             print(f"No Schedule DB Exist in User: {project['notion_id']}")
@@ -285,11 +148,11 @@ class NotionManager:
         schedules = (await self.notion.databases.query(database_id=schedule_id))["results"]
         
         schedule_data.extend(await asyncio.gather(*[
-            self.fetch_schedule_details(schedule, project['notion_id']) for schedule in schedules
+            self.fetch_schedule_content(schedule, project['notion_id']) for schedule in schedules
         ]))
 
     # Fetch schedule details by schedule object
-    async def fetch_schedule_details(self, schedule_raw, r_parent_db_notion_id):
+    async def fetch_schedule_content(self, schedule_raw, r_parent_db_notion_id):
         # Fetch schedule details for each schedule item.
         last_edited_time = NotionManager.notion_time_to_seconds(schedule_raw[LAST_EDITED_TIME])
         return {
@@ -300,10 +163,26 @@ class NotionManager:
             LAST_EDITED_TIME: last_edited_time
         }
 
-    # Delete data 
-    async def delete_page_by_notion_id(self, notion_id):
-        await self.notion.pages.update(notion_id, archived=True)
-        return True
+    # Insert schedule to users' schedule database according to the project's schedule database
+    async def insert_schedules_to_user_schedule_db(self, project_schedule, cache: Cache, synced_document_manager: SyncedDocumentManager):
+            people = project_schedule[NOTION_PROPERTIES]["負責人"]["people"]
+            for user in people:
+                user_id = user["id"]
+                notion_id = cache.get_user_id_to_notion_id(user_id)
+                if not notion_id:
+                    #! Handle cache not yet saved user_id -> notion_id mapping
+                    # might be because a user shared the project to other users
+                    continue
+                # Add schedule data to a specific user's schedule database
+                user_schedule_id = cache.get_notion_id_to_schedule_id(notion_id)
+                if not user_schedule_id:
+                    #! Handle cache not yet saved notion_id -> schedule_id mapping
+                    # brute search?
+                    continue
+                new_schedule_id = await self.create_user_schedule(user_schedule_id, project_schedule)
+
+                # Add link to synced document
+                synced_document_manager.create_instance_link(project_schedule[NOTION_ID], new_schedule_id, is_user=True)
 
     # Create user schedule page
     async def create_user_schedule(self, schedule_db_id, schedule):
@@ -322,6 +201,7 @@ class NotionManager:
         #! Notion currently doesn't allow direct content editing yet
         await self.notion.blocks.children.append(schedule_notion_id, children=schedule[NOTION_CONTENT])
 
+    # Update project schedule page to the newest version
     async def update_project_schedule(self, schedule_notion_id, schedule):
         mapped_properties = NotionManager.filter_project_schedule_before_updating_notion(schedule[NOTION_PROPERTIES])
         await self.notion.pages.update(schedule_notion_id, properties=mapped_properties)
@@ -329,7 +209,26 @@ class NotionManager:
         #! Notion currently doesn't allow direct content editing yet
         await self.notion.blocks.children.append(schedule_notion_id, children=schedule[NOTION_CONTENT])
 
-    # ============ Utility Functions for Notion ============
+    # Delete schedules in user that corresponds to a specific project
+    async def delete_user_schedules_by_project_notion_id(self, user, project_notion_ids):
+        if "schedule" not in user:
+            return
+        #! prop: "[勿動] IS任務"
+        pages_to_delete = await self.notion.databases.query(user["schedule"], **{
+            "property": "所屬專案",
+            "rich_text": {"is_not_empty": True}
+        })
+        # Filter those with the related project ids
+        #! Filter Ref: "所屬專案": { "rich_text": [ { "text": { "content": project_notion_id } }]},
+        page_ids = [page["id"] for page in pages_to_delete["results"] 
+                    if (
+                        len(page["properties"]["所屬專案"]["rich_text"]) > 0 
+                        and page["properties"]["所屬專案"]["rich_text"][0]["text"]["content"] in project_notion_ids
+                    )]
+        await asyncio.gather(*(self.delete_page_by_notion_id(page_id) for page_id in page_ids))
+        print(f"Deleted {len(page_ids)} Outdated Schedules")
+
+    #! ============ Utility Functions for Notion ============
 
     # Converts notion datetime to seconds since epoch
     @staticmethod
@@ -395,16 +294,3 @@ class NotionManager:
             "完成": properties["完成"]
         }
         return map_properties
-
-# ================= Test Run =================
-
-if __name__ == "__main__":
-    notion_manager = NotionManager()
-    async def test_run():
-        user_data, project_data = await notion_manager.get_all_users_and_projects()
-        user_data = await notion_manager.extract_child_db_ids(user_data)
-        project_data = await notion_manager.extract_child_db_ids(project_data)
-        user_data, project_data = await notion_manager.get_all_schedules_from_project(user_data, project_data)
-        NotionManager.output_to_json({"user_data": user_data, "project_data": project_data}, "data_sample/sample_notion_manager_output.json")
-
-    asyncio.run(test_run())

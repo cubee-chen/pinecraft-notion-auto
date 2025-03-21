@@ -5,26 +5,26 @@ import asyncio
 
 from pymongo.mongo_client import MongoClient
 
-# =========== Load Environmental Variables ===========
+#! =========== Load Environmental Variables ===========
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_PATH = os.path.join(BASE_DIR, ".env")
 load_dotenv(ENV_PATH)
 
 MONGO_URI = os.getenv("MONGO_URI")
 
-# ================= Default Variables ================
+#! ================= Default Variables ================
 DBNAME = "WebService"
 USER_COLLECTION = "user_db"
 PROJECT_COLLECTION = "project_db"
 SCHEDULE_COLLECTION = "schedule_db"
 
-# ============ Define Commonly Used Keys =============
+#! ============ Define Commonly Used Keys =============
 NOTION_ID = "notion_id"
 NOTION_PROPERTIES = "notion_properties"
 NOTION_CONTENT = "notion_content"
 LAST_EDITED_TIME = "last_edited_time"
 
-# =================== Define Class ===================
+#! =================== Define Class ===================
 class DBManager:
     
     # init: Establish connection with mongoDB
@@ -130,7 +130,7 @@ class DBManager:
             return None
         return schedule
 
-    # ============ Utility Functions for DB ============
+    #! ============ Utility Functions for DB ============
 
     # Checks schema
     @staticmethod

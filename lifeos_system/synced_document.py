@@ -4,7 +4,7 @@ import asyncio
 
 from db_manager import DBManager
 
-# ============ Define Commonly Used Keys =============
+#! ============ Define Commonly Used Keys =============
 NOTION_ID = "notion_id"
 NOTION_PROPERTIES = "notion_properties"
 NOTION_CONTENT = "notion_content"
@@ -14,7 +14,7 @@ SCHEDULE_NOTION_ID = "schedule_notion_id"
 SYNCED_DOCUMENT = "synced_document"
 IS_USER = "is_user"
 
-# =================== Define Class ===================
+#! =================== Define Class ===================
 
 # Data structure to store and index the SyncedDocument
 #! The middleware between DB and the program. The DB should not be accessed by the main program directly
@@ -120,6 +120,14 @@ class SyncedDocumentManager:
             return False
         synced_document: SyncedDocument = self.__map[instance_notion_id][SYNCED_DOCUMENT]
         return await synced_document.save_version(content, last_edited_time)
+    
+    async def sync_project_schedule(self, project_schedule):
+        if self.schedule_notion_id_is_synced(project_schedule[NOTION_ID]):
+            # Add virtual link with physical element for the project's schedule
+            self.create_instance_link(project_schedule[NOTION_ID], project_schedule[NOTION_ID], is_user=False)
+            # Save the physical page to the database
+            await self.save_version_by_notion_id(project_schedule[NOTION_ID], project_schedule, project_schedule[LAST_EDITED_TIME])
+    
 
 # A mapping of Notion Page and Physical DB via a Virtual Page (SyncedDocument)
 class SyncedDocument:
