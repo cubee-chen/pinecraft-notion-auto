@@ -1,4 +1,6 @@
 from notion_client import Client
+import os
+from dotenv import load_dotenv
 
 import pandas as pd
 from datetime import datetime, timedelta
@@ -226,8 +228,8 @@ def main_algorithm_meeting_time(users: list[dict[str, str]]):
         # Fill into result DataFrame
         result_df[date] = available_count
     
-    return result_df #yang:輸出dictionary之類的時間
-
+    return result_df #yang:輸出dictionary之類的時間 
+    !!!輸出格式要用啥呢
 
 
 
@@ -239,7 +241,8 @@ def main_algorithm_meeting_time(users: list[dict[str, str]]):
 
 if __name__ == "__main__":
     
-    NOTION_API_TOKEN = "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"
+    load_dotenv()
+    NOTION_API_TOKEN = os.getenv("ADMIN_TOKEN") 
     notion = Client(auth=NOTION_API_TOKEN)
 
 
