@@ -28,8 +28,10 @@ LAST_EDITED_TIME = "last_edited_time"
 
 #! =================== Define Class ===================
 class NotionManager:
-    def __init__(self):
+    def __init__(self, cache: Cache, synced_document_manager: SyncedDocumentManager):
         self.notion = AsyncClient(auth=NOTION_TOKEN)
+        self.cache = cache
+        self.synced_document_manager = synced_document_manager
 
     #! ============ General CRUD Operations ============
             
@@ -65,7 +67,7 @@ class NotionManager:
         return all_project_metadata
 
     # Fetch a single user's content from Notion by user_metadata
-    async def fetch_user_content(self, user_metadata, cache: Cache, includes_content=True):
+    async def fetch_user_content(self, user_metadata, includes_content=True):
         notion_id = user_metadata[NOTION_ID]
         last_edited_time = user_metadata[LAST_EDITED_TIME]
         notion_properties = user_metadata[NOTION_PROPERTIES]
@@ -73,7 +75,7 @@ class NotionManager:
         if len(notion_properties["姓名"]["people"]) > 0:
             user_id = notion_properties["姓名"]["people"][0]["id"]
             if user_id:
-                cache.update_user_id_to_notion_id(user_id, notion_id)
+                self.cache.update_user_id_to_notion_id(user_id, notion_id)
         
         if includes_content:
             notion_content = await self.notion.blocks.children.list(notion_id)
@@ -164,25 +166,27 @@ class NotionManager:
         }
 
     # Insert schedule to users' schedule database according to the project's schedule database
-    async def insert_schedules_to_user_schedule_db(self, project_schedule, cache: Cache, synced_document_manager: SyncedDocumentManager):
-            people = project_schedule[NOTION_PROPERTIES]["負責人"]["people"]
-            for user in people:
-                user_id = user["id"]
-                notion_id = cache.get_user_id_to_notion_id(user_id)
-                if not notion_id:
-                    #! Handle cache not yet saved user_id -> notion_id mapping
-                    # might be because a user shared the project to other users
-                    continue
-                # Add schedule data to a specific user's schedule database
-                user_schedule_id = cache.get_notion_id_to_schedule_id(notion_id)
-                if not user_schedule_id:
-                    #! Handle cache not yet saved notion_id -> schedule_id mapping
-                    # brute search?
-                    continue
-                new_schedule_id = await self.create_user_schedule(user_schedule_id, project_schedule)
+    async def insert_schedules_to_user_schedule_db(self, project_schedule):
+        people = project_schedule[NOTION_PROPERTIES]["負責人"]["people"]
+        await asyncio.gather(*(self.insert_user_schedule_db_by_person(person, project_schedule) for person in people))
 
-                # Add link to synced document
-                synced_document_manager.create_instance_link(project_schedule[NOTION_ID], new_schedule_id, is_user=True)
+    async def insert_user_schedule_db_by_person(self, person, project_schedule):
+        person_id = person["id"]
+        notion_id = self.cache.get_user_id_to_notion_id(person_id)
+        if not notion_id:
+            #! Handle cache not yet saved user_id -> notion_id mapping
+            # might be because a user shared the project to other users
+            return
+        # Add schedule data to a specific user's schedule database
+        user_schedule_id = self.cache.get_notion_id_to_schedule_id(notion_id)
+        if not user_schedule_id:
+            #! Handle cache not yet saved notion_id -> schedule_id mapping
+            # brute search?
+            return
+        new_schedule_id = await self.create_user_schedule(user_schedule_id, project_schedule)
+
+        # Add link to synced document
+        self.synced_document_manager.create_instance_link(project_schedule[NOTION_ID], new_schedule_id, is_user=True)
 
     # Create user schedule page
     async def create_user_schedule(self, schedule_db_id, schedule):

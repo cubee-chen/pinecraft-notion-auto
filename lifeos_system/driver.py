@@ -31,10 +31,10 @@ class Driver:
         self.last_updated_time = datetime.now(timezone.utc).timestamp()
         
         # Manager Functions
-        self.notion_manager = NotionManager()
-        #! Database can only be accessed via SyncedDocumentManager
-        self.synced_document_manager = SyncedDocumentManager()
         self.cache = Cache()
+        self.synced_document_manager = SyncedDocumentManager()
+        self.notion_manager = NotionManager(self.cache, self.synced_document_manager)
+        #! Database can only be accessed via SyncedDocumentManager
         self.request_manager = RequestManager(self.notion_manager, self.cache, self.synced_document_manager)
 
     #! ================ STARTUP FUNCTIONS ================
@@ -45,7 +45,7 @@ class Driver:
         # Get all properties and content from all the users
         print("Fetching Notion Page Data From All Users...")
         all_user_metadata = await self.notion_manager.fetch_all_user_metadata()
-        user_data = await asyncio.gather(*[self.notion_manager.fetch_user_content(user_metadata, self.cache, includes_content) for user_metadata in all_user_metadata])
+        user_data = await asyncio.gather(*[self.notion_manager.fetch_user_content(user_metadata, includes_content) for user_metadata in all_user_metadata])
 
         # Get all properties and content from all the projects
         print("Fetching Notion Page Data From All Projects...")
@@ -93,7 +93,7 @@ class Driver:
         
         # Insert
         print("Inserting New Schedules to User Notion...")
-        await asyncio.gather(*(self.notion_manager.insert_schedules_to_user_schedule_db(schedule, self.cache, self.synced_document_manager) for schedule in schedule_data))
+        await asyncio.gather(*(self.notion_manager.insert_schedules_to_user_schedule_db(schedule) for schedule in schedule_data))
         
         # Insert schedule to DB
         print("Inserting All Schedules to the Database...")
@@ -135,9 +135,20 @@ class Driver:
                 if is_user:
                     full_instance_schedule[NOTION_PROPERTIES] = self.notion_manager.convert_user_schedule_to_project_schedule(instance_notion_id, full_instance_schedule[NOTION_PROPERTIES])
                 
-                # Check if new collaborators are added to the schedule page
-
-
+                #! Check if new collaborators are added to the schedule page
+                # Compare collaborators property
+                previous_version_schedule = await self.synced_document_manager.get_latest_version_by_notion_id(instance_notion_id)
+                
+                #! ERROR: Couldn't be resolved using current structure
+                if "負責人" in full_instance_schedule[NOTION_PROPERTIES] and "負責人" in previous_version_schedule[NOTION_PROPERTIES]:
+                    previous_people = previous_version_schedule[NOTION_PROPERTIES]["負責人"]["people"]
+                    incoming_people = full_instance_schedule[NOTION_PROPERTIES]["負責人"]["people"]
+                    new_people = list(set(incoming_people) - set(previous_people))
+                    #! Not handled yet
+                    deleted_people = list(set(previous_people) - set(incoming_people))
+                    # Add pages in users' schedule_db corresponding to new people
+                    print(f"Added {len(new_people)} people to schedule {full_instance_schedule[NOTION_ID]}")
+                    await asyncio.gather(*(self.notion_manager.insert_user_schedule_db_by_person(new_person, full_instance_schedule) for new_person in new_people))
 
                 print(f"Page {instance_notion_id} is Ahead of the Current Version. Updating DB...")
                 await self.synced_document_manager.save_version_by_notion_id(instance_notion_id, full_instance_schedule)
@@ -188,7 +199,7 @@ class Driver:
             print(f"Creating {len(created_users_metadata)} users and {len(created_projects_metadata)} projects")
             
             # Fetch content using metadata
-            created_users = await asyncio.gather(*(self.notion_manager.fetch_user_content(user_metadata, self.cache, includes_content=True) for user_metadata in created_users_metadata))
+            created_users = await asyncio.gather(*(self.notion_manager.fetch_user_content(user_metadata, includes_content=True) for user_metadata in created_users_metadata))
             created_projects = await asyncio.gather(*(self.notion_manager.fetch_project_content(project_metadata, includes_content=True) for project_metadata in created_projects_metadata))
             
             # Extract child db ids from content

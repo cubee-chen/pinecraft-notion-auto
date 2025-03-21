@@ -145,6 +145,13 @@ class Cache:
         return self.__user_id_to_notion_id[user_id]
     def update_user_id_to_notion_id(self, user_id, notion_id):
         self.__user_id_to_notion_id[user_id] = notion_id
+    
+    #! Brute Force
+    def get_notion_id_to_user_id(self, notion_id):
+        for user_id in self.__user_id_to_notion_id:
+            if self.__user_id_to_notion_id[user_id] == notion_id:
+                return user_id
+        return None
 
     # notion_id -> schedule_id (notion_id) cache
     def get_notion_id_to_schedule_id(self, notion_id):
