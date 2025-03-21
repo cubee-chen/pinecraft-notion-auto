@@ -38,7 +38,7 @@ class ParseData:
         
         # Number of total mission
         N = len(btm_mission)
-        pprint(btm_mission)
+        # pprint(btm_mission)
 
         btm_mission_dict = defaultdict(dict)
         for i in range(N):
@@ -86,7 +86,7 @@ class ParseData:
 
         # Dict contains Parent and Child mission info
         nested_mission_dict = defaultdict(dict)
-        print("========== top_mission ==========")
+        # print("========== top_mission ==========")
         # pprint(top_mission)
         for m in range(N_parent):
 
@@ -127,49 +127,55 @@ class UpdateData:
     '''
     This class is used to update the User's Notion database with the calculated dates and critical path.
     '''
-    def __init__(self, userTriggered: dict[str, str]):
-        self.notion = userTriggered["notion"]
+    def __init__(self):
+        pass
     
     def update_btm_mission(self, btm_mission_dict, date_dict, critical_path):
-            for node in date_dict.keys():
-                page_id = btm_mission_dict[node]["page_id"]
-                self.notion.pages.update(
-                    page_id=page_id,
-                    properties={"時間": {"date": {
-                        "start": date_dict[node]["ES"],
-                        "end": date_dict[node]["EF"]}
-                    }}
-                )
-            # ----- Overlay critical path and mark with "$" -----
-            for node in critical_path[1:-1]:
-                page_id = btm_mission_dict[node]["page_id"]
-                self.notion.pages.update(
-                    page_id=page_id,
-                    properties={"名稱": {
-                            "title": [{
-                            "text": {"content": "$" + btm_mission_dict[node]["title"]},
-                            }]}}
-                )
+        to_be_updated = {}
+        for node in date_dict.keys():
+            page_id = btm_mission_dict[node]["page_id"]
+            if page_id not in to_be_updated:
+                to_be_updated[page_id] = {}
+            to_be_updated[page_id]["時間"] = {
+                "date": {
+                    "start": date_dict[node]["ES"],
+                    "end": date_dict[node]["EF"]
+                }
+            }
+        
+        # ----- Overlay critical path and mark with "$" -----
+        for node in critical_path[1:-1]:
+            page_id = btm_mission_dict[node]["page_id"]
+            if page_id not in to_be_updated:
+                to_be_updated[page_id] = {}
+            to_be_updated[page_id]["任務名稱"] = {
+                "title": [{
+                    "text": {"content": "$" + btm_mission_dict[node]["title"]},
+                }]
+            }
+        
+        return to_be_updated
     
     def update_parentChild(self, nested_mission_dict):
+        to_be_updated = {}
         for p in range(len(nested_mission_dict)):
             page_id = nested_mission_dict[p]["parent_page_id"]
-            self.notion.pages.update(
-                page_id=page_id,
-                properties={"時間": {"date": {
+            if page_id not in to_be_updated:
+                to_be_updated[page_id] = {}
+            to_be_updated[page_id]["時間"] = {"date": {
                     "start": nested_mission_dict[p]["ES"],
                     "end": nested_mission_dict[p]["EF"]}
-                }}
-            )
+                }
+
             for c in range(len(nested_mission_dict[p])-3):
                 page_id = nested_mission_dict[p][c]["child_page_id"]
-                self.notion.pages.update(
-                page_id=page_id,
-                properties={"時間": {"date": {
-                    "start": nested_mission_dict[p][c]["ES"],
-                    "end": nested_mission_dict[p][c]["EF"]}
-                    }}
-                )
+                if page_id not in to_be_updated:
+                    to_be_updated[page_id] = {}
+                to_be_updated[page_id]["時間"] = {"date": {
+                        "start": nested_mission_dict[p][c]["ES"],
+                        "end": nested_mission_dict[p][c]["EF"]}
+                    }
+        return to_be_updated
 
 def lifeos_system():
     

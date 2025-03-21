@@ -1,10 +1,12 @@
 from pprint import pprint
 from datetime import datetime
+from collections import defaultdict
+import asyncio
 
 from notion_manager import NotionManager
 from synced_document import SyncedDocumentManager
 from cache import Cache
-from gantt.call_gantt import ParseData
+from gantt.call_gantt import ParseData, UpdateData
 from gantt.main import GanttGenerator
 
 #! ============ Define Commonly Used Keys =============
@@ -42,6 +44,42 @@ class RequestManager:
         # NotionManager.output_to_json(nested_mission_dict, "nested_mission_dict.json")
         # NotionManager.output_to_json(btm_mission_dict, "btm_mission_dict.json")
         gantt = GanttGenerator(start_date, end_date, N, btm_mission_dict, nested_mission_dict)
-        output = gantt.run()
-        NotionManager.output_to_json(output, "gantt_output.json")
+        gantt_output = gantt.run()
+        NotionManager.output_to_json(gantt_output, "gantt_output.json")
+
+        # ===== Update Notion =====
+        if gantt_output["success"] == True:
+            gantt_result = gantt_output["result"]
+            update_data = UpdateData()
+            btm_mission_to_be_updated = update_data.update_btm_mission(
+                btm_mission_dict=gantt_result["btm_mission_dict"],
+                date_dict=gantt_result["date_dict"],
+                critical_path=gantt_result["critical_path"]
+            )
+            parent_child_to_be_updated = update_data.update_parentChild(nested_mission_dict=gantt_result["nested_mission_dict"])
+            
+            # Merge the two dicts
+            to_be_updated = defaultdict(dict)
+            for key, subdict in btm_mission_to_be_updated.items():
+                to_be_updated[key].update(subdict)
+            for key, subdict in parent_child_to_be_updated.items():
+                to_be_updated[key].update(subdict)
+            to_be_updated = dict(to_be_updated)
+
+            async def update_schedule(schedule_id, properties_to_be_updated):
+                pprint(properties_to_be_updated)
+                await self.notion_manager.update_project_schedules_by_partial_properties(schedule_id, properties_to_be_updated)
+
+            await asyncio.gather(*(update_schedule(schedule_id, to_be_updated[schedule_id]) for schedule_id in to_be_updated))
+
+            # change the notion '執行狀態' to 成功
+            await self.notion_manager.update_project_partial_properties(project[NOTION_ID], {
+                "甘特圖演算法": {"status": {"name": "執行完成"}}
+            })
+        else:
+            error_message = gantt_output["error_msg"]
+            # UPDATE NOTION WITH ERROR MSG
+            await self.notion_manager.update_project_partial_properties(project[NOTION_ID], {
+                "系統訊息": { "rich_text": [ { "text": { "content": error_message } }]}
+            })
         

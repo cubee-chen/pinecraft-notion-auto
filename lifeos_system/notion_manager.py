@@ -107,6 +107,9 @@ class NotionManager:
             NOTION_CONTENT: notion_content["results"]
         }
         
+    async def update_project_partial_properties(self, project_notion_id, partial_properties):
+        await self.notion.pages.update(project_notion_id, properties=partial_properties)
+
     #! ============ CRUD Operations on Schedule ============
 
     # Fetch a single schedule's data from Notion by Notion ID.
@@ -212,6 +215,9 @@ class NotionManager:
 
         #! Notion currently doesn't allow direct content editing yet
         await self.notion.blocks.children.append(schedule_notion_id, children=schedule[NOTION_CONTENT])
+
+    async def update_project_schedules_by_partial_properties(self, schedule_notion_id, partial_propterties):
+        await self.notion.pages.update(schedule_notion_id, properties=partial_propterties)
 
     # Delete schedules in user that corresponds to a specific project
     async def delete_user_schedules_by_project_notion_id(self, user, project_notion_ids):
