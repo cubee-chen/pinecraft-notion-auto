@@ -60,8 +60,11 @@ class GanttGenerator:
             path = path[1:-1] # omit start and end node
             
             total_spend = 0
-            for node in path:
-                total_spend += self.btm_mission_dict[node]["spend"]
+            try:
+                for node in path:
+                    total_spend += self.btm_mission_dict[node]["spend"]
+            except TypeError:
+                return self._error_handling("您的任務預估所需時長尚未填寫完成~")
                 
             if total_spend > critical_spend:
                 critical_spend = total_spend
@@ -113,19 +116,26 @@ class GanttGenerator:
         # ----- Calculate ES & EF for Parent and Child mission -----
         for p in range(len(self.nested_mission_dict)):
             for c in range(len(self.nested_mission_dict[p])-3): # omit 'ES', 'EF', 'parent_page_id'
-                btm_list = self.nested_mission_dict[p][c]["btm_node"]
-                smallest_c_es = min(date_dict[node]["ES"] for node in btm_list)
-                largest_c_ef = max(date_dict[node]["EF"] for node in btm_list)
+                try:
+                    btm_list = self.nested_mission_dict[p][c]["btm_node"]
+                    smallest_c_es = min(date_dict[node]["ES"] for node in btm_list)
+                    largest_c_ef = max(date_dict[node]["EF"] for node in btm_list)
 
-                self.nested_mission_dict[p][c]["ES"] = smallest_c_es
-                self.nested_mission_dict[p][c]["EF"] = largest_c_ef
-            
-            child_list = [child for child in self.nested_mission_dict[p]][3:]
-            smallest_p_es = min(self.nested_mission_dict[p][child]["ES"] for child in child_list)
-            largest_p_ef = max(self.nested_mission_dict[p][child]["EF"] for child in child_list)
-            self.nested_mission_dict[p]["ES"] = smallest_p_es
-            self.nested_mission_dict[p]["EF"] = largest_p_ef   
-            
+                    self.nested_mission_dict[p][c]["ES"] = smallest_c_es
+                    self.nested_mission_dict[p][c]["EF"] = largest_c_ef
+                except ValueError:
+                    return self._error_handling("您的任務結構有部分只有兩層，請確認總共要有三層任務~")
+                except KeyError:
+                    return self._error_handling("您的前置任務間形成封閉循環，例如任務1->任務2->任務1。請確認任務順序~")
+
+            try:
+                child_list = [child for child in self.nested_mission_dict[p]][3:]
+                smallest_p_es = min(self.nested_mission_dict[p][child]["ES"] for child in child_list)
+                largest_p_ef = max(self.nested_mission_dict[p][child]["EF"] for child in child_list)
+                self.nested_mission_dict[p]["ES"] = smallest_p_es
+                self.nested_mission_dict[p]["EF"] = largest_p_ef   
+            except ValueError:
+                return self._error_handling("您的任務結構有部分只有一層，請確認總共要有三層任務~")
         # -----------------------
         return {
             "success": True,
