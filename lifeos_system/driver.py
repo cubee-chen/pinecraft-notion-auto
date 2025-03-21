@@ -79,7 +79,7 @@ class Driver:
         
         # Run all schedule fetches in parallel
         print("Fetching Schedules From All Projects' Homepages...")
-        await asyncio.gather(*(self.notion_manager.fetch_schedule_by_parent_project(project, schedule_data) for project in project_data))
+        await asyncio.gather(*(self.notion_manager.fetch_schedules_by_parent_project(project, schedule_data) for project in project_data))
 
         return schedule_data
 

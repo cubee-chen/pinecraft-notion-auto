@@ -1,59 +1,52 @@
 from collections import defaultdict
 from datetime import datetime
+from gantt.main import GanttGenerator
+from pprint import pprint
 
-class FetchData:
+#! ============ Define Commonly Used Keys =============
+NOTION_ID = "notion_id"
+NOTION_PROPERTIES = "notion_properties"
+NOTION_CONTENT = "notion_content"
+LAST_EDITED_TIME = "last_edited_time"
+
+#! =================== Define Class ===================
+class ParseData:
     '''
     This class is used to fetch the necessary data from User's Notion database.
     Mission Structure: Parent -> Child -> Bottom 
     '''
-    def __init__(self, userTriggered: dict[str, str]):
-        self.email = userTriggered["email"]
-        self.notion = userTriggered["notion"]
-        self.prj_db_id = userTriggered["prj_db_id"]
-        self.msn_db_id = userTriggered["msn_db_id"]
-        self.current_trigger = userTriggered["current_trigger"]
+    def __init__(self, schedule_data, project):
+        self.project = project
+        self.schedule_data = schedule_data
 
     # ----- Get the corresponded project info based on trigger page ID -----
-    def get_project_info(self, trigger: str):
-        page = self.notion.pages.retrieve(page_id=trigger)
+    def parse_start_and_end_dates(self):
         start_date = datetime.strptime(
-            page["properties"]["時間"]["date"]["start"],
+            self.project[NOTION_PROPERTIES]["時間"]["date"]["start"],
             "%Y-%m-%d"
         )
         end_date = datetime.strptime(
-            page["properties"]["時間"]["date"]["end"],
+            self.project[NOTION_PROPERTIES]["時間"]["date"]["end"],
             "%Y-%m-%d"
         )
         return start_date, end_date
     
     # ----- Get the bottom mission info that 所屬專案 contains trigger page ID -----
     def get_btm_mission(self):
-        btm_mission = self.notion.databases.query(
-            database_id=self.msn_db_id,
-            filter={
-                "and": [
-                {"property": "子任務",
-                    "relation": {
-                        "is_empty": True
-                    }},
-                {"property": "所屬專案",
-                    "relation": {
-                        "contains": self.current_trigger
-                    }}
-                ]
-            }
-        )
+        # filter the schedules for which the sub-items don't have relations
+        btm_mission = [schedule for schedule in self.schedule_data if len(schedule[NOTION_PROPERTIES]["子任務"]["relation"]) == 0]
+        
         # Number of total mission
-        N = len(btm_mission["results"])
+        N = len(btm_mission)
+        pprint(btm_mission)
 
         btm_mission_dict = defaultdict(dict)
         for i in range(N):
             node = i+1    # Serial node start with 1
-            page_id = btm_mission["results"][i]["id"]
-            page = self.notion.pages.retrieve(page_id=page_id)
-            title = page["properties"]["名稱"]["title"][0]["plain_text"]
-            depend_id_list = page["properties"]["前置任務"]["relation"]
-            spend = page["properties"]["預估所需時長（天）"]["number"]
+            page_id = btm_mission[i][NOTION_ID]
+            title = btm_mission[i][NOTION_PROPERTIES]["任務名稱"]["title"][0]["plain_text"]
+            depend_id_list = btm_mission[i][NOTION_PROPERTIES]["前置任務"]["relation"]
+            spend = btm_mission[i][NOTION_PROPERTIES]["預估所需時長(天)"]["number"]
         
             # ----- Load basic info to dict -----
             btm_mission_dict[node]["page_id"] = page_id
@@ -86,32 +79,19 @@ class FetchData:
     
     # ----- Get the Parent and Child mission info that 所屬專案 contains trigger page ID -----
     def get_parentChild_mission(self, btm_mission_dict):
-        top_mission = self.notion.databases.query(
-            database_id=self.msn_db_id,
-            filter={
-                "and": [
-                {"property": "父任務",
-                    "relation": {
-                        "is_empty": True
-                    }},
-                {"property": "所屬專案",
-                    "relation": {
-                        "contains": self.current_trigger
-                    }}
-                ]
-            }
-        )
+        top_mission = [schedule for schedule in self.schedule_data if len(schedule[NOTION_PROPERTIES]["父任務"]["relation"]) == 0]
         
         # Number of Parent mission
-        N_parent = len(top_mission["results"])
+        N_parent = len(top_mission)
 
         # Dict contains Parent and Child mission info
         nested_mission_dict = defaultdict(dict)
+        print("========== top_mission ==========")
+        # pprint(top_mission)
         for m in range(N_parent):
 
-            page_id = top_mission["results"][m]["id"]
-            page = self.notion.pages.retrieve(page_id=page_id)
-            child_id_list = page["properties"]["子任務"]["relation"]
+            page_id = top_mission[m][NOTION_ID]
+            child_id_list = top_mission[m][NOTION_PROPERTIES]["子任務"]["relation"]
             
             # ----- Update parent info -----
             nested_mission_dict[m] = {
@@ -123,14 +103,15 @@ class FetchData:
             # ----- Get Child mission for each Parent -----
             for i in range(len(child_id_list)):
                 child_page_id = child_id_list[i]["id"]
-                child_page = self.notion.pages.retrieve(page_id=child_page_id)
-                btm_id_list = child_page["properties"]["子任務"]["relation"]
+                child_page = [schedule for schedule in self.schedule_data if schedule[NOTION_ID] == child_page_id][0]
+                btm_id_list = child_page[NOTION_PROPERTIES]["子任務"]["relation"]
                 
                 # ----- Replace bottom mission id with node number -----
                 btm_node_list = []
                 for j in range(len(btm_id_list)):
-                    btm_page = self.notion.pages.retrieve(page_id=btm_id_list[j]["id"])
-                    btm_node_list.append([k for k, v in btm_mission_dict.items() if v["page_id"] == (btm_page["id"])][0])
+                    btm_page_id = btm_id_list[j]["id"]
+                    btm_page = [schedule for schedule in self.schedule_data if schedule[NOTION_ID] == btm_page_id][0]
+                    btm_node_list.append([k for k, v in btm_mission_dict.items() if v["page_id"] == (btm_page[NOTION_ID])][0])
                 
                 # ----- Update Child info -----
                 nested_mission_dict[m][i] = {
@@ -191,23 +172,18 @@ class UpdateData:
                 )
 
 def lifeos_system():
-    import sys, os
-    sys.path.append(os.path.join(os.path.dirname(sys.path[0]), 'gantt'))
-    from gantt.main import GanttGenerator
-    from notion_client import Client
-
+    
     # ===== Example User info =====
-    CUBEE_NOTION_TOKEN = "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"
     user = {
-        "email": "cubee0405@gmail.com",
-        "notion": Client(auth=CUBEE_NOTION_TOKEN),
-        "prj_db_id": "17f37075d466819b9abdc563f49ea37c",
-        "msn_db_id": "17f37075d4668154aac8d63dc3d48669",
-        "current_trigger": "19437075d46680bca9c9d25b69b7a9b7"
+        "email": "",
+        "notion": None,
+        "prj_db_id": "",
+        "msn_db_id": "",
+        "current_trigger": ""
     }
     # ===== Fetch Notion info =====
-    fd = FetchData(user)
-    start_date, end_date = fd.get_project_info(fd.current_trigger)
+    fd = ParseData(user)
+    start_date, end_date = fd.parse_start_and_end_dates()
     N, btm_mission_dict = fd.get_btm_mission()
     nested_mission_dict = fd.get_parentChild_mission(btm_mission_dict)
 

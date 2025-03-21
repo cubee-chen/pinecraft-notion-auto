@@ -1,6 +1,7 @@
 from collections import defaultdict
 from datetime import timedelta
 from pprint import pprint
+from gantt.graph import Graph
 
 class GanttGenerator:
     '''
@@ -23,8 +24,6 @@ class GanttGenerator:
         }
 
     def main_algo(self):
-        
-        from graph import Graph
         # ----- Initialize Graph -----
         start_node = 0
         end_node = self.N+1

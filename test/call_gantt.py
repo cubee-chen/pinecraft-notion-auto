@@ -1,5 +1,6 @@
 from collections import defaultdict
 from datetime import datetime
+from pprint import pprint
 
 class FetchData:
     '''
@@ -193,7 +194,7 @@ class UpdateData:
 def lifeos_system():
     import sys, os
     sys.path.append(os.path.join(os.path.dirname(sys.path[0]), 'gantt'))
-    from gantt.main import GanttGenerator
+    # from gantt.main import GanttGenerator
     from notion_client import Client
 
     # ===== Example User info =====
@@ -207,10 +208,12 @@ def lifeos_system():
     }
     # ===== Fetch Notion info =====
     fd = FetchData(user)
-    start_date, end_date = fd.get_project_info(fd.current_trigger)
+    # start_date, end_date = fd.get_project_info(fd.current_trigger)
     N, btm_mission_dict = fd.get_btm_mission()
     nested_mission_dict = fd.get_parentChild_mission(btm_mission_dict)
+    pprint(nested_mission_dict)
 
+    """
     # ===== Calling Gantt function =====
     gantt = GanttGenerator(start_date, end_date, N, btm_mission_dict, nested_mission_dict)
     output = gantt.run()
@@ -232,6 +235,7 @@ def lifeos_system():
         #TODO: ddm UPDATE NOTION WITH ERROR MSG
     
     print("Process Done Successfully!")
+    """
 
 # ========================
 if __name__ == "__main__":

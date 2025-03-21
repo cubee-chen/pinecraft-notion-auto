@@ -130,6 +130,13 @@ class DBManager:
             return None
         return schedule
 
+    #! Danger Zone
+    async def delete_everything(self):
+        self.user_collection.delete_many({})
+        self.project_collection.delete_many({})
+        self.schedule_collection.delete_many({})
+        print("Deleted Everything in three collections")
+    
     #! ============ Utility Functions for DB ============
 
     # Checks schema

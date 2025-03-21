@@ -140,17 +140,17 @@ class NotionManager:
         return schedule_data
 
     # Fetch schedule by project object and extend schedule_data
-    async def fetch_schedule_by_parent_project(self, project, schedule_data):
+    async def fetch_schedules_by_parent_project(self, project, schedule_data):
         """Fetch schedule data for a single project."""
         if "schedule" not in project:
-            print(f"No Schedule DB Exist in User: {project['notion_id']}")
+            print(f"No Schedule DB Exist in Project: {project[NOTION_ID]}")
             return  #! Skip projects without schedules
         
         schedule_id = project["schedule"]
         schedules = (await self.notion.databases.query(database_id=schedule_id))["results"]
         
         schedule_data.extend(await asyncio.gather(*[
-            self.fetch_schedule_content(schedule, project['notion_id']) for schedule in schedules
+            self.fetch_schedule_content(schedule, project[NOTION_ID]) for schedule in schedules
         ]))
 
     # Fetch schedule details by schedule object
