@@ -1,6 +1,10 @@
+from pprint import pprint
+from datetime import datetime
+
 from notion_manager import NotionManager
 from synced_document import SyncedDocumentManager
 from cache import Cache
+from gantt.main import GanttGenerator
 
 #! ============ Define Commonly Used Keys =============
 NOTION_ID = "notion_id"
@@ -23,3 +27,5 @@ class RequestManager:
         pass
 
     #! =================== Handle Requests ===================
+    async def handle_gantt_request(self, project):
+        pass
