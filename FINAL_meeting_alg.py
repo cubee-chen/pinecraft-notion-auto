@@ -80,7 +80,7 @@ def calender_to_time(calender_db: dict[str, list[str]], para_date_start, para_da
     result = convert_pages_to_timeslots(calender_db_filter, para_time_start, para_time_end, today, one_week_later)
     return result
 
-#已完成，chatgpt，尚未驗證
+#已完成
 def normalize_time_slot(slot: str): #slot = "09:00-10:00", "9:00-10:00", "09：00-10：00", "09:00~10:00", "09:00 - 10:00".
     # Step 1: Replace Chinese colon to English colon
     slot = slot.replace('：', ':')
