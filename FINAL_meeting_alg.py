@@ -8,6 +8,7 @@ import re
 import asyncio #誘因結構西西
 from collections import defaultdict
 import json
+import bisect
 
 import sys
 sys.stdout.reconfigure(encoding='utf-8') #用來處理一些特殊符號在terminal的print
@@ -16,7 +17,7 @@ sys.stdout.reconfigure(encoding='utf-8') #用來處理一些特殊符號在termi
 #已測試完
 def filter_pages_calender(response,today , one_week_later):
     ## 會把response裡面的page過濾掉，只留下符合日期的page
-    ## 會把沒有enddate的刪掉
+    ## 會把沒有end date的刪掉
     filtered_pages = []
     
     for page in response['results']:
@@ -52,7 +53,10 @@ def convert_pages_to_timeslots(filtered_pages, p_time_start, p_time_end, p_today
         print(f"end date = {end_date}")
 
         start_time = max(datetime.strptime(p_time_start, "%H:%M").time(), start.time()).strftime("%H:%M") #type:str
-        end_time   = max(datetime.strptime(p_time_end, "%H:%M").time(), end.time()).strftime("%H:%M")     #type:str
+        if end.time() == datetime.strptime("00:00", "%H:%M").time():
+            end_time = (datetime.strptime(p_time_end, "%H:%M")+timedelta(minutes=5)).time().strftime("%H:%M")
+        else:
+            end_time = min((datetime.strptime(p_time_end, "%H:%M")+timedelta(minutes=5)).time(), end.time()).strftime("%H:%M")     #type:str
 
         period = (end_date - start_date).days
         print(f"Period = {period}")
@@ -112,7 +116,7 @@ def timetable_to_time(timetable_db: dict[str, list[str]], all_dates) -> dict[str
 
     for page in timetable_db_result:
         properties = page["properties"]
-        slot_origianl = properties["時段"]["title"][0]["plain_text"] #填錯可能會抱錯
+        slot_origianl = properties["時段"]["title"][0]["plain_text"] #填錯可能會抱錯 #有空的資料
         slot = normalize_time_slot(slot_origianl)
 
         i = (7 - date_start_weekday)%7                 #key的順序
@@ -178,18 +182,18 @@ def get_unavailable_list(users_list: UsersList):
     return result
 
 
-
 def main_algorithm_meeting_time(users: list[dict[str, str]]):   
     
     #Step 0: Parameters setup
     para_date_start  = datetime.today()  #排定會議的開始日期 (now)
     para_date_period = 7                 #一個list包含開始到結束的日期 (int)
     para_time_start = "09:00"            #排定會議的開始時刻
-    para_time_end   = "23:00"            #排定會議的結束時刻
-    para_time_freq  = "30min"
+    para_time_end   = "23:00"            #排定會議的結束時刻 (不能設超過23:30)
+    para_time_freq  = "30min"            #使用者不要條哈哈
 
     # Step 1: Time slots (30-min intervals)
     time_slots = pd.date_range(para_time_start, para_time_end, freq=para_time_freq).strftime("%H:%M").tolist()
+    time_slots_dt = [datetime.strptime(t, "%H:%M") for t in time_slots]
 
     # Step 2: Generate next 7 days' dates  
     all_dates = [(para_date_start + timedelta(days=i)).strftime("%Y-%m-%d") for i in range(para_date_period)]
@@ -214,12 +218,14 @@ def main_algorithm_meeting_time(users: list[dict[str, str]]):
                     start, end = slot.split("-")
                     start = f"{int(start.split(':')[0]):02}:{start.split(':')[1]}"
                     end = f"{int(end.split(':')[0]):02}:{end.split(':')[1]}"
-                    
+                    start_dt = datetime.strptime(start, "%H:%M")
+                    end_dt = datetime.strptime(end, "%H:%M")
+
                     try:
-                        start_idx = time_slots.index(start)
-                        end_idx = time_slots.index(end)
+                        start_idx = bisect.bisect_right(time_slots_dt, start_dt) - 1
+                        end_idx = bisect.bisect_left(time_slots_dt, end_dt)
                         temp_df.iloc[start_idx:end_idx, temp_df.columns.get_loc(user)] = 1
-                    except ValueError: !!!這裡有bug 請撰寫一個可以把時間補滿的判斷
+                    except ValueError: #!!!這裡有bug 請撰寫一個可以把時間補滿的判斷
                         print(f"Warning: {start} or {end} not found in time slots")
         
         # Count available users
@@ -229,10 +235,7 @@ def main_algorithm_meeting_time(users: list[dict[str, str]]):
         result_df[date] = available_count
     
     return result_df #yang:輸出dictionary之類的時間 
-    !!!輸出格式要用啥呢
-
-
-
+    #!!!輸出格式要用啥呢
 
 
 
@@ -296,4 +299,5 @@ if __name__ == "__main__":
 
     # Step 5: 輸出
     print(result_df)
+
 
