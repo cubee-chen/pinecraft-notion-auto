@@ -186,13 +186,13 @@ class NotionManager:
             #! Handle cache not yet saved notion_id -> schedule_id mapping
             # brute search?
             return
-        new_schedule_id = await self.create_user_schedule(user_schedule_id, project_schedule)
+        new_schedule_id = await self.insert_user_schedule(user_schedule_id, project_schedule)
 
         # Add link to synced document
         self.synced_document_manager.create_instance_link(project_schedule[NOTION_ID], new_schedule_id, is_user=True)
 
     # Create user schedule page
-    async def create_user_schedule(self, schedule_db_id, schedule):
+    async def insert_user_schedule(self, schedule_db_id, schedule):
         mapped_properties = NotionManager.convert_project_schedule_to_user_schedule(schedule["r_parent_db"], schedule[NOTION_PROPERTIES])
         new_page = await self.notion.pages.create(
             parent={"database_id": schedule_db_id},
@@ -246,6 +246,31 @@ class NotionManager:
     async def fetch_schedule_by_db_id(self, schedule_db_id):
         return await self.notion.databases.query(schedule_db_id)
     
+    async def delete_all_when_to_meet_schedules(self, when_to_meet_db_id):
+        all_when_to_meet = await self.notion.databases.query(when_to_meet_db_id)
+        await asyncio.gather(*(self.delete_page_by_notion_id(when_to_meet["id"]) for when_to_meet in all_when_to_meet["results"]))
+
+    async def insert_when_to_meet_schedule(self, when_to_meet_db_id, properties):
+        await self.notion.pages.create(
+            parent={"database_id": when_to_meet_db_id},
+            properties=properties
+        )
+
+    async def change_when_to_meet_property_names_sorted(self, when_to_meet_db_id, property_names_sorted):
+        retrieved_db = await self.notion.databases.retrieve(when_to_meet_db_id)
+        old_properties = retrieved_db["properties"]
+        
+        index = 0
+        for property_name in sorted(old_properties.keys()):
+            if property_name == "時段":
+                continue
+            await self.notion.databases.update(when_to_meet_db_id, properties = {
+                property_name: {
+                    "name": property_names_sorted[index]
+                }
+            })
+            index += 1
+
     #! ============ Utility Functions for Notion ============
 
     # Converts notion datetime to seconds since epoch
@@ -270,6 +295,7 @@ class NotionManager:
             "代辦事項": "schedule",
             "任務資料庫": "schedule",
             "專案": "projects",
+            "When to Meet": "when_to_meet"
         }
         for title in map:
             if title in db_title:

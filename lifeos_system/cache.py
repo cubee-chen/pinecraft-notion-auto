@@ -20,6 +20,7 @@ class Cache:
         self.__person_id_to_notion_id = {}
         self.__notion_id_to_schedule_id = {}
         self.__notion_id_to_class_schedule_id = {}
+        self.__notion_id_to_when_to_meet_id = {}
 
     #! =================== Functions ===================
     def print(self):
@@ -169,3 +170,11 @@ class Cache:
         return self.__notion_id_to_class_schedule_id[notion_id]
     def update_notion_id_to_class_schedule_id(self, notion_id, class_schedule_id):
         self.__notion_id_to_class_schedule_id[notion_id] = class_schedule_id
+
+    # notion_id -> when_to_meet_id (notion_id) cache
+    def get_notion_id_to_when_to_meet_id(self, notion_id):
+        if notion_id not in self.__notion_id_to_when_to_meet_id:
+            return None
+        return self.__notion_id_to_when_to_meet_id[notion_id]
+    def update_notion_id_to_when_to_meet_id(self, notion_id, when_to_meet_id):
+        self.__notion_id_to_when_to_meet_id[notion_id] = when_to_meet_id

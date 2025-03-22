@@ -92,8 +92,14 @@ class RequestManager:
             })
         
     async def handle_meeting_request(self, project):
+        print(f"MEETING REQUEST: {project[NOTION_ID]}")
+        await self.notion_manager.update_project_partial_properties(project[NOTION_ID], {
+            "會議排程演算法": {"status": {"name": "執行中..."}}
+        })
+
         users_meeting = [{ "email": self.cache.get_person_id_to_notion_id(person_id["id"]) } for person_id in project[NOTION_PROPERTIES]["成員"]["people"]]
 
+        # fetch data for the meeting algorithm to use
         async def fetch_user_class_meeting(user_meeting):
             user_notion_id = user_meeting["email"]
             class_schedule_id = self.cache.get_notion_id_to_class_schedule_id(user_notion_id)
@@ -109,5 +115,27 @@ class RequestManager:
             user_meeting["calendar_db"] = await self.notion_manager.fetch_schedule_by_db_id(schedule_id)
             
         await asyncio.gather(*(fetch_user_class_meeting(user_meeting) for user_meeting in users_meeting))
+        
+        # Run meeting algorithm
         meeting_result_df = main_algorithm_meeting_time(users_meeting)
-        print(meeting_result_df)
+        
+        # save the meeting algorithm results
+        when_to_meet_db_id = self.cache.get_notion_id_to_when_to_meet_id(project[NOTION_ID])
+        await self.notion_manager.delete_all_when_to_meet_schedules(when_to_meet_db_id)
+
+        property_names_sorted = sorted(meeting_result_df.columns.tolist())
+        await self.notion_manager.change_when_to_meet_property_names_sorted(when_to_meet_db_id, property_names_sorted)
+
+        async def insert_project_when_to_meet_schedules(timeslot, timeslot_row):
+            timeslot_dict = timeslot_row.to_dict()
+            for key in timeslot_dict:
+                timeslot_dict[key] = { "number": timeslot_dict[key] }
+            timeslot_dict["時段"] = { "title": [ { "text": { "content": str(timeslot) } }]}
+            await self.notion_manager.insert_when_to_meet_schedule(when_to_meet_db_id, timeslot_dict)
+
+        await asyncio.gather(*(insert_project_when_to_meet_schedules(timeslot, timeslot_row) for timeslot, timeslot_row in meeting_result_df.iterrows()))
+
+        # change the notion '執行狀態' to 成功
+        await self.notion_manager.update_project_partial_properties(project[NOTION_ID], {
+            "會議排程演算法": {"status": {"name": "執行完成"}}
+        })

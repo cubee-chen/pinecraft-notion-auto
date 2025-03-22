@@ -71,6 +71,8 @@ class Driver:
                         self.cache.update_notion_id_to_schedule_id(entry[NOTION_ID], block["id"])
                     elif db_name == "class_schedule":
                         self.cache.update_notion_id_to_class_schedule_id(entry[NOTION_ID], block["id"])
+                    elif db_name == "when_to_meet":
+                        self.cache.update_notion_id_to_when_to_meet_id(entry[NOTION_ID], block["id"])
 
 
         return data
@@ -219,8 +221,8 @@ class Driver:
             await self.renew_all_schedules_in_user(created_users, project_notion_ids, created_schedules)
 
         # Handle Update User or Project
-        user_update_request_results = await asyncio.gather(*(self.request_manager.handle_user_update_requests(user_notion_id) for user_notion_id in updated_users_metadata))
-        project_update_request_results = await asyncio.gather(*(self.request_manager.handle_project_update_requests(project_notion_id) for project_notion_id in updated_projects_metadata))  
+        await asyncio.gather(*(self.request_manager.handle_user_update_requests(user_notion_id) for user_notion_id in updated_users_metadata))
+        await asyncio.gather(*(self.request_manager.handle_project_update_requests(project_notion_id) for project_notion_id in updated_projects_metadata))
 
         #! Handle New Schedules Or Schedules with New Mentions to Sync in Old Project
         async def sync_new_schedules_in_old_project(project, user_data):
