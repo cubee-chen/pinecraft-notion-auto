@@ -4,7 +4,7 @@ for ddm:
 users 是一個list of dictionary,每一組dictionary包含三的元素:
     1.user的email
     2.user的課表(timetable_db)，這個就是直接把整個database的json放進來就好
-    3.user的行事曆(calender_db)，這個也是直接把整個database的json放進來就好
+    3.user的行事曆(calendar_db)，這個也是直接把整個database的json放進來就好
 所以要把一個project內的user的資料都放進來
 
 呼叫部分只有 def main_algorithm_meeting_time(users: list[dict[str, str]]):   
@@ -32,7 +32,7 @@ users = [
                 ...
             ]
         },
-        "calender_db": {
+        "calendar_db": {
             "results": [
                 {
                     "properties": {

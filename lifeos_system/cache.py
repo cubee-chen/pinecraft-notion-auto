@@ -17,13 +17,14 @@ class Cache:
         self.__user_index_dict = {}
         self.__project_index_dict = {}
         # Conversion (Private)
-        self.__user_id_to_notion_id = {}
+        self.__person_id_to_notion_id = {}
         self.__notion_id_to_schedule_id = {}
+        self.__notion_id_to_class_schedule_id = {}
 
     #! =================== Functions ===================
     def print(self):
         print("'user_id_to_notion_id':")
-        pprint(self.__user_id_to_notion_id)
+        pprint(self.__person_id_to_notion_id)
         print("'notion_id_to_schedule_id':")
         pprint(self.__notion_id_to_schedule_id)
         print("'user_data':")
@@ -139,17 +140,17 @@ class Cache:
         return self.__project_data[self.project_index_dict[notion_id]]
 
     # user_id -> notion_id cache
-    def get_user_id_to_notion_id(self, user_id):
-        if user_id not in self.__user_id_to_notion_id:
+    def get_person_id_to_notion_id(self, person_id):
+        if person_id not in self.__person_id_to_notion_id:
             return None
-        return self.__user_id_to_notion_id[user_id]
-    def update_user_id_to_notion_id(self, user_id, notion_id):
-        self.__user_id_to_notion_id[user_id] = notion_id
+        return self.__person_id_to_notion_id[person_id]
+    def update_person_id_to_notion_id(self, person_id, notion_id):
+        self.__person_id_to_notion_id[person_id] = notion_id
     
     #! Brute Force
-    def get_notion_id_to_user_id(self, notion_id):
-        for user_id in self.__user_id_to_notion_id:
-            if self.__user_id_to_notion_id[user_id] == notion_id:
+    def get_notion_id_to_person_id(self, notion_id):
+        for user_id in self.__person_id_to_notion_id:
+            if self.__person_id_to_notion_id[user_id] == notion_id:
                 return user_id
         return None
 
@@ -160,3 +161,11 @@ class Cache:
         return self.__notion_id_to_schedule_id[notion_id]
     def update_notion_id_to_schedule_id(self, notion_id, schedule_id):
         self.__notion_id_to_schedule_id[notion_id] = schedule_id
+
+    # notion_id -> class_schedule_id (notion_id) cache
+    def get_notion_id_to_class_schedule_id(self, notion_id):
+        if notion_id not in self.__notion_id_to_class_schedule_id:
+            return None
+        return self.__notion_id_to_class_schedule_id[notion_id]
+    def update_notion_id_to_class_schedule_id(self, notion_id, class_schedule_id):
+        self.__notion_id_to_class_schedule_id[notion_id] = class_schedule_id

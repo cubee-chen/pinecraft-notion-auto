@@ -15,13 +15,13 @@ sys.stdout.reconfigure(encoding='utf-8') #用來處理一些特殊符號在termi
 
 
 #已測試完
-def filter_pages_calender(response,today , one_week_later):
+def filter_pages_calendar(response,today , one_week_later):
     ## 會把response裡面的page過濾掉，只留下符合日期的page
     ## 會把沒有end date的刪掉
     filtered_pages = []
     
     for page in response['results']:
-        date_info = page['properties']['Date']['date']
+        date_info = page['properties']['日期 / Deadline']['date']
         start_date = datetime.fromisoformat(date_info['start']).date()
         end_date = None
         if date_info.get('end'):
@@ -77,11 +77,11 @@ def convert_pages_to_timeslots(filtered_pages, p_time_start, p_time_end, p_today
 
     return dict(time_slots)
 
-def calender_to_time(calender_db: dict[str, list[str]], para_date_start, para_date_period, para_time_start, para_time_end)   -> dict[str, list[str]]:
+def calendar_to_time(calendar_db: dict[str, list[str]], para_date_start, para_date_period, para_time_start, para_time_end)   -> dict[str, list[str]]:
     today = para_date_start.date()
     one_week_later = today + timedelta(days=para_date_period-1)
-    calender_db_filter = filter_pages_calender(calender_db, today, one_week_later)
-    result = convert_pages_to_timeslots(calender_db_filter, para_time_start, para_time_end, today, one_week_later)
+    calendar_db_filter = filter_pages_calendar(calendar_db, today, one_week_later)
+    result = convert_pages_to_timeslots(calendar_db_filter, para_time_start, para_time_end, today, one_week_later)
     return result
 
 #已完成
@@ -132,16 +132,16 @@ class UserSchedule:
     def __init__(self, user: dict[str, str], all_dates, para_date_start, para_date_period, para_time_start, para_time_end):
         self.email = user["email"]
         timetable_db = user["timetable_db"]
-        calender_db  = user["calender_db"]
-        self.schdule = calender_to_time(calender_db, para_date_start, para_date_period, para_time_start, para_time_end)
+        calendar_db  = user["calendar_db"]
+        self.schdule = calendar_to_time(calendar_db, para_date_start, para_date_period, para_time_start, para_time_end)
         self.timetable = timetable_to_time(timetable_db, all_dates)
     
     '''
     def update_timetable(self, timetable_db):
         self.timetable = timetable_to_time(timetable_db)
     
-    def update_calender(self, calender_db):
-        self.schdule = calender_to_time(calender_db)    
+    def update_calendar(self, calendar_db):
+        self.schdule = calendar_to_time(calendar_db)    
     '''
 
 class UsersList:
@@ -285,7 +285,7 @@ if __name__ == "__main__":
         # Step 3: 整理成 main_algorithm 所需格式
         user_entry = {
             "email": user['email'],
-            "calender_db": calendar_db,
+            "calendar_db": calendar_db,
             "timetable_db": timetable_db
         }
         users.append(user_entry)

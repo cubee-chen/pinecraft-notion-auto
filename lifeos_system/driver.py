@@ -69,6 +69,9 @@ class Driver:
                     entry[db_name] = block["id"]
                     if db_name == "schedule":
                         self.cache.update_notion_id_to_schedule_id(entry[NOTION_ID], block["id"])
+                    elif db_name == "class_schedule":
+                        self.cache.update_notion_id_to_class_schedule_id(entry[NOTION_ID], block["id"])
+
 
         return data
     

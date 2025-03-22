@@ -75,7 +75,7 @@ class NotionManager:
         if len(notion_properties["姓名"]["people"]) > 0:
             user_id = notion_properties["姓名"]["people"][0]["id"]
             if user_id:
-                self.cache.update_user_id_to_notion_id(user_id, notion_id)
+                self.cache.update_person_id_to_notion_id(user_id, notion_id)
         
         if includes_content:
             notion_content = await self.notion.blocks.children.list(notion_id)
@@ -175,7 +175,7 @@ class NotionManager:
 
     async def insert_user_schedule_db_by_person(self, person, project_schedule):
         person_id = person["id"]
-        notion_id = self.cache.get_user_id_to_notion_id(person_id)
+        notion_id = self.cache.get_person_id_to_notion_id(person_id)
         if not notion_id:
             #! Handle cache not yet saved user_id -> notion_id mapping
             # might be because a user shared the project to other users
@@ -237,7 +237,15 @@ class NotionManager:
                     )]
         await asyncio.gather(*(self.delete_page_by_notion_id(page_id) for page_id in page_ids))
         print(f"Deleted {len(page_ids)} Outdated Schedules")
+    
+    #! ================ Other CRUD Operations ===============
 
+    async def fetch_class_schedule_by_db_id(self, class_schedule_db_id):
+        return await self.notion.databases.query(class_schedule_db_id)
+    
+    async def fetch_schedule_by_db_id(self, schedule_db_id):
+        return await self.notion.databases.query(schedule_db_id)
+    
     #! ============ Utility Functions for Notion ============
 
     # Converts notion datetime to seconds since epoch

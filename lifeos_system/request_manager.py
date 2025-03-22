@@ -2,12 +2,14 @@ from pprint import pprint
 from datetime import datetime
 from collections import defaultdict
 import asyncio
+import pandas as pd
 
 from notion_manager import NotionManager
 from synced_document import SyncedDocumentManager
 from cache import Cache
 from gantt.call_gantt import ParseData, UpdateData
 from gantt.main import GanttGenerator
+from meeting.meeting_alg import main_algorithm_meeting_time
 
 #! ============ Define Commonly Used Keys =============
 NOTION_ID = "notion_id"
@@ -29,6 +31,9 @@ class RequestManager:
     async def handle_project_update_requests(self, project):
         if project[NOTION_PROPERTIES]["甘特圖演算法"]["status"]["name"] == "執行請求":
             await self.handle_gantt_request(project)
+        
+        if project[NOTION_PROPERTIES]["會議排程演算法"]["status"]["name"] == "執行請求":
+            await self.handle_meeting_request(project)
 
     #! =================== Handle Requests ===================
     async def handle_gantt_request(self, project):
@@ -86,3 +91,23 @@ class RequestManager:
                 "系統訊息": { "rich_text": [ { "text": { "content": error_message } }]}
             })
         
+    async def handle_meeting_request(self, project):
+        users_meeting = [{ "email": self.cache.get_person_id_to_notion_id(person_id["id"]) } for person_id in project[NOTION_PROPERTIES]["成員"]["people"]]
+
+        async def fetch_user_class_meeting(user_meeting):
+            user_notion_id = user_meeting["email"]
+            class_schedule_id = self.cache.get_notion_id_to_class_schedule_id(user_notion_id)
+            if class_schedule_id == None:
+                users_meeting.remove(user_meeting)
+                return
+            user_meeting["timetable_db"] = await self.notion_manager.fetch_class_schedule_by_db_id(class_schedule_id)
+            
+            schedule_id = self.cache.get_notion_id_to_schedule_id(user_notion_id)
+            if schedule_id == None:
+                users_meeting.remove(user_meeting)
+                return
+            user_meeting["calendar_db"] = await self.notion_manager.fetch_schedule_by_db_id(schedule_id)
+            
+        await asyncio.gather(*(fetch_user_class_meeting(user_meeting) for user_meeting in users_meeting))
+        meeting_result_df = main_algorithm_meeting_time(users_meeting)
+        print(meeting_result_df)
