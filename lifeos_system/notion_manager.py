@@ -260,8 +260,35 @@ class NotionManager:
         retrieved_db = await self.notion.databases.retrieve(when_to_meet_db_id)
         old_properties = retrieved_db["properties"]
         
+        temp_properties = [str(p) for p in range(len([p for p in old_properties.keys() if p != "時段"]))]
+
+        prop_mapping_dict = {}
         index = 0
         for property_name in sorted(old_properties.keys()):
+            if property_name == "時段":
+                continue
+            prop_mapping_dict[property_name] = {
+                "name": temp_properties[index]
+            }
+            index += 1
+        
+        await self.notion.databases.update(when_to_meet_db_id, properties=prop_mapping_dict)
+        
+        prop_mapping_dict = {}
+        index = 0
+        for property_name in temp_properties:
+            if property_name == "時段":
+                continue
+            prop_mapping_dict[property_name] = {
+                "name": property_names_sorted[index]
+            }
+            index += 1
+        
+        await self.notion.databases.update(when_to_meet_db_id, properties=prop_mapping_dict)
+        
+        """
+        index = 0
+        for property_name in temp_properties:
             if property_name == "時段":
                 continue
             await self.notion.databases.update(when_to_meet_db_id, properties = {
@@ -270,6 +297,7 @@ class NotionManager:
                 }
             })
             index += 1
+        """
 
     #! ============ Utility Functions for Notion ============
 

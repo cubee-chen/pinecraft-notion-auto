@@ -40,7 +40,7 @@ def convert_pages_to_timeslots(filtered_pages, p_time_start, p_time_end, p_today
     time_slots = defaultdict(list)
 
     for page in filtered_pages:
-        date_property = page["properties"]["Date"]["date"]
+        date_property = page["properties"]["日期 / Deadline"]["date"]
 
         # 將 ISO 格式的時間字串轉為 datetime
         start = datetime.fromisoformat(date_property.get("start"))
