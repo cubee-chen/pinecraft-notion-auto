@@ -74,10 +74,7 @@ class FetchData:
             else:
                 for dm in dependIdList_per_mission:    # "dm" stands for depend mission
                     matches = [k for k, v in btm_mission_dict.items() if v["page_id"] == dm["id"]]
-                    if matches:
-                        depend_list.append(matches[0])  # Append the first match
-                    else:
-                        print(f"Warning: No match found for id {dm['id']} in node {node}")
+                    depend_list.append(matches[0])  # Append the first match
 
                 # ----- Update depend list in btn_mission_dict -----    
                 btm_mission_dict[node]["depend_list"] = depend_list
@@ -214,7 +211,7 @@ def lifeos_system():
     # ===== Calling Gantt function =====
     gantt = GanttGenerator(start_date, end_date, N, btm_mission_dict, nested_mission_dict)
     output = gantt.run()
-    print(output)
+    print("run gantt done")
 
     # ===== Update Notion =====
     if output["success"] == True:
@@ -229,6 +226,7 @@ def lifeos_system():
         #TODO: ddm change the notion '執行狀態' to 成功
     else:
         msg = output["error_msg"]
+        print(f"error message: {msg}")
         #TODO: ddm UPDATE NOTION WITH ERROR MSG
     
     print("Process Done Successfully!")
