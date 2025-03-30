@@ -318,5 +318,33 @@ class Driver:
         asyncio.run(self.main())
 
 if __name__ == "__main__":
+    print("")
+    print("")
+    print("")
+    print("")
+    print("========== PINECRAFT NOTION AUTOMATION VERSION 2025/03/30 ==========")
+    print("")
+    print("""	
+        nnnnnnnnnnnnnnnnnnnnnnnnnnnnnn	
+        nnnn                         nnnn	
+        nnnnnnn                          nnnn	
+        nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn	
+        nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn	
+        nnnnnnnn                           nnn	
+        nnnnnnnn    nnnnnnnn     nnnnnnn   nnn	
+        nnnnnnnn      nnnnnnn      nnn     nnn	
+        nnnnnnnn      nnnnnnnn     nnn     nnn	
+        nnnnnnnn      nnnnnnnnnn   nnn     nnn	
+        nnnnnnnn      nnn nnnnnnn  nnn     nnn	
+        nnnnnnnn      nnn  nnnnnnnnnnn     nnn	
+        nnnnnnnn      nnn   nnnnnnnnnn     nnn	
+        nnnnnnnn      nnn     nnnnnnnn     nnn	
+        nnnnnnnn      nnn      nnnnnnn     nnn	
+        nnnnnnnn    nnnnnnnn    nnnnnn     nnn
+          nnnnnn                           nnn
+            nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn	
+              nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn	
+    
+        """)
     driver = Driver()
     driver.run()
