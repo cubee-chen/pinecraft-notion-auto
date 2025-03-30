@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 from pprint import pprint
 import asyncio
 
+from environment import env
 from pymongo.mongo_client import MongoClient
 
 #! =========== Load Environmental Variables ===========
@@ -10,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_PATH = os.path.join(BASE_DIR, ".env")
 load_dotenv(ENV_PATH)
 
-MONGO_URI = os.getenv("MONGO_URI")
+MONGO_URI = env.getenv("MONGO_URI")
 
 #! ================= Default Variables ================
 DBNAME = "WebService"

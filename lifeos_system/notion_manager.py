@@ -6,7 +6,7 @@ import json
 from datetime import datetime, timezone
 
 from notion_client import AsyncClient
-
+from environment import env
 from synced_document import SyncedDocumentManager
 from cache import Cache
 
@@ -15,10 +15,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ENV_PATH = os.path.join(BASE_DIR, ".env")
 load_dotenv(ENV_PATH)
 
-NOTION_TOKEN = os.getenv("NOTION_TOKEN")
+NOTION_TOKEN = env.getenv("NOTION_TOKEN")
 
-USER_NOTION = os.getenv("USER_NOTION")
-PROJECT_NOTION = os.getenv("PROJECT_NOTION")
+USER_NOTION = env.getenv("USER_NOTION")
+PROJECT_NOTION = env.getenv("PROJECT_NOTION")
 
 #! ============ Define Commonly Used Keys =============
 NOTION_ID = "notion_id"
