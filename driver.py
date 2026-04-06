@@ -9,7 +9,7 @@ from request_manager import RequestManager
 
 #! =========== System Variables ===========
 FAST_FETCH_INTERVAL = 0.1 # seconds
-NORMAL_FETCH_INTERVAL = 10 # seconds
+NORMAL_FETCH_INTERVAL = 5 # seconds
 SLOW_FETCH_INTERVAL = 600 # seconds
 
 MAX_SYNC_ATTEMPTS = 5 # continuously sync the pages
