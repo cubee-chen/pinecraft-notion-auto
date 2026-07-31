@@ -81,14 +81,62 @@ Build a practical, automation-first operations layer on top of Notion so teams c
 - Admin-user fetch support for external integration endpoints.
 
 ### Algorithms
-- Gantt scheduling:
-  - Parses dependency structures and date constraints.
-  - Computes critical execution outputs.
-  - Writes updates back to Notion schedule pages.
-- Meeting scheduling:
-  - Aggregates participant availability signals.
-  - Produces candidate meeting slots.
-  - Updates Notion meeting tables with structured results.
+The automation loop is split into three layers:
+
+1. **Bootstrap and cache warm-up**
+  - Fetch all user and project pages from Notion.
+  - Read each page's child databases to discover schedule, class schedule, and when-to-meet database IDs.
+  - Load project schedules and seed the local cache.
+  - Create or refresh synced-document links so each Notion page is tied to a canonical database record.
+
+2. **Continuous sweep and version control**
+  - Re-fetch Notion metadata on each driver cycle.
+  - Compare incoming user/project metadata against the cached copy to detect created or updated pages.
+  - For every tracked schedule page, compare `last_edited_time` with the database copy and classify the page as:
+    - `UP_TO_DATE`: no action required
+    - `AHEAD`: Notion is newer, so save the page into MongoDB
+    - `BEHIND`: MongoDB is newer, so restore the page back to Notion
+    - `NOT_TRACKED`: the page is not linked to a synced document yet
+  - If a project gains new collaborators, automatically create the matching user schedule pages.
+
+3. **Request-driven workflow execution**
+  - If a project sets the Gantt status to `執行請求`, run the Gantt pipeline.
+  - If a project sets the meeting status to `執行請求`, run the meeting pipeline.
+
+#### Gantt Workflow
+- Read all schedule pages under the project homepage.
+- Parse start/end dates, bottom-level tasks, and parent-child task structure.
+- Run the Gantt generator to produce a schedule plan and critical path result.
+- Convert the result into partial Notion property updates.
+- Write the computed dates and task status data back into each schedule page.
+- Mark the project status as `執行完成` on success, or write an error message on failure.
+
+#### Meeting Workflow
+- Collect project members from the Notion people field.
+- For each member, fetch their class schedule and personal schedule databases.
+- Feed the collected availability data into the meeting-time algorithm.
+- Clear the existing when-to-meet table, reorder its properties, and insert the newly computed time slots.
+- Mark the project status as `執行完成` after the table is rebuilt.
+
+#### Overall Driver Loop
+```mermaid
+flowchart TD
+   A[Startup] --> B[Fetch all users and projects]
+   B --> C[Extract child database IDs]
+   C --> D[Load project schedules]
+   D --> E[Seed cache and MongoDB]
+   E --> F[Repeat every fetch interval]
+   F --> G[Detect user/project updates]
+   G --> H[Handle Gantt and meeting requests]
+   H --> I[Version-check all synced schedules]
+   I --> J{Any pages ahead?}
+   J -- Yes --> K[Save Notion changes to MongoDB]
+   J -- No --> L{Any pages behind?}
+   L -- Yes --> M[Restore MongoDB state back to Notion]
+   L -- No --> F
+   K --> F
+   M --> F
+```
 
 ### Data and Versioning Model
 - Version states include:
